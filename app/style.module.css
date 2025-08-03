@@ -1,0 +1,19 @@
+/* style.module.scss */
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cursor-ring.visible {
+  opacity: 1;
+}
+
+
+

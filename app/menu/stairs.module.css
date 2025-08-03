@@ -1,0 +1,29 @@
+.stairs{
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 998;
+    height: 100vh;
+    width: 100%; /* ou fixe */
+    display: flex;
+    transition: all 1s;
+    pointer-events: none;
+    flex-direction: column-reverse;
+    justify-content: flex-start; /* aligner en bas (vu que column-reverse) */
+}
+.stair{
+    width: 0;
+    height: 28vh;
+    background-color: black;
+     margin-left: auto; /* aligne la marche à droite */
+}
+
+.background{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: black;
+}
+
+@media only screen and (min-width: 600px) {
+}
