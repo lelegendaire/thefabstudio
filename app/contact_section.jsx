@@ -1,6 +1,6 @@
 "use client"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { useState, useTransition } from "react";
+import { useState } from "react";
 
 import {
   ChartConfig,
@@ -30,10 +30,6 @@ const chartConfig = {
 export default function Contact(){
     const [selectedTab, setSelectedTab] = useState("perso");
      const [activeIndex, setActiveIndex] = useState(0)
-const [email, setEmail] = useState("");
-const [subject, setSubject] = useState("");
-const [message, setMessage] = useState("");
-const [loading, startTransition] = useTransition();
 
 
   const tabs = [
@@ -118,24 +114,13 @@ const [loading, startTransition] = useTransition();
         <div className="flex flex-col items-start justify-center w-100">
         <div className="p-5 w-full">
             <h1>Email*</h1>
-           <input
-  type="email"
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-  placeholder="myemail@gmail.com"
-  className="w-full h-10 outline-0"
-/>
+            <input type="mail" placeholder="myemail@gmail.com" className=" w-full h-10 outline-0"></input>
         </div>
         <div className="h-0.5 w-100 bg-gray-200 rounded-2xl "></div>
         <div className="pl-5 pt-5 w-full">
             <h1 className="pt-3 ">Object*</h1>
-<input
-  type="text"
-  value={subject}
-  onChange={(e) => setSubject(e.target.value)}
-  placeholder="An idea, a question, a project... ?"
-  className="w-full outline-0 h-10"
-/>            <div className="flex gap-2 mt-4">
+            <input type="text" placeholder="An idea, a question, a project... ?" className="w-full outline-0 h-10"></input>
+            <div className="flex gap-2 mt-4">
         {tabs.map((tab) => (
           <button
             key={tab.key}
@@ -154,36 +139,8 @@ const [loading, startTransition] = useTransition();
         </div>
         <div className="p-5 w-full">
             <h1 className="pt-3 pb-3">Your message*</h1>
-<textarea
-  value={message}
-  onChange={(e) => setMessage(e.target.value)}
-  placeholder="Tell us all about it!"
-  className="h-40 w-full outline-0"
-/>            
-<button
-  className="bg-black text-white rounded-2xl px-3 py-2"
-  disabled={loading}
-  onClick={() => {
-    startTransition(async () => {
-        console.log("ENVOI DU FORMULAIRE 🚀", { email, subject, message });
-
-      const response = await fetch("/api/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, subject, message }),
-      });
-      const data = await response.json();
-  if (!response.ok) {
-    console.error("Erreur:", data);
-  } else {
-    console.log("Mail envoyé ✅", data);
-  }
-      // Optionnel : reset fields ou affichage "envoyé"
-    });
-  }}
->
-  {loading ? "Sending..." : "Send"}
-</button>
+            <textarea type="text" placeholder="Tell us all about it! Tell us about your idea, your desires or what you're looking for." className="h-40 w-full outline-0"></textarea>
+            <button className="bg-black text-white rounded-2xl px-3 py-2 flex items-center justify-center">Send</button>
         </div>
         <div className="h-0.5 w-100 bg-gray-200 rounded-2xl "></div>
 
