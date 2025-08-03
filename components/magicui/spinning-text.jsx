@@ -1,22 +1,8 @@
-"use client";;
-import { cn } from "../../lib/utils";
-import { motion, Transition, Variants } from "motion/react";
-import React, { CSSProperties } from "react";
+"use client";
 
-type SpinningTextProps = {
-  children: string | string[];
-  style?: CSSProperties;
-  duration?: number;
-  className?: string;
-  reverse?: boolean;
-  fontSize?: number;
-  radius?: number;
-  transition?: Transition;
-  variants?: {
-    container?: Variants;
-    item?: Variants;
-  };
-};
+import { motion } from "motion/react";
+import React from "react";
+import { cn } from "../../lib/utils";
 
 const BASE_TRANSITION = {
   repeat: Infinity,
@@ -41,13 +27,12 @@ export function SpinningText({
   radius = 5,
   transition,
   variants,
-}: SpinningTextProps) {
+}) {
   if (typeof children !== "string" && !Array.isArray(children)) {
     throw new Error("children must be a string or an array of strings");
   }
 
   if (Array.isArray(children)) {
-    // Validate all elements are strings
     if (!children.every((child) => typeof child === "string")) {
       throw new Error("all elements in children array must be strings");
     }
@@ -57,20 +42,21 @@ export function SpinningText({
   const letters = children.split("");
   letters.push(" ");
 
+  // Gestion du transition avec fallback
   const finalTransition = {
     ...BASE_TRANSITION,
-    ...transition,
-    duration: (transition as { duration?: number })?.duration ?? duration,
+    ...(transition || {}),
+    duration: (transition && transition.duration) || duration,
   };
 
   const containerVariants = {
     visible: { rotate: reverse ? -360 : 360 },
-    ...variants?.container,
+    ...(variants?.container || {}),
   };
 
   const itemVariants = {
     ...BASE_ITEM_VARIANTS,
-    ...variants?.item,
+    ...(variants?.item || {}),
   };
 
   return (
@@ -90,19 +76,17 @@ export function SpinningText({
           key={`${index}-${letter}`}
           variants={itemVariants}
           className="absolute left-1/2 top-1/2 inline-block"
-          style={
-            {
-              "--index": index,
-              "--total": letters.length,
-              "--radius": radius,
-              transform: `
-                  translate(-50%, -50%)
-                  rotate(calc(360deg / var(--total) * var(--index)))
-                  translateY(calc(var(--radius, 5) * -1ch))
-                `,
-              transformOrigin: "center",
-            } as React.CSSProperties
-          }
+          style={{
+            "--index": index,
+            "--total": letters.length,
+            "--radius": radius,
+            transform: `
+              translate(-50%, -50%)
+              rotate(calc(360deg / var(--total) * var(--index)))
+              translateY(calc(var(--radius, 5) * -1ch))
+            `,
+            transformOrigin: "center",
+          }}
         >
           {letter}
         </motion.span>
