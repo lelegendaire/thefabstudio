@@ -11,6 +11,7 @@ import Team from './team_section';
 import Interaction from './interaction';
 
 export default function Home() {
+   const contactRef = useRef(null);
   return (
     
     <>
@@ -22,8 +23,8 @@ export default function Home() {
 
     <About_us/>
     <Projects/>
-    <Team/>
-    <Contact/>
+<Team contactRef={contactRef} />
+      <Contact ref={contactRef} />
     <Interaction/>
     <Footer/>
     </>

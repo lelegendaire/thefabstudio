@@ -1,6 +1,6 @@
 "use client"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { useState } from "react";
+import { useState, forwardRef  } from "react";
 
 import {
   ChartConfig,
@@ -27,7 +27,7 @@ const chartConfig = {
   },
 };
 
-export default function Contact(){
+const Contact = forwardRef((props, ref) => {
     const [selectedTab, setSelectedTab] = useState("perso");
      const [activeIndex, setActiveIndex] = useState(0)
 
@@ -85,7 +85,7 @@ export default function Contact(){
   },
 ]
     return (
-        <section id="contact_section" className="h-[150vh] bg-white p-4 ">
+        <section id="contact_section" ref={ref} className="h-[150vh] bg-white p-4 rounded-4xl relative" style={{ transform: "translateY(-105%) scale(0.05)" }}>
             <h1 className="font-[Satoshi] font-bold text-8xl text-black">Let’s work together</h1>
             <h1 className="font-[Satoshi] font-bold text-3xl"> — even just to explore.</h1>
             <div className="flex items-center justify-between">
@@ -150,4 +150,5 @@ export default function Contact(){
       </div>
         </section>
     )
-}
+})
+export default Contact;
