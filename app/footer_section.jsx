@@ -45,10 +45,11 @@ export function DepthImage({ src, alt }) {
     </motion.div>
   );
 }
-export function AnimatedLink({ href, children, color }) {
+export function AnimatedLink({ href, children, color,target_on }) {
   return (
     <motion.a
       href={href}
+      target={target_on}
       className="relative inline-block text-nowrap"
       initial="rest"
       whileHover="hover"
@@ -101,7 +102,7 @@ export default function Footer(){
                 <div className="flex justify-between items-start">
                 <div className="social w-1/4 list-none">
                     <h1 className="text-gray-400">Social</h1>
-                    <li className="mt-3 text-2xl"><AnimatedLink color="black" href="instagram.com">Instagram</AnimatedLink></li> </div>
+                    <li className="mt-3 text-2xl"><AnimatedLink color="black" target_on="_blank "href="https://instagram.com">Instagram</AnimatedLink></li> </div>
                 <div className="page w-1/4 list-none">
                     <h1 className="text-gray-400">Page</h1>
                     <li className="mt-3 text-2xl"><AnimatedLink color="black" href="#home_section">Home</AnimatedLink></li>
@@ -110,10 +111,11 @@ export default function Footer(){
                     <li className="text-2xl"><AnimatedLink color="black" href="#team_section">Team</AnimatedLink></li>
                     <li className="text-2xl"><AnimatedLink color="black" href="#contact_section">Contact</AnimatedLink></li>
                </div></div>
-               <div className="flex items-end justify-start gap-3  h-50">
-                <p>Fr</p>
+               <div className="flex items-end justify-start h-50">
+                <div className="flex items-center justify-center gap-3">
+                <p>EN</p>
                      <Switch/>
-                <p>En</p>
+                <p>FR</p></div>
       
 
                </div>

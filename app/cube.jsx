@@ -1,11 +1,13 @@
 'use client';
 import { SpinningText } from "../components/magicui/spinning-text";
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useScroll, ScrollControls } from '@react-three/drei'
 import { OrbitControls, MeshTransmissionMaterial, RoundedBox, Environment, useTexture, Text, Text3D   } from '@react-three/drei';
 import { useControls } from 'leva';
 import { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import styles from "./style.module.css"
+
 function BackgroundPlane({ textureUrl }) {
   const texture = useTexture(textureUrl);
   return (
@@ -15,8 +17,12 @@ function BackgroundPlane({ textureUrl }) {
     </mesh>
   );
 }
+
+
 function InteractiveCube({ materialProps, setIsHovered }) {
   const ref = useRef();
+  const sphereRef = useRef();
+  const ringRef = useRef();
 
   const { size, viewport, mouse } = useThree();
   const [isDragging, setIsDragging] = useState(false);
@@ -28,7 +34,7 @@ function InteractiveCube({ materialProps, setIsHovered }) {
     }
   }, []);
 
-  useFrame(() => {
+  useFrame((state, delta) => {
     if (!ref.current) return;
 
     // Rotation standard
@@ -52,27 +58,60 @@ function InteractiveCube({ materialProps, setIsHovered }) {
       );
       ref.current.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
     }
+
+    // Animation de la sphère - rotation lente autour de son axe Y
+    if (sphereRef.current) {
+      sphereRef.current.rotation.y += delta * 0.5;
+      sphereRef.current.rotation.x += delta * 0.2;
+    }
+
+    // Animation de l'anneau - rotation sur différents axes
+    if (ringRef.current) {
+      ringRef.current.rotation.x += delta * 0.8;
+      ringRef.current.rotation.z += delta * 0.4;
+    }
   });
 
   return (
     <RoundedBox
-  ref={ref}
-  args={[3, 3, 3]}
-  radius={0.15}
-  smoothness={4}
-  position={originalPosition.current}
-  onPointerDown={() => {setIsDragging(true);setIsHovered(false)}}
-  onPointerUp={() => {setIsDragging(false);setIsHovered(true)}}
-  onPointerLeave={() => {
-    setIsDragging(false);
-    setIsHovered(false);
-  }}
-  onPointerOver={() => setIsHovered(true)}
-  onPointerOut={() => setIsHovered(false)}
->
-  <MeshTransmissionMaterial {...materialProps} />
-</RoundedBox>
+      ref={ref}
+      args={[3, 3, 3]}
+      radius={0.15}
+      smoothness={4}
+      position={originalPosition.current}
+      onPointerDown={() => {setIsDragging(true);setIsHovered(false)}}
+      onPointerUp={() => {setIsDragging(false);setIsHovered(true)}}
+      onPointerLeave={() => {
+        setIsDragging(false);
+        setIsHovered(false);
+      }}
+      onPointerOver={() => setIsHovered(true)}
+      onPointerOut={() => setIsHovered(false)}
+    >
+      <MeshTransmissionMaterial {...materialProps} />
+      
+      {/* Sphère à l'intérieur du cube */}
+      <mesh ref={sphereRef} position={[0, 0, 0]}>
+        <sphereGeometry args={[0.8, 32, 32]} />
+        <MeshTransmissionMaterial {...materialProps} />
+      </mesh>
 
+      {/* Anneau autour de la sphère */}
+      <mesh ref={ringRef} position={[0, 0, 0]}>
+        <torusGeometry args={[1.2, 0.1, 16, 100]} />
+        <MeshTransmissionMaterial 
+       
+          color="white"
+          transmission={0.95}
+          thickness={0.05}
+          roughness={0.0}
+          metalness={0.0}
+          emissive="white"
+          emissiveIntensity={0.3}
+        />
+      </mesh>
+
+    </RoundedBox>
   );
 }
 function AnimatedText({ children, offsetX, offsetY, font, delay = 0, isLoaded }) {
@@ -119,7 +158,7 @@ function AnimatedText({ children, offsetX, offsetY, font, delay = 0, isLoaded })
 
 
 
-export default function CubeOverlay({ isLoaded }) {
+export default function CubeOverlay({ isLoaded, scrollProgress }) {
   
 
   const materialProps = {
@@ -151,11 +190,12 @@ useEffect(() => {
 
   return (
     <div className="absolute top-0 left-0 w-screen h-full pointer-events-none ">
-<Canvas gl={{ alpha: true }} style={{ background: 'transparent' }}>
+<Canvas gl={{ alpha: true, premultipliedAlpha: false }} style={{ background: 'transparent' }}>
+  
 {/* Fond dupliqué dans la scène WebGL */}
-          <BackgroundPlane textureUrl="/medias/background.jpg" />        
-<InteractiveCube materialProps={materialProps} setIsHovered={setIsHovered} />
- <AnimatedText offsetX={-0.358} offsetY={0.235} font="/fonts/Dirtyline.ttf" delay={0.2} isLoaded={isLoaded}>
+ <BackgroundPlane textureUrl="/medias/bg_final.jpg" />     
+  <InteractiveCube materialProps={materialProps} setIsHovered={setIsHovered} />
+  <AnimatedText offsetX={-0.358} offsetY={0.235} font="/fonts/Dirtyline.ttf" delay={0.2} isLoaded={isLoaded}>
   The
 </AnimatedText>
 <AnimatedText offsetX={-0.3647} offsetY={-0.03} font="/fonts/Dirtyline.ttf" delay={0.5} isLoaded={isLoaded}>
@@ -164,7 +204,7 @@ useEffect(() => {
 <AnimatedText offsetX={-0.306} offsetY={-0.287} font="/fonts/Dirtyline.ttf" delay={0.8} isLoaded={isLoaded}>
   Studi
 </AnimatedText>
-<AnimatedText offsetX={-0.0705} offsetY={-0.234} font="/fonts/PlayfairDisplay.ttf" delay={1} isLoaded={isLoaded}>
+<AnimatedText offsetX={-0.0705} offsetY={-0.234} font="/fonts/PlayfairDisplay.ttf" delay={0.8} isLoaded={isLoaded}>
   O
 </AnimatedText>
 
