@@ -58,6 +58,7 @@ const [lenis, setLenis] = useState(null);
   }, []);
 
   return (
+    
     <section className="relative text-black">
            <header className="flex items-center justify-center gap-4 p-5">
           <CornerDownLeft onClick={() => router.push('/')} className="cursor-pointer hover:scale-110 transition-transform mr-auto" />

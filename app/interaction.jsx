@@ -1,20 +1,27 @@
 "use client"
 import Copy from "./components/Copy"
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState  } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
-import Lenis from '@studio-freight/lenis';
-
+import { useLenis } from './context/LenisContext'
+import { useRouter } from 'next/navigation';
+import { startTransition } from 'react'
 // Enregistrer les plugins GSAP
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, SplitText);
 }
 
-const TeamSection = () => {
+const Interaction = () => {
+  const router = useRouter();
+  const [transitioning, setTransitioning] = useState(false);
+  const [transitionImage, setTransitionImage] = useState('');
+  const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef(null);
-  const lenisRef = useRef(null);
+  const lenis = useLenis()
   const animationInitialized = useRef(false);
+  const rafIdRef = useRef(null);
+
 // Collection d'images variées
   const imageUrls = [
     'https://images.unsplash.com/photo-1757317202556-a87236bdb48b?q=80&w=775&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -38,47 +45,98 @@ const TeamSection = () => {
     'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1444927714506-8492d94b5ba0?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   ];
-  useEffect(() => {
-    if (animationInitialized.current) return;
-      const timeoutId = setTimeout(() => {
-    // Initialiser Lenis
-    lenisRef.current = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
+  const works = [
+    {
+      title: "Atlantas XI",
+      image: "/medias/Example.png",
+      url: "/Atlantas"
+    },
+    {
+      title: "The Weeknd : An artist like no other",
+      image: "/medias/The_weeknd.png",
+      url: "/The_Weeknd"
+    },
+    {
+      title: "The new vision of cinema",
+      image: "/medias/Cinema.png",
+      url: "/Cinema"
+    }
+  ];
+ const handleNavigation = (image, url, e) => {
+    // Récupérer la position du clic
+    const rect = e.currentTarget.querySelector('img').getBoundingClientRect();
+    setClickPosition({
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2
     });
 
-    lenisRef.current.on('scroll', ScrollTrigger.update);
-    
+    // Démarrer la transition
+    setTransitionImage(image);
+    setTransitioning(true);
+
+    // Naviguer après l'animation
+    setTimeout(() => {
+      // Annuler le requestAnimationFrame
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+      
+      // Tuer tous les ScrollTriggers
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      
+     
+      router.push(url);
+    }, 800);
+  };useEffect(() => {
+  if (!lenis || animationInitialized.current) return;
+
+  let timeoutId;
+  let started = false;
+
+  // Fonction d'animation principale
+  const startAnimations = () => {
+    if (started) return;
+    started = true;
+
+    // Boucle Lenis
     const tick = (time) => {
-      lenisRef.current.raf(time);
-      requestAnimationFrame(tick);
+      lenis.raf(time);
+      rafIdRef.current = requestAnimationFrame(tick);
     };
-    requestAnimationFrame(tick);
-}, 6000);
-    // Initialiser les animations
+    rafIdRef.current = requestAnimationFrame(tick);
+
+    // Init des ScrollTriggers
     initSpotlightAnimations();
     animationInitialized.current = true;
 
-    const handleResize = () => {
+    // ⚠️ Attendre un peu pour laisser Lenis stabiliser le layout
+    timeoutId = setTimeout(() => {
       ScrollTrigger.refresh();
-      initSpotlightAnimations();
-    };
+    }, 600);
+  };
 
-    window.addEventListener("resize", handleResize);
+  // Attendre que Lenis commence à scroller avant de démarrer
+  const handleScrollStart = () => {
+    startAnimations();
+    lenis.off('scroll', handleScrollStart);
+  };
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      if (lenisRef.current) {
-        lenisRef.current.destroy();
-      }
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
+  lenis.on('scroll', handleScrollStart);
+
+  // Fallback : démarrage automatique après 800 ms si aucun scroll
+  timeoutId = setTimeout(startAnimations, 800);
+
+  return () => {
+    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+    if (timeoutId) clearTimeout(timeoutId);
+    lenis.off('scroll', handleScrollStart);
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    animationInitialized.current = false;
+  };
+}, [lenis]);
+
+
 
   const initSpotlightAnimations = () => {
     if (!sectionRef.current) return;
@@ -101,12 +159,20 @@ const TeamSection = () => {
     });
 
     try {
+      // Sauvegarder le texte original avant de split
+      const introOriginalText = introHeader.textContent;
+      const outroOriginalText = outroHeader.textContent;
+
       introHeaderSplit = new SplitText(introHeader, {type: "words"});
       gsap.set(introHeaderSplit.words, {opacity: 1});
 
       outroHeaderSplit = new SplitText(outroHeader, {type: "words"});
       gsap.set(outroHeaderSplit.words, {opacity: 0});
       gsap.set(outroHeader, {opacity: 1});
+
+      // Stocker les instances pour le nettoyage
+      introHeaderSplit._originalText = introOriginalText;
+      outroHeaderSplit._originalText = outroOriginalText;
     } catch (error) {
       console.warn("SplitText non disponible, utilisation d'une alternative");
       // Alternative simple si SplitText n'est pas disponible
@@ -164,9 +230,10 @@ const TeamSection = () => {
       pin: true,
       pinSpacing: true,
       scrub: 1,
+      anticipatePin: 1, // Important pour Lenis
+      invalidateOnRefresh: true, // recalcul après resize
       onUpdate: (self) => {
         const progress = self.progress;
-
         images.forEach((img, index) => {
           const staggerDelay = index * 0.03;
           const scaleMultiplier = isMobile ? 4 : 2;
@@ -219,13 +286,14 @@ const TeamSection = () => {
 
         // Animation du texte outro
         if (outroHeaderSplit && outroHeaderSplit.words.length > 0) {
-          if (progress >= 0.8 && progress <= 0.95) {
-            const outroRevealProgress = (progress - 0.8) / 0.15;
+         
+          if (progress >= 0.85 && progress <= 1.0) {
+            const outroRevealProgress = (progress - 0.85) / 0.15;
             const totalWords = outroHeaderSplit.words.length;
 
             outroHeaderSplit.words.forEach((word, index) => {
               const wordRevealProgress = index / totalWords;
-              const fadeRange = 0.1;
+              const fadeRange = 0.15;
 
               if (outroRevealProgress >= wordRevealProgress + fadeRange) {
                 gsap.set(word, {opacity: 1});
@@ -236,9 +304,9 @@ const TeamSection = () => {
                 gsap.set(word, {opacity: wordOpacity});
               }
             });
-          } else if (progress < 0.8) {
+          } else if (progress < 0.85) {
             gsap.set(outroHeaderSplit.words, {opacity: 0});
-          } else if (progress > 0.95) {
+          } else if (progress > 1) {
             gsap.set(outroHeaderSplit.words, {opacity: 1});
           }
         }
@@ -300,30 +368,77 @@ const TeamSection = () => {
       </section>
 
       {/* Section Outro */}
-      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-white h-[150vh] bg-black p-4 font-[Satoshi]">
+      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-white h-[100vh] bg-black p-4 font-[Satoshi]">
        
         <Copy><h1 className="font-bold text-6xl p-10">Still not convinced</h1></Copy>
         <Copy><h3 className="font-bold text-3xl p-5 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h3></Copy>
         <div className="flex items-center justify-center gap-3">
-            <div className="flex items-center justify-center flex-col">
-                <div className="h-100 rounded-2xl overflow-hidden "><img className="w-full h-full object-cover transition-transform object-center hover:transform-[scale(1.2)]" src={"https://images.unsplash.com/photo-1752041593295-29a7546096e4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyM3x8fGVufDB8fHx8fA%3D%3D"}></img></div>
-                <h1>Our work 1</h1>
-                <button className="bg-white w-60 rounded-4xl p-2 text-black">I will try</button>
-            </div>
-            <div className="flex items-center justify-center flex-col">
-                <div className="h-100 rounded-2xl overflow-hidden "><img className="w-full h-full object-cover transition-transform object-center hover:transform-[scale(1.2)]" src={"https://images.unsplash.com/photo-1752805936163-73fe92f5070d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMHx8fGVufDB8fHx8fA%3D%3D"}></img></div>
-                <h1>Our work 2</h1>
-                <button className="bg-white w-60 rounded-4xl p-2 text-black">Try</button>
-            </div>
-            <div className="flex items-center justify-center flex-col">
-                <div className="h-100 rounded-2xl overflow-hidden "><img className="w-full h-full object-cover transition-transform object-center hover:transform-[scale(1.2)]" src={"https://plus.unsplash.com/premium_photo-1746417461105-51b89a61907f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0NHx8fGVufDB8fHx8fA%3D%3D"}></img></div>
-                <h1>Our work 3</h1>
-                <button className="bg-white w-60 rounded-4xl p-2 text-black">Try</button>
-            </div>
+           {works.map((work, index) => (
+              <div 
+                key={index} 
+                className="flex items-center justify-center flex-col gap-3 cursor-pointer"
+                onClick={(e) => handleNavigation(work.image, work.url, e)}
+              >
+                <div className="h-64 w-full rounded-2xl overflow-hidden transition-all duration-500">
+                  <img 
+                    className="w-full h-full object-cover transition-transform duration-500 object-center hover:scale-110" 
+                    src={work.image}
+                    alt={work.title}
+                  />
+                </div>
+                <h1 className="text-xl font-semibold">{work.title}</h1>
+                <button 
+                  className="bg-white w-60 rounded-full py-3 px-6 text-black font-medium active:scale-95 transition-transform duration-300 hover:bg-gray-100"
+                >
+                  See more
+                </button>
+              </div>
+            ))}
         </div>
-       
+        {/* Overlay de transition */}
+      {transitioning && (
+        <div 
+          className="fixed inset-0 z-[9999] pointer-events-none"
+          style={{
+            transformOrigin: `${clickPosition.x}px ${clickPosition.y}px`
+          }}
+        >
+          <div 
+            className="absolute bg-black rounded-2xl overflow-hidden animate-expand"
+            style={{
+              left: clickPosition.x,
+              top: clickPosition.y,
+              transform: 'translate(-50%, -50%)',
+              animation: 'expandToFull 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards'
+            }}
+          >
+            <img 
+              className="w-full h-full object-cover" 
+              src={transitionImage}
+              alt="Transition"
+            />
+          </div>
+        </div>
+      )}
+
+      <style jsx>{`
+        @keyframes expandToFull {
+          0% {
+            width: 320px;
+            height: 256px;
+            border-radius: 1rem;
+          }
+          100% {
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0;
+            left: 50%;
+            top: 50%;
+          }
+        }
+      `}</style>
       </section>
     </div>
         
     )}
-export default TeamSection;
+export default Interaction;

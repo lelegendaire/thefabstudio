@@ -55,6 +55,12 @@
   font-weight: normal;
   font-style: normal;
 }
+    @font-face {
+  font-family: "Druck";
+  src: url('/fonts/Druk-Medium-Trial.otf') format('truetype'); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
+}
 *{
  box-sizing: border-box;
 
@@ -69,8 +75,6 @@ body {
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
-
-
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -140,3 +144,17 @@ body {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Méthode 1: Webkit Custom Scrollbar (Chrome, Safari, Edge) */
+/* À ajouter dans ton globals.css ou fichier CSS principal */
+
+/* Cache la scrollbar native */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+
+body {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+}

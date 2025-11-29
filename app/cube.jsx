@@ -91,25 +91,20 @@ function InteractiveCube({ materialProps, setIsHovered }) {
       <MeshTransmissionMaterial {...materialProps} />
       
       {/* Sphère à l'intérieur du cube */}
-      <mesh ref={sphereRef} position={[0, 0, 0]}>
-        <sphereGeometry args={[0.8, 32, 32]} />
-        <MeshTransmissionMaterial {...materialProps} />
-      </mesh>
+     <lineSegments ref={sphereRef} position={[0, 0, 0]}>
+  <edgesGeometry args={[new THREE.SphereGeometry(0.8, 16, 16)]} />
+  <lineBasicMaterial 
+    color="white" 
+    transparent={true}
+    opacity={0.8}
+  />
+</lineSegments>
 
       {/* Anneau autour de la sphère */}
-      <mesh ref={ringRef} position={[0, 0, 0]}>
-        <torusGeometry args={[1.2, 0.1, 16, 100]} />
-        <MeshTransmissionMaterial 
-       
-          color="white"
-          transmission={0.95}
-          thickness={0.05}
-          roughness={0.0}
-          metalness={0.0}
-          emissive="white"
-          emissiveIntensity={0.3}
-        />
-      </mesh>
+    <lineSegments ref={ringRef} position={[0, 0, 0]}>
+  <edgesGeometry args={[new THREE.TorusGeometry(1.2, 0.1, 16, 100)]} />
+  <lineBasicMaterial color="white" transparent={true} opacity={0.8} />
+</lineSegments>
 
     </RoundedBox>
   );

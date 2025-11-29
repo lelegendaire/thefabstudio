@@ -30,13 +30,58 @@ const chartConfig = {
 const Contact = forwardRef((props, ref) => {
     const [selectedTab, setSelectedTab] = useState("perso");
      const [activeIndex, setActiveIndex] = useState(0)
-
+  const [formData, setFormData] = useState({
+    email: '',
+    object: '',
+    message: ''
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [status, setStatus] = useState('')
 
   const tabs = [
-    { key: "perso", label: "Perso" },
-    { key: "pro", label: "Pro" },
-    { key: "autre", label: "Autre" },
-  ];
+    { key: 'idea', label: 'Idea' },
+    { key: 'question', label: 'Question' },
+    { key: 'project', label: 'Project' },
+  ]
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setStatus('')
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          category: tabs.find(t => t.key === selectedTab)?.label
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setStatus('Email envoyé avec succès! ✅')
+        setFormData({ email: '', object: '', message: '' })
+        setSelectedTab('idea')
+      } else {
+        setStatus('Erreur lors de l\'envoi. ❌')
+      }
+    } catch (error) {
+      setStatus('Erreur lors de l\'envoi. ❌')
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
+  }
+  
   const slides = [
   {
     id: 0,
@@ -54,7 +99,7 @@ const Contact = forwardRef((props, ref) => {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dashed" />} />
             <Bar dataKey="visiteur" fill="#000" radius={20} />
-            <Bar dataKey="client" fill="#506dfd" radius={20} />
+            <Bar dataKey="client" fill="#b98d6b" radius={20} />
           </BarChart>
         </ChartContainer>
         <h1 className="font-[Satoshi] font-bold py-4">We have lot of client </h1>
@@ -64,9 +109,9 @@ const Contact = forwardRef((props, ref) => {
   {
     id: 1,
     content: ( 
-      <div className="w-full h-full flex items-center justify-center text-3xl flex-col">🌍 Map 3D ici
+      <div className="w-full h-full flex items-center justify-center  flex-col"><iframe className="w-[80%] h-[80%] object-cover rounded-xl" width="500" height="300" allow="geolocation" src="https://api.maptiler.com/maps/019a29ee-fc6c-7214-992b-1d1cfeb51a7d/?key=OVKTtEmd6oXqJWFoFhnn#11.1/48.85582/2.37502"></iframe>
       
-       <h1 className="font-[Satoshi] font-bold py-4">We have lot of client </h1>
+       <h1 className="font-[Satoshi] font-bold py-4">We are here </h1>
        </div>
     ),
   },
@@ -76,10 +121,9 @@ const Contact = forwardRef((props, ref) => {
       <div className="w-full h-full flex items-center justify-center flex-col">
         <img
           className="w-[80%] h-[80%] object-cover rounded-xl"
-          src="https://images.unsplash.com/photo-1753516373564-d41bdaa6d71a?w=600&auto=format&fit=crop&q=60"
+          src="/medias/Contact.jpg"
           alt="slide"
         />
-         <h1 className="font-[Satoshi] font-bold py-4">We have lot of client </h1>
       </div>
     ),
   },
@@ -110,16 +154,20 @@ const Contact = forwardRef((props, ref) => {
         <div className="pt-20 flex  h-screen items-center justify-center flex-col font-[Satoshi] font-bold">
         <h1 className="text-3xl">Formulaire</h1>
         
-        <div className="flex gap-1 items-start w-100 pl-5 pt-5"><p>To:</p> <p className="w-auto bg-[#506dfd87] pt-0.5 pb-0.5 pr-1.5 pl-1.5 rounded-md">thefabstudio2@gmail.com</p></div>
-        <div className="flex flex-col items-start justify-center w-100">
+        <div className="flex gap-1 items-start w-100 pl-5 pt-5"><p>To:</p> <p className="w-auto bg-[#b98d6b8c] pt-0.5 pb-0.5 pr-1.5 pl-1.5 rounded-md">thefabstudio2@gmail.com</p></div>
+        <form onSubmit={handleSubmit} className="flex flex-col items-start justify-center w-100">
         <div className="p-5 w-full">
             <h1>Email*</h1>
-            <input type="mail" placeholder="myemail@gmail.com" className=" w-full h-10 outline-0"></input>
+            <input type="mail" placeholder="myemail@gmail.com" className=" w-full h-10 outline-0" value={formData.email}
+            onChange={(e) => handleChange('email', e.target.value)}
+            required></input>
         </div>
         <div className="h-0.5 w-100 bg-gray-200 rounded-2xl "></div>
         <div className="pl-5 pt-5 w-full">
             <h1 className="pt-3 ">Object*</h1>
-            <input type="text" placeholder="An idea, a question, a project... ?" className="w-full outline-0 h-10"></input>
+            <input type="text" placeholder="An idea, a question, a project... ?" className="w-full outline-0 h-10" value={formData.object}
+            onChange={(e) => handleChange('object', e.target.value)}
+            required></input>
             <div className="flex gap-2 mt-4">
         {tabs.map((tab) => (
           <button
@@ -139,13 +187,21 @@ const Contact = forwardRef((props, ref) => {
         </div>
         <div className="p-5 w-full">
             <h1 className="pt-3 pb-3">Your message*</h1>
-            <textarea type="text" placeholder="Tell us all about it! Tell us about your idea, your desires or what you're looking for." className="h-40 w-full outline-0"></textarea>
-            <button className="bg-black text-white rounded-2xl px-3 py-2 flex items-center justify-center">Send</button>
+            <textarea type="text" placeholder="Tell us all about it! Tell us about your idea, your desires or what you're looking for." className="h-40 w-full outline-0" value={formData.message}
+            onChange={(e) => handleChange('message', e.target.value)}
+            required></textarea>
+            <button  type="submit"
+            disabled={isLoading} className="bg-black text-white rounded-2xl px-3 py-2 flex items-center justify-center">{isLoading ? 'Envoi en cours...' : 'Send'}</button>
+            {status && (
+            <p className={`mt-2 text-sm ${status.includes('✅') ? 'text-green-600' : 'text-red-600'}`}>
+              {status}
+            </p>
+          )}
         </div>
         <div className="h-0.5 w-100 bg-gray-200 rounded-2xl "></div>
 
 
-        </div>
+        </form>
        </div>
       </div>
         </section>

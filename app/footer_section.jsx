@@ -1,47 +1,74 @@
 "use client"
 import "./style_footer.css"
 import {ArrowRight} from "lucide-react"
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import { Switch  } from "./components/ui/switch"
 import Copy from "./components/Copy"
 
 export function DepthImage({ src, alt }) {
-  const [bgPos, setBgPos] = useState({ x: 50, y: 50 });
+  const [transform, setTransform] = useState({ rotateX: 0, rotateY: 0, translateX: 0, translateY: 0 });
+  const [bgPos, setBgPos] = useState({ x: 0, y: 0 });
+  const containerRef = useRef(null);
+
+  const range = 15; // Amplitude de la rotation en degrés
+
+  const calcValue = (a, b) => (a / b * range - range / 2);
 
   const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
+    if (!containerRef.current) return;
 
-    // Position relative 0 -> 1
+    const rect = containerRef.current.getBoundingClientRect();
+    
+    // Position relative dans le conteneur (0 -> 1)
     const relX = (e.clientX - rect.left) / rect.width;
     const relY = (e.clientY - rect.top) / rect.height;
 
-    // On crée un petit décalage (+/- 10%)
-    const offset = 10; 
-    const x = 50 + (relX - 0.5) * offset * 2;
-    const y = 50 + (relY - 0.5) * offset * 2;
+    // Calcul des valeurs de transformation
+    const rotateY = calcValue(relX, 1);
+    const rotateX = -calcValue(relY, 1); // Inversé pour un effet naturel
+    const translateX = -rotateY * 2; // Parallaxe proportionnelle
+    const translateY = -rotateX * 2;
 
-    setBgPos({ x, y });
+    // Background position pour l'effet de profondeur
+    const bgX = rotateY * 0.45;
+    const bgY = -rotateX * 0.45;
+
+    setTransform({ rotateX, rotateY, translateX, translateY });
+    setBgPos({ x: bgX, y: bgY });
+  };
+
+  const handleMouseLeave = () => {
+    setTransform({ rotateX: 0, rotateY: 0, translateX: 0, translateY: 0 });
+    setBgPos({ x: 0, y: 0 });
   };
 
   return (
     <motion.div
-      className="image_footer relative ml-2 mt-2 w-110 h-100 rounded-2xl overflow-hidden"
+      ref={containerRef}
+      className="image_footer relative ml-2 mt-2 w-110 h-100 rounded-2xl overflow-hidden "
       style={{
-        backgroundImage: `url(${src})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: `${bgPos.x}% ${bgPos.y}%`,
+        transformStyle: "preserve-3d",
+        perspective: "1000px",
       }}
       onMouseMove={handleMouseMove}
-      onMouseLeave={() => setBgPos({ x: 50, y: 50 })}
-      animate={{
-        scale: 1.05, // léger zoom pour accentuer la profondeur
-      }}
-      transition={{ type: "spring", stiffness: 100, damping: 15 }}
+    
     >
-      <span className="sr-only">{alt}</span>
+      <motion.div
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundImage: `url(${src})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: `calc(50% + ${bgPos.x}px) calc(50% + ${bgPos.y}px)`,
+          transform: `rotateX(${transform.rotateX}deg) rotateY(${transform.rotateY}deg) translateX(${transform.translateX}px) translateY(${transform.translateY}px) scale(1.25)`,
+        }}
+        transition={{ type: "spring", stiffness: 150, damping: 20 }}
+      >
+        <span className="sr-only">{alt}</span>
+      </motion.div>
     </motion.div>
   );
 }
@@ -69,7 +96,7 @@ export function AnimatedLink({ href, children, color,target_on }) {
 }
 export default function Footer(){
     return (
-        <section id="project_section" className="h-[120vh] bg-white pr-4 pl-4 pt-4 relative font-[Satoshi] font-bold">
+        <section id="project_section" className="h-[115vh] bg-white pr-4 pl-4 pt-4 relative font-[Satoshi] font-bold">
             <div className="flex justify-between items-center"><h1 className=" w-1/2 font-[Dirtyline] font-bold text-8xl text-black">The <br></br>Fab <br></br>Studi</h1><h1 className="font-[PlayfairDisplay] font-normal text-8xl italic absolute top-50 left-63">O</h1>
             <div className="droite  w-1/2">
                 <Copy><h1 className="text-6xl mb-8">We are a french studio who developp a site web for you</h1></Copy>
@@ -102,7 +129,7 @@ export default function Footer(){
                 <div className="flex justify-between items-start">
                 <div className="social w-1/4 list-none">
                     <h1 className="text-gray-400">Social</h1>
-                    <li className="mt-3 text-2xl"><AnimatedLink color="black" target_on="_blank "href="https://instagram.com">Instagram</AnimatedLink></li> </div>
+                    <li className="mt-3 text-2xl"><AnimatedLink color="black" target_on="_blank "href="https://www.instagram.com/thefabstudio2/">Instagram</AnimatedLink></li> </div>
                 <div className="page w-1/4 list-none">
                     <h1 className="text-gray-400">Page</h1>
                     <li className="mt-3 text-2xl"><AnimatedLink color="black" href="#home_section">Home</AnimatedLink></li>
@@ -121,9 +148,9 @@ export default function Footer(){
                </div>
                </div>
                 <div className="flex items-start justify-start relative flex-col w-1/2">
-                <DepthImage src={"https://images.unsplash.com/photo-1744740620138-e4b143ef29f9?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}/>
+                <DepthImage src={"/medias/Dune_footer.jpg"}/>
                 <div className="absolute"><h3 className="text-gray-400">Need help ?</h3>
-                <button className="flex items-center justify-center gap-1  w-auto bg-black text-white rounded-3xl p-3 mt-3">Take contact<ArrowRight /></button>
+                <button className="flex items-center justify-center gap-1  w-auto bg-black text-white rounded-3xl p-3 mt-3">Contact<ArrowRight /></button>
                 </div></div>
                 
             </div>

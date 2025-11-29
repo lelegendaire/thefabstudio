@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect,useRef, useState  } from "react";
-import Lenis from "@studio-freight/lenis";
+
 import gsap from "gsap";
 import * as THREE from 'three';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,15 +13,15 @@ const slides = [
     type: "Web developper",
     field: "Foundator",
     date: "2 years",
-    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=600&fit=crop" // Real image URL
+    image: "/medias/Fabien.jpg" // Real image URL
   },
   {
     title: "Noah CHEVALIER",
-    description: "nobody can be better than him to explain the raw informatique to people.",
+    description: "Nobody can be better than him to explain the raw informatique to people.",
     type: "Community manager",
     field: "CO-foundator",
     date: "2 years",
-    image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop" // Real image URL
+    image: "/medias/Noah.jpg" // Real image URL
   },
   {
     title: "Rafaël ASTRO",
@@ -29,7 +29,7 @@ const slides = [
     type: "Fronted and backend",
     field: "Employe",
     date: "4 years",
-    image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&h=600&fit=crop" // Real image URL
+    image: "/medias/Rafaël.jpg" // Real image URL
   }
 ];
 
@@ -122,174 +122,193 @@ const fragmentShader = `
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Team({contactRef }) {
-   const canvasRef = useRef(null);
-  const sliderRef = useRef(null);
-  const rendererRef = useRef(null);
-  const shaderMaterialRef = useRef(null);
-  const slideTexturesRef = useRef([]);
-  const animationRef = useRef(null);
-  
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+    const canvasRef = useRef(null);
+    const slideContentRef = useRef(null);
+    const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+    const [isTransitioning, setIsTransitioning] = useState(false);
+    
+    const rendererRef = useRef(null);
+    const shaderMaterialRef = useRef(null);
+    const slideTexturesRef = useRef([]);
+    const animationRef = useRef(null);
 
-  // Character animation component
- const AnimatedChar = ({ char, delay = 0, animate }) => {
-  const [displayChar, setDisplayChar] = useState(char);
-  const charRef = useRef(null);
-
-  useEffect(() => {
-    if (!charRef.current) return;
-
-    // Sortie (vers le haut)
-    charRef.current.style.transition = `transform 0.5s ease, opacity 0.5s ease`;
-    charRef.current.style.transform = "translateY(-100%)";
-    charRef.current.style.opacity = "0";
-
-    // Après la sortie → changer le char → entrée
-    const timeout = setTimeout(() => {
-      setDisplayChar(char);
-
-      if (!charRef.current) return;
-      charRef.current.style.transition = "none"; // reset instantané
-      charRef.current.style.transform = "translateY(100%)";
-      charRef.current.style.opacity = "0";
-
-      requestAnimationFrame(() => {
-        if (!charRef.current) return;
-        charRef.current.style.transition = `transform 0.5s ease ${delay}s, opacity 0.5s ease ${delay}s`;
-        charRef.current.style.transform = "translateY(0%)";
-        charRef.current.style.opacity = "1";
-      });
-    }, 500); // durée sortie
-
-    return () => clearTimeout(timeout);
-  }, [char, delay, animate]);
-
-  return (
-    <span 
-      ref={charRef}
-      className="inline-block will-change-transform"
-    >
-      {displayChar}
-    </span>
-  );
-};
-
-
-  // Line animation component
- const AnimatedLine = ({ text, delay = 0 }) => {
-  const [displayText, setDisplayText] = useState(text);
-  const lineRef = useRef(null);
-
-  useEffect(() => {
-    if (!lineRef.current) return;
-
-    // Animation sortie
-    lineRef.current.style.transition = `transform 0.6s ease, opacity 0.6s ease`;
-    lineRef.current.style.transform = "translateY(-100%)";
-    lineRef.current.style.opacity = "0";
-
-    // Après la sortie → changer le texte → entrée
-    const timeout = setTimeout(() => {
-      setDisplayText(text);
-
-      if (!lineRef.current) return;
-      lineRef.current.style.transition = "none"; // reset instant
-      lineRef.current.style.transform = "translateY(100%)";
-      lineRef.current.style.opacity = "0";
-
-      requestAnimationFrame(() => {
-        if (!lineRef.current) return;
-        lineRef.current.style.transition = `transform 0.6s ease ${delay}s, opacity 0.6s ease ${delay}s`;
-        lineRef.current.style.transform = "translateY(0%)";
-        lineRef.current.style.opacity = "1";
-      });
-    }, 600); // durée sortie
-
-    return () => clearTimeout(timeout);
-  }, [text, delay]);
-
-  return (
-    <div className="overflow-hidden">
-      <span ref={lineRef} className="inline-block will-change-transform">
-        {displayText}
-      </span>
-    </div>
-  );
-};
+ 
 
   const initializeRenderer = async () => {
-    if (!canvasRef.current) return;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-    rendererRef.current = new THREE.WebGLRenderer({
-      canvas: canvasRef.current,
-      antialias: true,
-    });
-    rendererRef.current.setSize(window.innerWidth, window.innerHeight * 1.5);
-
-    shaderMaterialRef.current = new THREE.ShaderMaterial({
-      uniforms: {
-        uTexture1: { value: null },
-        uTexture2: { value: null },
-        uProgress: { value: 0.0 },
-        uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight * 1.5) },
-        uTexture1Size: { value: new THREE.Vector2(1, 1) },
-        uTexture2Size: { value: new THREE.Vector2(1, 1) },
-      },
-      vertexShader,
-      fragmentShader
-    });
-
-    scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shaderMaterialRef.current));
-
-    const loader = new THREE.TextureLoader();
-    for (const slide of slides) {
-      const texture = await new Promise((resolve) =>
-        loader.load(slide.image, resolve)
-      );
-
-      texture.minFilter = texture.magFilter = THREE.LinearFilter;
-      texture.userData = {
-        size: new THREE.Vector2(texture.image.width, texture.image.height),
+      if (!canvasRef.current) return;
+    // Éviter de charger plusieurs fois
+    if (slideTexturesRef.current.length > 0) {
+      console.log('Textures already loaded, skipping...');
+      return;
+    }
+      const scene = new THREE.Scene();
+      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  
+      rendererRef.current = new THREE.WebGLRenderer({
+        canvas: canvasRef.current,
+        antialias: true,
+      });
+      rendererRef.current.setSize(window.innerWidth, window.innerHeight * 1.5);
+  
+      shaderMaterialRef.current = new THREE.ShaderMaterial({
+        uniforms: {
+          uTexture1: { value: null },
+          uTexture2: { value: null },
+          uProgress: { value: 0.0 },
+          uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight * 1.5) },
+          uTexture1Size: { value: new THREE.Vector2(1, 1) },
+          uTexture2Size: { value: new THREE.Vector2(1, 1) },
+        },
+        vertexShader,
+        fragmentShader
+      });
+  
+      scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shaderMaterialRef.current));
+  
+      const loader = new THREE.TextureLoader();
+       const loadedTextures = []; // Utiliser un tableau local
+      for (const slide of slides) {
+        
+        const texture = await new Promise((resolve) =>
+          loader.load(slide.image, resolve)
+        );
+  
+        texture.minFilter = texture.magFilter = THREE.LinearFilter;
+        texture.userData = {
+          size: new THREE.Vector2(texture.image.width, texture.image.height),
+        };
+        loadedTextures.push(texture);
+      }
+        slideTexturesRef.current = loadedTextures;
+console.log('Loaded textures:', slideTexturesRef.current.length);
+    slideTexturesRef.current.forEach((tex, i) => {
+      console.log(`Texture ${i}:`, slides[i].title, tex.uuid);
+    });      if (slideTexturesRef.current.length >= 2) {
+        shaderMaterialRef.current.uniforms.uTexture1.value = slideTexturesRef.current[0];
+        shaderMaterialRef.current.uniforms.uTexture2.value = slideTexturesRef.current[1];
+        shaderMaterialRef.current.uniforms.uTexture1Size.value = slideTexturesRef.current[0].userData.size;
+        shaderMaterialRef.current.uniforms.uTexture2Size.value = slideTexturesRef.current[1].userData.size;
+      }
+  
+      const render = () => {
+        animationRef.current = requestAnimationFrame(render);
+        rendererRef.current.render(scene, camera);
       };
-      slideTexturesRef.current.push(texture);
-    }
-
-    if (slideTexturesRef.current.length >= 2) {
-      shaderMaterialRef.current.uniforms.uTexture1.value = slideTexturesRef.current[0];
-      shaderMaterialRef.current.uniforms.uTexture2.value = slideTexturesRef.current[1];
-      shaderMaterialRef.current.uniforms.uTexture1Size.value = slideTexturesRef.current[0].userData.size;
-      shaderMaterialRef.current.uniforms.uTexture2Size.value = slideTexturesRef.current[1].userData.size;
-    }
-
-    const render = () => {
-      animationRef.current = requestAnimationFrame(render);
-      rendererRef.current.render(scene, camera);
+      render();
     };
-    render();
+useEffect(() => {
+  let timeout;
+
+  const startAutoSlide = () => {
+    timeout = setTimeout(() => {
+      // On lance l’auto-slide SEULEMENT si rien n'est en transition
+      if (!isTransitioning) {
+        handleSlideChange();
+      }
+      startAutoSlide(); // relance la boucle
+    }, 5000);
   };
 
-   const handleSlideChange = () => {
-    if (isTransitioning || !shaderMaterialRef.current) return;
+  startAutoSlide();
+
+  return () => clearTimeout(timeout);
+}, [isTransitioning, currentSlideIndex]);
+
+useEffect(() => {
+     initializeRenderer();
+ 
+     const handleResize = () => {
+       if (rendererRef.current && shaderMaterialRef.current) {
+         rendererRef.current.setSize(window.innerWidth, window.innerHeight*1.5);
+         shaderMaterialRef.current.uniforms.uResolution.value.set(window.innerWidth, window.innerHeight*1.5);
+       }
+     };
+     window.addEventListener('resize', handleResize);
+ 
+     return () => {
+       window.removeEventListener('resize', handleResize);
+       if (animationRef.current) {
+         cancelAnimationFrame(animationRef.current);
+       }
+       if (rendererRef.current) {
+         rendererRef.current.dispose();
+       }
+     };
+   }, []);
+
+const animateTextTransition = (nextIndex) => {
+    if (!slideContentRef.current) return;
+
+    const chars = slideContentRef.current.querySelectorAll('.char span');
+    const lines = slideContentRef.current.querySelectorAll('.line span');
+    // Timeline GSAP pour animer la sortie du texte
+    const timeline = gsap.timeline();
+
+    timeline.to(Array.from(chars), {
+      y: '-100%',
+      duration: 0.6,
+      stagger: 0.025,
+      ease: 'power2.inOut',
+    }).to(
+      Array.from(lines),
+      {
+        y: '-100%',
+        duration: 0.6,
+        stagger: 0.025,
+        ease: 'power2.inOut',
+      },
+      0.1
+    );
+
+    // Changer le contenu du texte et réinitialiser les positions
+    setTimeout(() => {
+      setCurrentSlideIndex(nextIndex);
+      setTimeout(() => {
+        if (slideContentRef.current) {
+          const newChars = slideContentRef.current.querySelectorAll('.char span');
+          const newLines = slideContentRef.current.querySelectorAll('.line span');
+          
+          gsap.set(Array.from(newChars), { y: '100%' });
+          gsap.set(Array.from(newLines), { y: '100%' });
+          
+          gsap.to(Array.from(newChars), {
+            y: '0%',
+            duration: 0.6,
+            stagger: 0.025,
+            ease: 'power2.inOut',
+          });
+          
+          gsap.to(Array.from(newLines), {
+            y: '0%',
+            duration: 0.5,
+            stagger: 0.1,
+            ease: 'power2.inOut',
+            delay: 0.3,
+          });
+        }
+      }, 50);
+    }, 500);
+  };
+
+ const handleSlideChange = () => {
+    if (isTransitioning || !shaderMaterialRef.current || slideTexturesRef.current.length === 0) return;
     
     setIsTransitioning(true);
     const nextIndex = (currentSlideIndex + 1) % slides.length;
 
-    // Check if textures exist and have userData before accessing
-  
-      
-      shaderMaterialRef.current.uniforms.uTexture1.value = slideTexturesRef.current[currentSlideIndex];
-      shaderMaterialRef.current.uniforms.uTexture2.value = slideTexturesRef.current[nextIndex];
-      shaderMaterialRef.current.uniforms.uTexture1Size.value = slideTexturesRef.current[currentSlideIndex].userData.size;
-      shaderMaterialRef.current.uniforms.uTexture2Size.value = slideTexturesRef.current[nextIndex].userData.size;
-    
 
-    // Simple progress animation
+    
+    // Mettre à jour les textures du shader AVANT d'animer
+    shaderMaterialRef.current.uniforms.uTexture1.value = slideTexturesRef.current[currentSlideIndex];
+    shaderMaterialRef.current.uniforms.uTexture2.value = slideTexturesRef.current[nextIndex];
+    shaderMaterialRef.current.uniforms.uTexture1Size.value = slideTexturesRef.current[currentSlideIndex].userData.size;
+    shaderMaterialRef.current.uniforms.uTexture2Size.value = slideTexturesRef.current[nextIndex].userData.size;
+    // Animer le texte
+    animateTextTransition(nextIndex);
+
+    // Animation du shader avec requestAnimationFrame
     let progress = 0;
-    const duration = 2500; // 2.5 seconds
+    const duration = 2500;
     const startTime = Date.now();
 
     const animate = () => {
@@ -308,62 +327,45 @@ export default function Team({contactRef }) {
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
-        // Reset and update for next transition
-        if (shaderMaterialRef.current && slideTexturesRef.current[nextIndex]?.userData) {
-          shaderMaterialRef.current.uniforms.uProgress.value = 0;
-          shaderMaterialRef.current.uniforms.uTexture1.value = slideTexturesRef.current[nextIndex];
-          shaderMaterialRef.current.uniforms.uTexture1Size.value = slideTexturesRef.current[nextIndex].userData.size;
-        }
-        
-        setCurrentSlideIndex(nextIndex);
-        setIsTransitioning(false);
+         
+       if (shaderMaterialRef.current) {
+
+  // Reset progress
+  shaderMaterialRef.current.uniforms.uProgress.value = 0;
+
+  // La texture finale DOIT être celle du nextIndex
+  shaderMaterialRef.current.uniforms.uTexture1.value =
+    slideTexturesRef.current[nextIndex];
+  shaderMaterialRef.current.uniforms.uTexture1Size.value =
+    slideTexturesRef.current[nextIndex].userData.size;
+
+  // IMPORTANT : recharger uTexture2 avec la future image suivante
+  const nextNextIndex = (nextIndex + 1) % slides.length;
+  shaderMaterialRef.current.uniforms.uTexture2.value =
+    slideTexturesRef.current[nextNextIndex];
+  shaderMaterialRef.current.uniforms.uTexture2Size.value =
+    slideTexturesRef.current[nextNextIndex].userData.size;
+}
+
+setCurrentSlideIndex(nextIndex);
+setIsTransitioning(false);
+
       }
     };
 
     animate();
   };
 
-  const handleResize = () => {
-    if (rendererRef.current && shaderMaterialRef.current) {
-      rendererRef.current.setSize(window.innerWidth, window.innerHeight * 1.5);
-      shaderMaterialRef.current.uniforms.uResolution.value.set(window.innerWidth, window.innerHeight * 1.5);
-    }
-  };
-
-  useEffect(() => {
-    initializeRenderer();
-    
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      if (rendererRef.current) {
-        rendererRef.current.dispose();
-      }
-    };
-  }, []);
-
+ 
   const currentSlide = slides[currentSlideIndex];
-  const titleChars = currentSlide.title.split('');
+  
      const teamRef = useRef(null); // ✅ ton ref simple ici
   useEffect(() => {
     if (!contactRef?.current || typeof window === "undefined" || window.innerWidth < 900) return;
 
    const section = contactRef.current;
- const lenis = new Lenis();
 
-  // NE PAS activer Lenis tout de suite
-  // On attend 2 secondes avant de démarrer Lenis et ScrollTrigger.update
-  const timeoutId = setTimeout(() => {
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0);
-  }, 6000);
+
    
 
     const breakpoints = [
@@ -466,86 +468,51 @@ export default function Team({contactRef }) {
     return () => {
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("mousemove", handleMouseMove);
-       clearTimeout(timeoutId);
     };
   },[contactRef]);
 
   return (
-    <section id="team_section" ref={teamRef} className="h-[150vh] bg-black relative" onClick={handleSlideChange}>
-            
+    <section id="team_section" ref={teamRef} className="h-[150vh] bg-black relative" >
+            <div 
+      className="slider"
+      onClick={handleSlideChange}
+    >
             <canvas
         ref={canvasRef}
         className="block w-full h-full"
       />
       
-      <div className="absolute top-0 left-0 w-full h-full select-none z-10 text-white" >
+      <div className="absolute top-0 left-0 w-full h-full select-none z-10 text-white" ref={slideContentRef} >
         <h1 className="font-[Satoshi] font-bold text-8xl text-white m-4">Our team</h1>
-        <div className="relative top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center">
-          <h1 className="uppercase text-[7vw] font-bold leading-none flex justify-center gap-1">
-            {titleChars.map((char, index) => (
-              <AnimatedChar 
-                key={`${currentSlideIndex}-${index}`}
-                char={char === ' ' ? '\u00A0' : char}
-                delay={index * 0.025}
-              />
+        <div className="relative top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center" >
+          <h1 className="uppercase text-[7vw] font-bold leading-none flex justify-center whitespace-pre-line font-[Satoshi] gap-[1em]">
+            {currentSlide.title.split(' ').map((word, i) => (
+              <div className="word flex" key={i}>
+                {word.split('').map((char, j) => (
+                  <div className="char overflow-hidden block" key={j}>
+                    <span className="relative inline-block will-change-transform">{char}</span>
+                  </div>
+                ))}
+              </div>
             ))}
           </h1>
         </div>
         
-        <div className="relative top-[30%] left-[60%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden">
-          <AnimatedLine 
-            key={`desc-${currentSlideIndex}`}
-            text={currentSlide.description} 
-            delay={0.2}
-          />
-          
-          <div className="space-y-1">
-            <AnimatedLine 
-              key={`type-${currentSlideIndex}`}
-              text={`Work. ${currentSlide.type}`}
-              delay={0.3}
-            />
-            <AnimatedLine 
-              key={`field-${currentSlideIndex}`}
-              text={`Status. ${currentSlide.field}`}
-              delay={0.35}
-            />
-            <AnimatedLine 
-              key={`date-${currentSlideIndex}`}
-              text={`Experience. ${currentSlide.date}`}
-              delay={0.4}
-            />
+        <div className="relative top-[30%] left-[70%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden font-[Satoshi] ">
+          <div className="line overflow-hidden">
+            <span className="relative inline-block will-change-transform">{currentSlide.description}</span>
           </div>
+        
         </div>
-
-        {/* Mobile layout */}
-        <div className="lg:hidden relative bottom-[5%] left-1/2 transform -translate-x-1/2 w-3/4 text-center flex flex-col gap-8">
-          <AnimatedLine 
-            key={`mobile-desc-${currentSlideIndex}`}
-            text={currentSlide.description} 
-            delay={0.2}
-          />
-          
-          <div className="space-y-1 uppercase text-sm">
-            <AnimatedLine 
-              key={`mobile-type-${currentSlideIndex}`}
-              text={`Type. ${currentSlide.type}`}
-              delay={0.3}
-            />
-            <AnimatedLine 
-              key={`mobile-field-${currentSlideIndex}`}
-              text={`Field. ${currentSlide.field}`}
-              delay={0.35}
-            />
-            <AnimatedLine 
-              key={`mobile-date-${currentSlideIndex}`}
-              text={`Date. ${currentSlide.date}`}
-              delay={0.4}
-            />
+  <div className="space-y-1 relative top-[30%] left-[30%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden font-[Satoshi]">
+             <div className="line overflow-hidden"><span className="relative inline-block will-change-transform">Type. {currentSlide.type}</span></div>
+            <div className="line overflow-hidden"><span className="relative inline-block will-change-transform">Field. {currentSlide.field}</span></div>
+            <div className="line overflow-hidden"><span className="relative inline-block will-change-transform">Date. {currentSlide.date}</span></div>
           </div>
-        </div>
+        
+       
       </div>
-    
+    </div>
         </section>
   );
 }
