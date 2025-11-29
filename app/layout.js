@@ -1,7 +1,7 @@
 // layout.js
 import './globals.css'
 import { LenisProvider } from './context/LenisContext'
-import CustomScrollbar from './components/CustomScrollbar'
+import CustomScrollbar from './components/CustomScrollBar'
 
 export const metadata = {
   title: "The Fab Studio",
