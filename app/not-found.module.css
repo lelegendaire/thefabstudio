@@ -1,6 +1,6 @@
 .container {
   height: 100vh;
-  background: black;
+  background: url("/medias/bg_final.jpg") center / cover no-repeat;
   color: white;
   display: flex;
   flex-direction: column;
