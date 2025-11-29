@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { gsap } from 'gsap';
 import {X} from "lucide-react"
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import CopyBloc from "./components/Copy_bloc";
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -28,86 +29,86 @@ export default function Projects() {
         { 
             id: 1, 
             title: "Projet de développement web", 
-            description: "Application web moderne avec React et Three.js",
-            technologies: ["React", "Three.js", "GSAP"],
-            year: "2024"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 2, 
             title: "Application mobile", 
-            description: "App mobile cross-platform innovante",
-            technologies: ["React Native", "TypeScript", "Firebase"],
-            year: "2024"
+              title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 3, 
             title: "Site e-commerce", 
-            description: "Plateforme e-commerce complète et performante",
-            technologies: ["Next.js", "Stripe", "PostgreSQL"],
-            year: "2023"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 4, 
             title: "Dashboard analytics", 
-            description: "Tableau de bord avec visualisations de données",
-            technologies: ["Vue.js", "D3.js", "Node.js"],
-            year: "2023"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 5, 
             title: "Plateforme SaaS", 
-            description: "Solution SaaS B2B complète",
-            technologies: ["Angular", "MongoDB", "AWS"],
-            year: "2024"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 6, 
             title: "Jeu vidéo 3D", 
-            description: "Jeu immersif en 3D avec Three.js",
-            technologies: ["Three.js", "WebGL", "Physics"],
-            year: "2023"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 7, 
             title: "Portfolio interactif", 
-            description: "Site portfolio avec animations créatives",
-            technologies: ["GSAP", "ScrollTrigger", "CSS"],
-            year: "2024"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 8, 
             title: "CRM sur mesure", 
-            description: "Système de gestion client personnalisé",
-            technologies: ["React", "GraphQL", "MySQL"],
-            year: "2023"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 9, 
             title: "Application IA", 
-            description: "App utilisant l'intelligence artificielle",
-            technologies: ["Python", "TensorFlow", "FastAPI"],
-            year: "2024"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 10, 
             title: "Site vitrine", 
-            description: "Site moderne pour agence créative",
-            technologies: ["Webflow", "JavaScript", "CSS"],
-            year: "2023"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 11, 
             title: "Marketplace", 
-            description: "Plateforme de mise en relation",
-            technologies: ["Next.js", "Prisma", "Tailwind"],
-            year: "2024"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         },
         { 
             id: 12, 
             title: "App de streaming", 
-            description: "Application de streaming vidéo",
-            technologies: ["React", "WebRTC", "Socket.io"],
-            year: "2023"
+            title_description: ["Application web moderne avec React et Three.js","Esse consequat","Nulla incididunt"],
+            description: ["Occaecat amet in ut dolore minim consectetur.","Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.","Ipsum proident consectetur dolor proident pariatur."],
+            link: "#"
         }
     ]
     const projectImages = [
@@ -235,7 +236,7 @@ export default function Projects() {
                 originalRotation: { x: cube.rotation.x, y: cube.rotation.y, z: cube.rotation.z },
                 targetRotation: { x: cube.rotation.x, y: cube.rotation.y, z: cube.rotation.z },
                 isSelected: false,
-                projectIndex: i
+                projectIndex: i,
             }
             
             cubesGroup.add(cube)
@@ -399,10 +400,10 @@ export default function Projects() {
             opacity: 0,
             duration: 0.6,
             ease: "power2.inOut",
-            onComplete: () => {
-              projetDivRef.current.style.display = "none"
-            }
-          })
+            onComplete: () => setSelectedProject(null)  // <-- fermeture finale
+            
+          });
+          return;
                 } else {
                     // Désélectionner l'ancien cube si existant
                     if (selectedCube.current) {
@@ -417,21 +418,18 @@ export default function Projects() {
                     selectedCube.current = clickedCube
                     clickedCube.userData.isSelected = true
                    
+                    const index = clickedCube.userData.projectIndex;
+                    setSelectedProject({image: projectImages[index],data: projectsData[index]})
+                    gsap.fromTo(projetDivRef.current,
+                    { y: "100%", opacity: 0 },
+                    { y: "0%", opacity: 1, duration: 0.8, ease: "power3.out" }
+                    )
+    
 
-                    projetDivRef.current.style.display = "flex"
-          gsap.fromTo(projetDivRef.current,
-            { y: "100%", opacity: 0 },
-            { y: "0%", opacity: 1, duration: 0.8, ease: "power3.out" }
-          )
-         // Nettoyer les images précédentes
-const oldImages = projetDivRef.current.querySelectorAll('.hero-project-img')
-oldImages.forEach(img => img.remove())
 
-// Créer la nouvelle image
-const image_hero_project = document.createElement("img")
-image_hero_project.src = projectImages[clickedCube.userData.projectIndex]
-image_hero_project.className = "hero-project-img object-cover w-full h-full" // Pour pouvoir la retrouver
-projetDivRef.current.querySelector(".project_div").querySelector(".hero_project_div").appendChild(image_hero_project)
+
+
+
         
                     // Calculer la position du cube dans l'espace monde (en tenant compte de la rotation du groupe)
                     const worldPosition = new THREE.Vector3()
@@ -598,21 +596,67 @@ projetDivRef.current.querySelector(".project_div").querySelector(".hero_project_
                     className="w-full h-full cursor-grab active:cursor-grabbing   overflow-hidden"
                 />
             </div>
-            <div  ref={projetDivRef} className="Projet overflow-y-scroll bg-white hidden w-[98%] rounded-4xl  top-4 left-4 shadow-2xl fixed h-[96%]  text-white  items-start pt-4 justify-center"      style={{ transform: 'translateY(100%)', opacity: 0 }}>
-                <button 
-                    onClick={handleDeselectCube}
-                    className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors cursor-pointer z-50 p-2 hover:bg-[#b98d6b85] rounded-2xl"
-                    aria-label="Fermer"
-                >
-                    <X size={32} />
-                </button>
-                <div className='project_div h-auto relative flex justify-start items-start flex-col gap-[3rem]' >  
-                <div className='hero_project_div relative h-[90vh] w-[95vw]  rounded-2xl overflow-hidden ' style={{ boxShadow: "rgba(185, 141, 107, 0.5) 1px 10px 20px, rgba(185, 141, 107, 0.2) 0px 0px 0px 10px" }}>
-                    </div>   
-                <div className='description relative h-[90vh] w-[95vw] bg-amber-50 rounded-2xl overflow-hidden '>
-                    </div>   
-                </div>
-            </div>  
+           {selectedProject && (
+  <div 
+    ref={projetDivRef}
+    className="Projet overflow-y-scroll bg-white w-[98%] rounded-4xl top-4 left-4 shadow-2xl fixed h-[96%] text-white flex items-start pt-4 justify-center font-[Satoshi]"
+    style={{ transform: 'translateY(100%)', opacity: 0 }}
+  >
+      <button 
+        onClick={handleDeselectCube}
+        className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors cursor-pointer z-50 p-2 hover:bg-[#b98d6b85] rounded-2xl"
+      >
+        <X size={32} />
+      </button>
+
+      <div className='project_div h-auto relative flex justify-start items-start flex-col gap-[3rem]'>
+
+        {/* HERO IMAGE */}
+        <div className='hero_project_div relative h-[90vh] w-[95vw] rounded-2xl overflow-hidden'
+             style={{ boxShadow: "rgba(185, 141, 107, 0.5) 1px 10px 20px, rgba(185, 141, 107, 0.2) 0px 0px 0px 10px" }}>
+            <img 
+              src={selectedProject.image}
+              className="w-full h-full object-cover"
+            />
+        </div>
+
+        {/* DESCRIPTION */}
+        <div className='description relative h-[90vh] w-[95vw] bg-amber-50 rounded-2xl overflow-hidden text-black p-10'>
+
+          <h1 className="text-5xl font-bold text-center mb-10">{selectedProject.data.title}</h1>
+
+          <div className="flex flex-wrap gap-6 justify-center">
+
+            {selectedProject.data.title_description.map((item, i) => (
+              <div key={i} className="w-[300px] flex flex-col gap-2">
+
+                
+                  <h2 className="text-xl font-semibold">{item}</h2>
+                
+
+                
+                  <p className="text-base text-black opacity-80 mt-2">
+                    {selectedProject.data.description[i]}
+                  </p>
+                
+
+              </div>
+            ))}
+
+          </div>
+
+          <div className="flex justify-center">
+            <button className="mt-10 px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 transition">
+              Voir le projet
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+  </div>
+)}
+
             <style jsx>{`
     .Projet::-webkit-scrollbar {
       width: 8px !important;
@@ -624,6 +668,26 @@ projetDivRef.current.querySelector(".project_div").querySelector(".hero_project_
       background: #9ca3af;
       border-radius: 4px;
     }
+    .block-line-wrapper{
+      margin: 0 auto;
+      position: relative;
+      width: max-content;
+      display: block;
+    }
+    .block-line{
+      position: relative;
+      display: block
+    }
+    .block-revealer{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 101%;
+      height: 101%;
+      pointer-events: none;
+      will-change: transform;
+      z-index: 1;
+      }
   `}</style>
         </section>
     )

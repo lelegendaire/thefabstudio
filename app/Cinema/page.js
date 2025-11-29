@@ -264,7 +264,7 @@ console.log(titles)
                     className="absolute inset-0"
                     style={{
                         transform: transformStyle,
-                        backgroundImage: "url('/medias/blade_runner.webp')",
+                        backgroundImage: "url('/medias/Blade_runner.webp')",
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
