@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Interdire les dossiers techniques ou inutiles
+Disallow: /api/
+Disallow: /private/
+Disallow: /server/
+Disallow: /temp/
+Disallow: /preview/
+
+# Indiquer ton sitemap
+Sitemap: https://tondomaine.com/sitemap.xml
+
