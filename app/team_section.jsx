@@ -5,6 +5,7 @@ import { useEffect,useRef, useState  } from "react";
 import gsap from "gsap";
 import * as THREE from 'three';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useAssets } from '../context/AssetContext'
 // Mock slides data - replace with your actual slides
 const slides = [
    {
@@ -131,71 +132,124 @@ export default function Team({contactRef }) {
     const shaderMaterialRef = useRef(null);
     const slideTexturesRef = useRef([]);
     const animationRef = useRef(null);
+const isInitializedRef = useRef(false)
+const isVisibleRef = useRef(true);
+const isAnimatingRef = useRef(false);
+     const teamRef = useRef(null); // ✅ ton ref simple ici
 
- 
 
-  const initializeRenderer = async () => {
-      if (!canvasRef.current) return;
-    // Éviter de charger plusieurs fois
-    if (slideTexturesRef.current.length > 0) {
-      console.log('Textures already loaded, skipping...');
-      return;
-    }
-      const scene = new THREE.Scene();
-      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-  
-      rendererRef.current = new THREE.WebGLRenderer({
-        canvas: canvasRef.current,
-        antialias: true,
-      });
-      rendererRef.current.setSize(window.innerWidth, window.innerHeight * 1.5);
-  
-      shaderMaterialRef.current = new THREE.ShaderMaterial({
-        uniforms: {
-          uTexture1: { value: null },
-          uTexture2: { value: null },
-          uProgress: { value: 0.0 },
-          uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight * 1.5) },
-          uTexture1Size: { value: new THREE.Vector2(1, 1) },
-          uTexture2Size: { value: new THREE.Vector2(1, 1) },
-        },
-        vertexShader,
-        fragmentShader
-      });
-  
-      scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shaderMaterialRef.current));
-  
+ // ✅ Récupère les assets du contexte
+  const assets = useAssets();
+
+  // Initialisation Three.js
+useEffect(() => {
+  if (!assets || isInitializedRef.current) return;
+  if (!canvasRef.current) return;
+
+  isInitializedRef.current = true;
+
+  let rafId;
+  let observer;
+
+  async function init() {
+    // TEXTURES
+    let textures = assets.teamTextures;
+    if (!textures) {
       const loader = new THREE.TextureLoader();
-       const loadedTextures = []; // Utiliser un tableau local
-      for (const slide of slides) {
-        
-        const texture = await new Promise((resolve) =>
-          loader.load(slide.image, resolve)
-        );
+      textures = await Promise.all(
+        slides.map(
+          (s) =>
+            new Promise((resolve) =>
+              loader.load(s.image, (tex) => {
+                tex.colorSpace = THREE.SRGBColorSpace;
+                tex.minFilter = tex.magFilter = THREE.LinearFilter;
+                tex.userData = {
+                  size: new THREE.Vector2(tex.image.width, tex.image.height),
+                };
+                resolve(tex);
+              })
+            )
+        )
+      );
+    }
+
+    slideTexturesRef.current = textures;
+
+    // THREE SETUP
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvasRef.current,
+      antialias: true,
+    });
+    rendererRef.current = renderer;
+
+    const isMobile = window.innerWidth < 768;
+    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+
+    const height = isMobile
+      ? window.innerHeight
+      : window.innerHeight * 1.5;
+
+    renderer.setSize(window.innerWidth, height);
+
+    shaderMaterialRef.current = new THREE.ShaderMaterial({
+      uniforms: {
+        uTexture1: { value: textures[0] },
+        uTexture2: { value: textures[1] },
+        uProgress: { value: 0 },
+        uResolution: {
+          value: new THREE.Vector2(window.innerWidth, height),
+        },
+        uTexture1Size: { value: textures[0].userData.size },
+        uTexture2Size: { value: textures[1].userData.size },
+      },
+      vertexShader,
+      fragmentShader,
+    });
+
+    scene.add(
+      new THREE.Mesh(
+        new THREE.PlaneGeometry(2, 2),
+        shaderMaterialRef.current
+      )
+    );
+
+    // VISIBILITY CONTROL
+    observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(teamRef.current);
+
+    // RENDER LOOP
+const render = () => {
+   rafId = requestAnimationFrame(render);
+
+
+  renderer.render(scene, camera);
+};
+render();
+
+
+
+    render();
+  }
+
+  init();
+
+  return () => {
+    cancelAnimationFrame(rafId);
+    observer?.disconnect();
+    rendererRef.current?.dispose();
+  };
+}, [assets]);
+
   
-        texture.minFilter = texture.magFilter = THREE.LinearFilter;
-        texture.userData = {
-          size: new THREE.Vector2(texture.image.width, texture.image.height),
-        };
-        loadedTextures.push(texture);
-      }
-        slideTexturesRef.current = loadedTextures;
-console.log('Loaded textures:', slideTexturesRef.current.length);
-    slideTexturesRef.current.forEach((tex, i) => {
-      console.log(`Texture ${i}:`, slides[i].title, tex.uuid);
-    });      if (slideTexturesRef.current.length >= 2) {
-        shaderMaterialRef.current.uniforms.uTexture1.value = slideTexturesRef.current[0];
-        shaderMaterialRef.current.uniforms.uTexture2.value = slideTexturesRef.current[1];
-        shaderMaterialRef.current.uniforms.uTexture1Size.value = slideTexturesRef.current[0].userData.size;
-        shaderMaterialRef.current.uniforms.uTexture2Size.value = slideTexturesRef.current[1].userData.size;
-      }
-  
-      const render = () => {
-        animationRef.current = requestAnimationFrame(render);
-        rendererRef.current.render(scene, camera);
-      };
-      render();
-    };
 useEffect(() => {
   let timeout;
 
@@ -215,7 +269,6 @@ useEffect(() => {
 }, [isTransitioning, currentSlideIndex]);
 
 useEffect(() => {
-     initializeRenderer();
  
      const handleResize = () => {
        if (rendererRef.current && shaderMaterialRef.current) {
@@ -292,7 +345,7 @@ const animateTextTransition = (nextIndex) => {
 
  const handleSlideChange = () => {
     if (isTransitioning || !shaderMaterialRef.current || slideTexturesRef.current.length === 0) return;
-    
+    isAnimatingRef.current = true;
     setIsTransitioning(true);
     const nextIndex = (currentSlideIndex + 1) % slides.length;
 
@@ -349,17 +402,16 @@ const animateTextTransition = (nextIndex) => {
 
 setCurrentSlideIndex(nextIndex);
 setIsTransitioning(false);
-
+isAnimatingRef.current = false; // ✅ VERY IMPORTANT
       }
     };
 
-    animate();
+  requestAnimationFrame(animate);
   };
 
  
   const currentSlide = slides[currentSlideIndex];
   
-     const teamRef = useRef(null); // ✅ ton ref simple ici
   useEffect(() => {
     if (!contactRef?.current || typeof window === "undefined") return;
 
@@ -477,7 +529,7 @@ setIsTransitioning(false);
       <div className="absolute top-0 left-0 min-w-full h-full select-none z-10 text-white" ref={slideContentRef} >
         <h1 className="font-[Satoshi] font-bold text-8xl text-white m-4">Our team</h1>
         <div className="relative top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center" >
-          <h1 className="uppercase text-[12vw] sm:text-[7vw] font-bold leading-none flex justify-center whitespace-pre-line font-[Satoshi] gap-[1em]">
+          <h1 className="uppercase text-[12vw] sm:text-[7vw] font-bold leading-none flex justify-center whitespace-pre-line font-[Satoshi] gap-[1em] flex-col sm:flex-row">
             {currentSlide.title.split(' ').map((word, i) => (
               <div className="word flex" key={i}>
                 {word.split('').map((char, j) => (

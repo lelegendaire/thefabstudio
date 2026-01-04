@@ -7,7 +7,7 @@ export default function Hero({ isLoaded }) {
   return (
     <>
     
-      <CubeOverlay isLoaded={ isLoaded } />
+      <CubeOverlay isLoaded />
       
 <section className="hero text-[180px] h-screen flex items-center justify-center z-10 pointer-events-none">
   <div  className="btn_home absolute top-0 right-0 p-5 pointer-events-auto"><Header/></div>

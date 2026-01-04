@@ -4,16 +4,19 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useScroll, ScrollControls } from '@react-three/drei'
 import { OrbitControls, MeshTransmissionMaterial, RoundedBox, Environment, useTexture, Text, Text3D   } from '@react-three/drei';
 import { useControls } from 'leva';
+import { useAssets } from '../context/AssetContext'
+
 import { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import styles from "./style.module.css"
 
-function BackgroundPlane({ textureUrl }) {
-  const texture = useTexture(textureUrl);
+
+function BackgroundPlane() {
+  const { bgTexture } = useAssets()
   return (
     <mesh position={[0, 0, -2]} scale={[10, 10, 1]}>
       <planeGeometry args={[2.5, 1.5]} />
-      <meshBasicMaterial map={texture} />
+      <meshBasicMaterial map={bgTexture} />
     </mesh>
   );
 }
@@ -247,7 +250,8 @@ const gap = isPhone ? [0.63,0.03] : isTablet ? [0.43,0.5] : [0.23,0.05]
 }
 
 
-export default function CubeOverlay({ isLoaded, scrollProgress }) {
+export default function CubeOverlay({ isLoaded}) {
+    if (!isLoaded) return null
 
   
   const materialProps = {
@@ -260,7 +264,8 @@ export default function CubeOverlay({ isLoaded, scrollProgress }) {
   distorsion: 0.1,
   distortionScale: 0.3,
   temporalDistortion: 0.2,
-  resolution: 1024,
+  resolution: 512,
+  simples: 8,
   backside: true,
 };
 const [isHovered, setIsHovered] = useState(false);
@@ -279,18 +284,12 @@ useEffect(() => {
 
   return (
     <div className="absolute top-0 left-0 w-screen h-full pointer-events-none ">
-<Canvas gl={{ alpha: true, premultipliedAlpha: false }} style={{ background: 'transparent' }}>
+<Canvas gl={{ alpha: true, premultipliedAlpha: false }}  dpr={[1, 1.5]} style={{ background: 'transparent' }}>
   
 {/* Fond dupliqué dans la scène WebGL */}
- <BackgroundPlane textureUrl="/medias/bg_final.jpg" />     
+ <BackgroundPlane />    
   <InteractiveCube materialProps={materialProps} setIsHovered={setIsHovered} />
-   <Logo3D isLoaded={isLoaded} />
-
-
-      
-       
-        
-       
+   <Logo3D isLoaded />
 
         {/* <OrbitControls enableZoom={false} /> */}
       </Canvas>

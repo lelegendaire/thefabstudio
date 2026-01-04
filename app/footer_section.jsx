@@ -96,13 +96,13 @@ export function AnimatedLink({ href, children, color,target_on }) {
 }
 export default function Footer(){
     return (
-        <section id="project_section" className="sm:h-[115vh] h-screen bg-white pr-4 pl-4 pt-4 relative font-[Satoshi] font-bold">
+        <section id="project_section" className="sm:h-[115vh] h-full bg-white pr-4 pl-4 pt-4 relative font-[Satoshi]  w-full">
             <div className="flex justify-between items-center"><h1 className=" w-1/2 font-[Dirtyline] font-bold sm:text-8xl text-3xl text-black">The <br></br>Fab <br></br>Studi</h1><h1 className="font-[PlayfairDisplay] font-normal sm:text-8xl text-3xl italic absolute sm:top-52 sm:left-62 top-21.5 left-22.5">O</h1>
-            <div className="droite w-1/2 ">
+            <div className="droite w-1/2 flex flex-col">
                 <Copy><h1 className="sm:text-6xl text-xs mb-8 w-full">We are a french studio who developp a site web for you</h1></Copy>
-                <a href="mailto:thefabstudio2@gmail.com" className="underline sm:text-3xl text-base">thefabstudio2@gmail.com</a>
+                <a href="mailto:thefabstudio2@gmail.com" className="underline sm:text-3xl w-full">thefabstudio2@gmail.com</a>
             </div>
-            </div> <div className="flex items-center justify-between w-screen gap-[1rem] text-black text-[20px] h-[20px]">
+            </div> <div className="flex items-center justify-between gap-[1rem] text-black text-[20px] h-[20px] w-full">
                    
                      <motion.div
           className="star h-[20px] w-[20px] relative mt-auto"

@@ -1,75 +1,61 @@
 'use client'
-import Image from "next/image";
-
 import { useEffect, useState, Children, cloneElement } from 'react'
-import { motion, useAnimation  } from 'framer-motion'
+import { motion, useAnimation } from 'framer-motion'
 import styles from './loader.module.css'
+import { useAssets } from '../../context/AssetContext'
 
 export default function Loader({ children }) {
- const [maskRemoved, setMaskRemoved] = useState(false)
- const controls = useAnimation()
+  const [maskRemoved, setMaskRemoved] = useState(false)
+  const controls = useAnimation()
+  const assets = useAssets() // récupère bgTexture et fonts préchargées depuis LenisProvider
 
   useEffect(() => {
-    async function sequence() {
-      // ✅ Remet la page en haut au refresh
-    window.scrollTo(0, 0);
+    async function animate() {
+      // 🔹 Bloque scroll pendant animation
+      document.body.style.overflow = 'hidden'
 
-    // ✅ Reset le mask
-    setMaskRemoved(false);
-      // ✅ Bloque le scroll
-    document.body.style.overflow = "hidden";
+      // 🎬 Animation du mask/logo
       await controls.start({
-        maskSize: "80%",
-        maskPosition: "center 50%",
-        transition: { duration: 3, ease: 'easeInOut' },
+        maskSize: '80%',
+        maskPosition: 'center 50%',
+        transition: { duration: 2.2, ease: 'easeInOut' },
       })
-      await new Promise(resolve => setTimeout(resolve, 100))
       await controls.start({
-        maskSize: "2500%",
-        transition: { duration: 1.5, ease: 'easeInOut' },
+        maskSize: '2500%',
+        transition: { duration: 1.2, ease: 'easeInOut' },
       })
-     setTimeout(() => {
-        setMaskRemoved(true)
-         // ✅ Réactive le scroll
-      document.body.style.overflow = "";
-      }, 1500)
+
+      setMaskRemoved(true)
+      document.body.style.overflow = ''
     }
 
-    sequence()
+    animate()
   }, [controls])
-const maskStyle = !maskRemoved
-    ? {
-        WebkitMaskImage: 'url(/logo.svg)',
-        WebkitMaskRepeat: 'no-repeat',
-        WebkitMaskPosition: 'center',
-        WebkitMaskSize: '30%',
-        maskImage: 'url(/logo.svg)',
-        maskRepeat: 'no-repeat',
-        maskPosition: 'center',
-        maskSize: '30%',
-        overflow: 'hidden',
-      }
-    : {}
-
 
   return (
-    <>
-   <motion.div 
-  className={styles.stickyMask}
-  style={maskStyle}
-  id="home"
-  initial={{
-    maskSize: "30%",
-    maskPosition: "center -300%",
-    scale: 1
-  }}
-  animate={controls}
->
-  {Children.map(children, (child) =>
-        cloneElement(child, { isLoaded: maskRemoved })
+    <motion.div
+      className={styles.stickyMask}
+      style={
+        !maskRemoved
+          ? {
+              WebkitMaskImage: 'url(/logo.svg)',
+              WebkitMaskRepeat: 'no-repeat',
+              WebkitMaskPosition: 'center',
+              WebkitMaskSize: '30%',
+              maskImage: 'url(/logo.svg)',
+              maskRepeat: 'no-repeat',
+              maskPosition: 'center',
+              maskSize: '30%',
+              overflow: 'hidden',
+            }
+          : {}
+      }
+      initial={{ maskSize: '30%', maskPosition: 'center -300%' }}
+      animate={controls}
+    >
+      {Children.map(children, (child) =>
+        cloneElement(child, { isLoaded: maskRemoved, assets })
       )}
-</motion.div>
-
-    </>
+    </motion.div>
   )
 }

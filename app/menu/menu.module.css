@@ -22,7 +22,7 @@
     top: 50%;
     transform: translateX(-146%) translateY(-50%);
     width: 100%;
-.el{
+    .el{
             border-top: 1px solid white;
             display: flex;
             justify-content: center;
@@ -103,4 +103,19 @@
     to {
         transform: translate3d(-100%, 0, 0);
     }
+}
+@media screen and (max-width: 768px) {
+  .el a, 
+  .el p {
+    font-size: 7vw;
+    line-height: 8vw;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .el a, 
+  .el p {
+    font-size: 9vw;
+    line-height: 10vw;
+  }
 }

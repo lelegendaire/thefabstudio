@@ -23,6 +23,7 @@ export default function Projects() {
     const selectedCube = useRef(null)
    // État pour stocker les données du projet sélectionné
     const [selectedProject, setSelectedProject] = useState(null)
+  
    
     // Données des projets
     const projectsData = [
@@ -128,22 +129,26 @@ export default function Projects() {
 
   
 
+    // Détection mobile
+   
+   
+
+    // Initialisation Three.js - se re-déclenche quand isMobile change
     useEffect(() => {
         if (!canvasRef.current) return
-
+        const isMobile = window.innerWidth < 768
+        console.log(isMobile ? 2 : 1)
         // Scene
         const scene = new THREE.Scene()
-       
         sceneRef.current = scene
-
         // Camera
         const camera = new THREE.PerspectiveCamera(
-            75,
+            isMobile ? 85 : 75,
             canvasRef.current.clientWidth / canvasRef.current.clientHeight,
             0.1,
             1000
         )
-        camera.position.z = 8
+        camera.position.z = isMobile ? 10 : 8
         camera.position.y = 0
         cameraRef.current = camera
 
@@ -154,8 +159,9 @@ export default function Projects() {
             alpha: true,
             
         })
-        renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientHeight)
-        renderer.setPixelRatio(window.devicePixelRatio)
+       
+        renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientHeight*(isMobile ? 2 : 1))
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         renderer.setClearColor(0x000000, 0); 
         rendererRef.current = renderer
 
@@ -167,8 +173,12 @@ export default function Projects() {
         const textureLoader = new THREE.TextureLoader()
         // Créer un cercle de cubes
         const numCubes = 12
-        const radius = 4
-        const geometry = new THREE.BoxGeometry(0.5, 3, 2)
+        const radius = isMobile ? 5 : 4 // Cercle plus grand sur mobile
+         const geometry = new THREE.BoxGeometry(
+            isMobile ? 0.4 : 0.5,
+            isMobile ? 2.5 : 3,
+            isMobile ? 1.5 : 2
+        )
         
         const colors = [
             0x000000, 0xf1f1f1, 0x751213, 0x3b82f6,
@@ -182,8 +192,8 @@ export default function Projects() {
              // Charger la texture pour ce projet
                          const texture = textureLoader.load(projectImages[i], (tex) => {
                 // Une fois l'image chargée, calculer le ratio pour le mode "cover"
-                const faceWidth = 2  // profondeur de la box
-                const faceHeight = 3 // hauteur de la box
+                 const faceWidth = isMobile ? 1.5 : 2
+                const faceHeight = isMobile ? 2.5 : 3
                 const faceAspect = faceWidth / faceHeight // 2/3 = 0.666
                 
                 const imgAspect = tex.image.width / tex.image.height
@@ -242,7 +252,7 @@ export default function Projects() {
             cubesGroup.add(cube)
         }
 
-        scene.fog = new THREE.Fog(0xf0f0f0, 3, 13)
+        scene.fog = new THREE.Fog(0xf0f0f0, 3, isMobile ? 15 : 13)
 
 
         // Lights
@@ -316,14 +326,14 @@ export default function Projects() {
   ScrollTrigger.create({
     trigger: ".static_div",
     start: "top top",
-    end: `+=${window.innerHeight * 7}px`,
+    end: `+=${window.innerHeight * (isMobile ? 5 : 7)}px`,
     pin: true,
     pinSpacing: true,
     scrub: 1,
     onUpdate: (self) => {
       if (cubesGroupRef.current && !selectedCube.current && !isDragging.current) {
         const numCubes = cubesGroupRef.current.children.length;
-      const rotation = self.progress * Math.PI * 4;
+      const rotation = self.progress * Math.PI * (isMobile ? 3 : 4);
       cubesGroupRef.current.rotation.y = rotation;
 
       const totalRotation = Math.PI * 2;
@@ -373,9 +383,11 @@ export default function Projects() {
   })
         // Mouse events pour drag
         const handleMouseDown = (e) => {
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY
             const rect = canvasRef.current.getBoundingClientRect()
-            mouse.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
-            mouse.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
+            mouse.current.x = ((clientX - rect.left) / rect.width) * 2 - 1
+            mouse.current.y = -((clientY - rect.top) / rect.height) * 2 + 1
             
             // Vérifier si on clique sur un cube
             raycaster.current.setFromCamera(mouse.current, camera)
@@ -424,13 +436,7 @@ export default function Projects() {
                     { y: "100%", opacity: 0 },
                     { y: "0%", opacity: 1, duration: 0.8, ease: "power3.out" }
                     )
-    
 
-
-
-
-
-        
                     // Calculer la position du cube dans l'espace monde (en tenant compte de la rotation du groupe)
                     const worldPosition = new THREE.Vector3()
                     clickedCube.getWorldPosition(worldPosition)
@@ -443,32 +449,34 @@ export default function Projects() {
                     // Position à gauche face à nous, en coordonnées monde
                     clickedCube.userData.targetPosition = { x: 0, y: 0, z: 5 }
                     clickedCube.userData.targetRotation = { x: 0, y: Math.PI / 2, z: 0 }
-                    clickedCube.userData.targetScale = 1.5
+                    clickedCube.userData.targetScale = isMobile ? 1.3 : 1.5
                     clickedCube.userData.useWorldCoordinates = true
                    
                     
                 }
             } else {
                 isDragging.current = true
-                previousMousePosition.current = { x: e.clientX, y: e.clientY }
+                previousMousePosition.current = { x: clientX, y: clientY }
                 canvasRef.current.style.cursor = 'grabbing'
             }
         }
 
         const handleMouseMove = (e) => {
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY
             // Calculer la position de la souris en coordonnées normalisées
             const rect = canvasRef.current.getBoundingClientRect()
-            mouse.current.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
-            mouse.current.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
+            mouse.current.x = ((clientX - rect.left) / rect.width) * 2 - 1
+            mouse.current.y = -((clientY - rect.top) / rect.height) * 2 + 1
 
             if (isDragging.current && cubesGroupRef.current) {
-                const deltaX = e.clientX - previousMousePosition.current.x
-                const deltaY = e.clientY - previousMousePosition.current.y
+                const deltaX = clientX - previousMousePosition.current.x
+                const deltaY = clientY - previousMousePosition.current.y
 
                 cubesGroupRef.current.rotation.y += deltaX * 0.01
                 cubesGroupRef.current.rotation.x += deltaY * 0.01
 
-                previousMousePosition.current = { x: e.clientX, y: e.clientY }
+                previousMousePosition.current = { x: clientX, y: clientY }
             } else if (!selectedCube.current) {
                 // Raycasting pour détecter le hover
                 raycaster.current.setFromCamera(mouse.current, camera)
@@ -516,12 +524,15 @@ export default function Projects() {
 
         const handleMouseUp = () => {
             isDragging.current = false
-            canvasRef.current.style.cursor = 'grab'
+            if (!isMobile) canvasRef.current.style.cursor = 'grab'
         }
 
         canvasRef.current.addEventListener('mousedown', handleMouseDown)
+        canvasRef.current.addEventListener('touchstart', handleMouseDown, { passive: true })
         window.addEventListener('mousemove', handleMouseMove)
+        window.addEventListener('touchmove', handleMouseMove, { passive: true })
         window.addEventListener('mouseup', handleMouseUp)
+        window.addEventListener('touchend', handleMouseUp)
 
         // Responsive
         const handleResize = () => {
@@ -539,8 +550,11 @@ export default function Projects() {
         return () => {
             window.removeEventListener('resize', handleResize)
             canvasRef.current?.removeEventListener('mousedown', handleMouseDown)
+            canvasRef.current?.removeEventListener('touchstart', handleMouseDown)
             window.removeEventListener('mousemove', handleMouseMove)
+            window.removeEventListener('touchmove', handleMouseMove)
             window.removeEventListener('mouseup', handleMouseUp)
+            window.removeEventListener('touchend', handleMouseUp)
             geometry.dispose()
           
             cubesGroup.children.forEach(cube => {
@@ -550,6 +564,7 @@ export default function Projects() {
             renderer.dispose()
         }
     }, [])
+     
  // Fonction pour désélectionner le cube
     const handleDeselectCube = () => {
         if (selectedCube.current) {
@@ -573,27 +588,28 @@ export default function Projects() {
         }
     }
     return (
-        <section id="project_section" className="h-full bg-white p-4 flex flex-col ">
-            <h1 className="font-bold text-8xl text-black mb-8 font-[Satoshi] mr-auto">Our projects</h1>
+        <section id="project_section" className="h-full bg-white p-2 sm:p-4 flex flex-col ">
+            <h1 className="font-bold text-4xl sm:text-6xl lg:text-8xl text-black mb-4 sm:mb-8 font-[Satoshi] mr-auto">Our projects</h1>
             <div className="static_div flex-1 relative rounded-lg shadow-2xl" style={{backgroundColor: "#f0f0f0", backgroundImage: "radial-gradient(rgba(0, 0, 0, 0.05) 2px, transparent 0)", backgroundSize: "30px 30px", backgroundPosition: "-5px -5px",}}>
                <div 
   id="project-counter-container" 
-  className="absolute top-6 left-1/2 transform -translate-x-1/2 flex items-center gap-4 z-20"
+  className="absolute top-4 sm:top-6 left-1/2 transform -translate-x-1/2 flex items-center gap-2 sm:gap-4 z-20"
 >
-  <span className="w-8 h-[1px] bg-black"></span>
+  <span className="w-4 sm:w-8 h-[1px] bg-black"></span>
 
-  <div className="overflow-hidden h-[40px] flex items-center justify-center">
-    <div id="project-counter" className="text-black text-3xl font-bold font-[Satoshi] flex flex-col">
+  <div className="overflow-hidden h-[30px] sm:h-[40px] flex items-center justify-center">
+    <div id="project-counter" className="text-black text-2xl sm:text-3xl  font-[Satoshi] flex flex-col">
       <span>01</span>
     </div>
   </div>
 
-  <span className="w-8 h-[1px] bg-black"></span>
+  <span className="w-4 sm:w-8 h-[1px] bg-black"></span>
 </div>
 
                 <canvas 
                     ref={canvasRef} 
-                    className="w-full h-full cursor-grab active:cursor-grabbing   overflow-hidden"
+                    className="w-full h-full cursor-grab active:cursor-grabbing overflow-hidden"
+                    
                 />
             </div>
            {selectedProject && (
@@ -606,7 +622,7 @@ export default function Projects() {
         onClick={handleDeselectCube}
         className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors cursor-pointer z-50 p-2 hover:bg-[#b98d6b85] rounded-2xl"
       >
-        <X size={32} />
+         <X size={ 32} />
       </button>
 
       <div className='project_div h-auto relative flex justify-start items-center flex-col sm:gap-[3rem] gap-5'>

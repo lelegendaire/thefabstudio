@@ -1,44 +1,71 @@
 'use client'
 import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import Lenis from '@studio-freight/lenis'
+import { preloadTexture, preloadFont } from '../../utils/preloadAssets'
+import { AssetContext } from '../../context/AssetContext'
 
 const LenisContext = createContext(null)
 export const useLenis = () => useContext(LenisContext)
 
 export const LenisProvider = ({ children }) => {
   const [lenis, setLenis] = useState(null)
+  const [assets, setAssets] = useState(null)
   const lenisRef = useRef(null)
 
   useEffect(() => {
-    // 🔹 Création du Lenis
-    const instance = new Lenis({
-      duration: 1.2,
-      easing: (t) => 1 - Math.pow(1 - t, 3),
-      smoothWheel: true,
-      touchMultiplier: 2,
-    })
+    async function init() {
+      // 🔹 Précharge assets
+      const [bgTexture] = await Promise.all([
+        preloadTexture('/medias/bg_final.jpg'),
+        preloadFont('/fonts/Dirtyline.ttf'),
+        preloadFont('/fonts/PlayfairDisplay.ttf'),
+      ])
+      // 🔹 Précharge textures Team
+      const teamTextures = await Promise.all([
+        preloadTexture('/medias/Fabien.jpg'),
+        preloadTexture('/medias/Noah.jpg'),
+        preloadTexture('/medias/Rafaël.jpg'),
+      ])
+      setAssets({
+        bgTexture,
+        teamTextures
+      })
 
-    const raf = (time) => {
-      instance.raf(time)
+      // 🔹 Init Lenis
+      const instance = new Lenis({
+        duration: 1.2,
+        easing: (t) => 1 - Math.pow(1 - t, 3),
+        smoothWheel: true,
+        touchMultiplier: 2,
+      })
+      const raf = (time) => {
+        instance.raf(time)
+        requestAnimationFrame(raf)
+      }
       requestAnimationFrame(raf)
+
+      lenisRef.current = instance
+      setLenis(instance)
     }
-    requestAnimationFrame(raf)
 
-    lenisRef.current = instance
-    setLenis(instance) // ✅ Une fois prêt, on met à jour le state
-
-    return () => instance.destroy()
+    init()
+    return () => lenisRef.current?.destroy()
   }, [])
 
-  // 🔹 Tant que Lenis n'est pas prêt, on ne rend rien
-  if (!lenis) {
+  if (!lenis || !assets) {
+    // 🔹 Tant que Lenis n'est pas prêt OU que les assets ne sont pas chargés
     return (
       <div className="fixed inset-0 flex items-center justify-center text-sm text-neutral-500">
-        Initialisation du scroll...
+        Préchargement…
       </div>
     )
   }
 
-  // 🔹 Quand il est prêt, on rend les enfants
-  return <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>
+  return (
+    <LenisContext.Provider value={lenis}>
+      <AssetContext.Provider value={assets}>
+        {children}
+      </AssetContext.Provider>
+    </LenisContext.Provider>
+  )
 }

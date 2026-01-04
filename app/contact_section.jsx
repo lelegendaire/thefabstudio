@@ -151,7 +151,7 @@ const Contact = forwardRef((props, ref) => {
         ))}
       </div>
         </div>
-        <div className="pt-20 flex w-full h-screen items-center justify-center flex-col font-[Satoshi] font-bold">
+        <div className="pt-20 flex w-full h-screen items-center justify-center flex-col font-[Satoshi] ">
         <h1 className="text-3xl">Formulaire</h1>
         
         <div className="flex gap-1 items-start sm:w-100 w-full pl-5 pt-5"><p>To:</p> <p className="w-auto bg-[#b98d6b8c] pt-0.5 pb-0.5 pr-1.5 pl-1.5 rounded-md">thefabstudio2@gmail.com</p></div>

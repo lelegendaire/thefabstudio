@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { useLenis } from '.././context/LenisContext'
+import Image from 'next/image'
 import setupMarqueeAnimation from './marquee.js'
 const CinemaPage = () => {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -38,7 +39,7 @@ console.log(titles)
     });
   });
   const cardImgWraper = introCard.querySelector(".card-img");
-  const cardImg = introCard.querySelector(".card-img img");
+  const cardImg = introCard.querySelector(".card-img .image_film");
   gsap.set(cardImgWraper, { scale: 0.5, borderRadius: "400px" });
   gsap.set(cardImg, { scale: 1.5 });
 
@@ -131,7 +132,7 @@ console.log(titles)
   });
  cards.forEach((card, index) => {
     if (index > 0) {
-      const cardImg = card.querySelector(".card-img img");
+      const cardImg = card.querySelector(".card-img .image_film");
       const imgContainer = card.querySelector(".card-img");
       ScrollTrigger.create({
         trigger: card,
@@ -246,7 +247,7 @@ console.log(titles)
                         <li className='no-underline hover:text-black transition-all'><a href='#'>History</a></li>
                     </div>
                     <h1 className="text-9xl font-bold text-white font-[boska]">BEAUTY OF CINEMA</h1>
-                    <img className="absolute" src="/medias/Runner.webp" alt="Runner" />
+                    <Image className="absolute" src="/medias/Runner.webp" alt="Runner" />
                 </section>
             </div>
         );
@@ -290,8 +291,8 @@ console.log(titles)
                     </div>
                     <h1 className="text-9xl font-bold z-10 text-white font-[boska]">BEAUTY OF CINEMA</h1>
                     
-                    <img 
-                        className="absolute z-20" 
+                    <Image 
+                        className="image_runner absolute z-20" 
                         style={{
                             transform: transformStyle,
                         }} 
@@ -337,7 +338,7 @@ console.log(titles)
                                 <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-[500] tracking-[-0.1rem] leading-[1.25]'>2001 : a space odyssey</h1></div>
                                 <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-[400] leading-[1.25]'>a new perspection</p></div>
                             </div>
-                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/space_odyssey.jpg"}></img></div>
+                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><Image className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/space_odyssey.jpg"}></Image></div>
                         </div>
                     </div>
                     <div className='card mt-[50vh] relative w-full h-[100svh] p-[1.5em]'>
@@ -349,7 +350,7 @@ console.log(titles)
                                 <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-[500] tracking-[-0.1rem] leading-[1.25]'>Interstellar</h1></div>
                                 <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-[400] leading-[1.25]'>a new perspection</p></div>
                             </div>
-                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.jpg"}></img></div>
+                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><Image className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.jpg"}></Image></div>
                         </div>
                     </div>
                     <div className='card relative w-full h-[100svh] p-[1.5em]'>
@@ -361,7 +362,7 @@ console.log(titles)
                                 <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-[500] tracking-[-0.1rem] leading-[1.25]'>Interstellar</h1></div>
                                 <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-[400] leading-[1.25]'>a new perspection</p></div>
                             </div>
-                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.jpg"}></img></div>
+                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><Image className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.jpg"}></Image></div>
                         </div>
                     </div>
                  </div>

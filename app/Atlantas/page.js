@@ -2,6 +2,7 @@
 import "./style.css"
 import { useEffect, useState } from 'react'
 import {House, ShoppingBag, Gem} from "lucide-react"
+import Image from 'next/image'
 export default function Projects_1(){
    
     
@@ -75,7 +76,7 @@ export default function Projects_1(){
           height: `${dimensions.height}px`,
           clipPath: `path("${pathData}")`,
           margin: '5px'
-        }}><img src="/medias/Parfum.jpg" ></img>
+        }}><Image src="/medias/Parfum.jpg" ></Image>
           
          
         </div>

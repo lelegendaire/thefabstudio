@@ -148,7 +148,76 @@ const Interaction = () => {
     const outroHeader = sectionRef.current.querySelector(".spotlight-outro-header h1");
 
     if (!images.length || !coverImg || !introHeader || !outroHeader) return;
+     const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    const isMobile = screenWidth < 1000;
+const isVerySmallScreen = screenWidth < 600;
 
+    // 🔥 VERSION SIMPLIFIÉE POUR PETITS ÉCRANS (sans scroll pin)
+    if (isVerySmallScreen) {
+      
+      // Animation simple au scroll sans pin
+      gsap.set(images, { opacity: 0, scale: 0.5 });
+      gsap.set(coverImg, { opacity: 0, scale: 0.8 });
+      gsap.set(introHeader, { opacity: 1 });
+      gsap.set(outroHeader, { opacity: 0 });
+
+      // Intro text fade out
+      ScrollTrigger.create({
+        trigger: sectionRef.current.querySelector('.spotlight'),
+        start: "top center",
+        end: "center center",
+        scrub: 1,
+        onUpdate: (self) => {
+          gsap.set(introHeader, { opacity: 1 - self.progress });
+        }
+      });
+
+      // Images apparition simple
+      ScrollTrigger.create({
+        trigger: sectionRef.current.querySelector('.spotlight'),
+        start: "top center",
+        end: "center top",
+        scrub: 1,
+        onUpdate: (self) => {
+          images.forEach((img, index) => {
+            const delay = index * 0.05;
+            const progress = Math.max(0, Math.min(1, (self.progress - delay) * 2));
+            gsap.set(img, { 
+              opacity: progress,
+              scale: 0.5 + (progress * 0.5)
+            });
+          });
+        }
+      });
+
+      // Cover image apparition
+      ScrollTrigger.create({
+        trigger: sectionRef.current.querySelector('.spotlight'),
+        start: "center top",
+        end: "bottom center",
+        scrub: 1,
+        onUpdate: (self) => {
+          gsap.set(coverImg, { 
+            opacity: self.progress,
+            scale: 0.8 + (self.progress * 0.2)
+          });
+        }
+      });
+
+      // Outro text fade in
+      ScrollTrigger.create({
+        trigger: sectionRef.current.querySelector('.spotlight'),
+        start: "center top",
+        end: "bottom center",
+        scrub: 1,
+        onUpdate: (self) => {
+          gsap.set(outroHeader, { opacity: self.progress });
+        }
+      });
+
+      return; // Exit early - pas besoin du reste
+    }
     let introHeaderSplit = null;
     let outroHeaderSplit = null;
 
@@ -200,9 +269,7 @@ const Interaction = () => {
       {x: 1.7, y: -1.0 }, {x: -1.3, y: -1.2 }, {x: 0.7, y: 2.0 }, {x: 1.25, y: -0.2 },
     ];
 
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-    const isMobile = screenWidth < 1000;
+   
     const scatterMultiplier = isMobile ? 2.5 : 0.5;
 
     // 🔥 FIX PRINCIPAL: Réduire drastiquement la durée du scroll sur mobile
@@ -381,7 +448,7 @@ const Interaction = () => {
       <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-white sm:h-[120vh] h-full bg-black p-4 font-[Satoshi]">
        
         <Copy><h1 className="font-bold sm:text-6xl text-4xl sm:p-10 p-3">Still not convinced</h1></Copy>
-        <Copy><h3 className="font-bold sm:text-3xl text-2xl sm:p-5 p-1 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h3></Copy>
+        <Copy><h3 className=" sm:text-3xl text-2xl sm:p-5 p-1 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h3></Copy>
         <div className="flex items-center justify-center gap-3 flex-col sm:flex-row">
            {works.map((work, index) => (
               <div 
@@ -396,7 +463,7 @@ const Interaction = () => {
                     alt={work.title}
                   />
                 </div>
-                <h1 className="text-xl font-semibold">{work.title}</h1>
+                <h1 className="text-xl ">{work.title}</h1>
                 <button 
                   className="bg-white w-60 rounded-full py-3 px-6 text-black font-medium active:scale-95 transition-transform duration-300 hover:bg-gray-100"
                 >
