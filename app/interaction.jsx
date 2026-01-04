@@ -88,8 +88,9 @@ const Interaction = () => {
      
       router.push(url);
     }, 800);
-  };useEffect(() => {
-  if (!lenis || animationInitialized.current) return;
+  };
+  useEffect(() => {
+  if (!lenis || animationInitialized.current ) return;
 
   let timeoutId;
   let started = false;
@@ -112,7 +113,7 @@ const Interaction = () => {
 
     // ⚠️ Attendre un peu pour laisser Lenis stabiliser le layout
     timeoutId = setTimeout(() => {
-      ScrollTrigger.refresh();
+      ScrollTrigger.update();
     }, 600);
   };
 
@@ -204,6 +205,8 @@ const Interaction = () => {
     const isMobile = screenWidth < 1000;
     const scatterMultiplier = isMobile ? 2.5 : 0.5;
 
+    // 🔥 FIX PRINCIPAL: Réduire drastiquement la durée du scroll sur mobile
+    const scrollDuration = isMobile ? 8 : 15; // 8x viewport au lieu de 15x
     const startPositions = Array.from(images).map(() => ({
       x: 0, y: 0, z: -1000, scale: 0,
     }));
@@ -226,12 +229,19 @@ const Interaction = () => {
     ScrollTrigger.create({
       trigger: sectionRef.current.querySelector('.spotlight'),
       start: "top top",
-      end: `+=${window.innerHeight * 15}px`,
+      end: `+=${window.innerHeight * scrollDuration}px`,
       pin: true,
       pinSpacing: true,
       scrub: 1,
       anticipatePin: 1, // Important pour Lenis
       invalidateOnRefresh: true, // recalcul après resize
+      // 🔥 Empêcher le refresh sur mobile
+      onRefresh: (self) => {
+        // Forcer la recalculation sans recharger
+        self.scroll(self.scroll());
+      },
+      // 🔥 Désactiver le refresh automatique sur mobile
+      refreshPriority: isMobile ? -1 : 0,
       onUpdate: (self) => {
         const progress = self.progress;
         images.forEach((img, index) => {
@@ -368,11 +378,11 @@ const Interaction = () => {
       </section>
 
       {/* Section Outro */}
-      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-white h-[120vh] bg-black p-4 font-[Satoshi]">
+      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-white sm:h-[120vh] h-full bg-black p-4 font-[Satoshi]">
        
-        <Copy><h1 className="font-bold text-6xl p-10">Still not convinced</h1></Copy>
-        <Copy><h3 className="font-bold text-3xl p-5 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h3></Copy>
-        <div className="flex items-center justify-center gap-3">
+        <Copy><h1 className="font-bold sm:text-6xl text-4xl sm:p-10 p-3">Still not convinced</h1></Copy>
+        <Copy><h3 className="font-bold sm:text-3xl text-2xl sm:p-5 p-1 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h3></Copy>
+        <div className="flex items-center justify-center gap-3 flex-col sm:flex-row">
            {works.map((work, index) => (
               <div 
                 key={index} 

@@ -129,11 +129,11 @@ const Contact = forwardRef((props, ref) => {
   },
 ]
     return (
-        <section id="contact_section" ref={ref} className="h-[150vh] bg-white p-4 rounded-4xl relative" style={{ transform: "translateY(-105%) scale(0.05)" }}>
-            <h1 className="font-[Satoshi] font-bold text-8xl text-black">Let’s work together</h1>
-            <h1 className="font-[Satoshi] font-bold text-3xl"> — even just to explore.</h1>
-            <div className="flex items-center justify-between">
-             <div className="flex w-1/2 h-[80vh] flex-col items-center justify-center"> 
+        <section id="contact_section" ref={ref} className="h-[150vh] w-full bg-white p-4 rounded-4xl relative" style={{ transform: "translateY(-105%) scale(0.05)" }}>
+            <h1 className="font-[Satoshi] font-bold sm:text-8xl text-3xl text-black">Let’s work together</h1>
+            <h1 className="font-[Satoshi] font-bold sm:text-3xl text-sm"> — even just to explore.</h1>
+            <div className="flex items-center justify-between flex-col sm:flex-row">
+             <div className="flex sm:w-1/2 w-full sm:h-[80vh] h-[40vh] flex-col items-center justify-center"> 
              <div className="slider w-full h-full flex items-center justify-center">
                {slides[activeIndex].content}
         
@@ -151,18 +151,18 @@ const Contact = forwardRef((props, ref) => {
         ))}
       </div>
         </div>
-        <div className="pt-20 flex  h-screen items-center justify-center flex-col font-[Satoshi] font-bold">
+        <div className="pt-20 flex w-full h-screen items-center justify-center flex-col font-[Satoshi] font-bold">
         <h1 className="text-3xl">Formulaire</h1>
         
-        <div className="flex gap-1 items-start w-100 pl-5 pt-5"><p>To:</p> <p className="w-auto bg-[#b98d6b8c] pt-0.5 pb-0.5 pr-1.5 pl-1.5 rounded-md">thefabstudio2@gmail.com</p></div>
-        <form onSubmit={handleSubmit} className="flex flex-col items-start justify-center w-100">
+        <div className="flex gap-1 items-start sm:w-100 w-full pl-5 pt-5"><p>To:</p> <p className="w-auto bg-[#b98d6b8c] pt-0.5 pb-0.5 pr-1.5 pl-1.5 rounded-md">thefabstudio2@gmail.com</p></div>
+        <form onSubmit={handleSubmit} className="flex flex-col items-start justify-center sm:w-100 w-full">
         <div className="p-5 w-full">
             <h1>Email*</h1>
             <input type="mail" placeholder="myemail@gmail.com" className=" w-full h-10 outline-0" value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
             required></input>
         </div>
-        <div className="h-0.5 w-100 bg-gray-200 rounded-2xl "></div>
+        <div className="h-0.5 sm:w-100 w-full bg-gray-200 rounded-2xl "></div>
         <div className="pl-5 pt-5 w-full">
             <h1 className="pt-3 ">Object*</h1>
             <input type="text" placeholder="An idea, a question, a project... ?" className="w-full outline-0 h-10" value={formData.object}

@@ -361,7 +361,7 @@ setIsTransitioning(false);
   
      const teamRef = useRef(null); // ✅ ton ref simple ici
   useEffect(() => {
-    if (!contactRef?.current || typeof window === "undefined" || window.innerWidth < 900) return;
+    if (!contactRef?.current || typeof window === "undefined") return;
 
    const section = contactRef.current;
 
@@ -369,10 +369,10 @@ setIsTransitioning(false);
    
 
     const breakpoints = [
-      { maxWidth: 1100, translateY: -100, movMultiplier: 450 },
-      { maxWidth: 1100, translateY: -105, movMultiplier: 500 },
-      { maxWidth: 1200, translateY: -90, movMultiplier: 550 },
-      { maxWidth: 1300, translateY: -85, movMultiplier: 600 },
+      { maxWidth: 640, translateY: -40, movMultiplier: 150 },  // mobile
+      { maxWidth: 900, translateY: -80, movMultiplier: 300 },  // tablette
+        { maxWidth: 1100, translateY: -100, movMultiplier: 450 },  
+    { maxWidth: 1300, translateY: -110, movMultiplier: 550 },
     ];
 
     const getInitialValues = () => {
@@ -386,7 +386,7 @@ setIsTransitioning(false);
         }
       }
       return {
-        translateY: -110,
+        translateY: -120,
         movementMultiplier: 650,
       };
     };
@@ -437,25 +437,17 @@ setIsTransitioning(false);
     });
 
     const animate_contatc = () => {
-      if (window.innerWidth < 900) return;
-      const {
-        scale,
-        targetMouseX,
-        currentMouseX,
-        currentTranslateY,
-        movementMultiplier,
-      } = animationState;
+       const { scale, targetMouseX, currentMouseX, currentTranslateY, movementMultiplier } = animationState;
 
-      const scaleMovementMultiplier = (1 - scale) * movementMultiplier;
-      const maxHorizontalMovement = scale < 0.95 ? targetMouseX * scaleMovementMultiplier : 0;
-      animationState.currentMouseX = gsap.utils.interpolate(
-        currentMouseX,
-        maxHorizontalMovement,
-        0.05
-      );
+    const scaleMove = (1 - scale) * movementMultiplier;
+    const maxX = scale < 0.95 ? targetMouseX * scaleMove : 0;
 
-      section.style.transform = `translateY(${currentTranslateY}%) translateX(${animationState.currentMouseX}px) scale(${scale})`;
-      requestAnimationFrame(animate_contatc);
+    animationState.currentMouseX = gsap.utils.interpolate(currentMouseX, maxX, 0.08);
+
+    section.style.transform =
+      `translateY(${currentTranslateY}%) translateX(${animationState.currentMouseX}px) scale(${scale})`;
+
+    requestAnimationFrame(animate_contatc);
     };
 
     const handleMouseMove = (e) => {
@@ -472,7 +464,7 @@ setIsTransitioning(false);
   },[contactRef]);
 
   return (
-    <section id="team_section" ref={teamRef} className="h-[150vh] bg-black relative" >
+    <section id="team_section" ref={teamRef} className="h-[150vh] sm:h-screen  bg-black relative" >
             <div 
       className="slider"
       onClick={handleSlideChange}
@@ -482,10 +474,10 @@ setIsTransitioning(false);
         className="block w-full h-full"
       />
       
-      <div className="absolute top-0 left-0 w-full h-full select-none z-10 text-white" ref={slideContentRef} >
+      <div className="absolute top-0 left-0 min-w-full h-full select-none z-10 text-white" ref={slideContentRef} >
         <h1 className="font-[Satoshi] font-bold text-8xl text-white m-4">Our team</h1>
         <div className="relative top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center" >
-          <h1 className="uppercase text-[7vw] font-bold leading-none flex justify-center whitespace-pre-line font-[Satoshi] gap-[1em]">
+          <h1 className="uppercase text-[12vw] sm:text-[7vw] font-bold leading-none flex justify-center whitespace-pre-line font-[Satoshi] gap-[1em]">
             {currentSlide.title.split(' ').map((word, i) => (
               <div className="word flex" key={i}>
                 {word.split('').map((char, j) => (
@@ -498,7 +490,7 @@ setIsTransitioning(false);
           </h1>
         </div>
         
-        <div className="relative top-[30%] left-[70%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden font-[Satoshi] ">
+        <div className="relative sm:top-[30%] top-[40%] left-[70%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden font-[Satoshi] ">
           <div className="line overflow-hidden">
             <span className="relative inline-block will-change-transform">{currentSlide.description}</span>
           </div>

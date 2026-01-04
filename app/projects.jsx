@@ -599,7 +599,7 @@ export default function Projects() {
            {selectedProject && (
   <div 
     ref={projetDivRef}
-    className="Projet overflow-y-scroll bg-white w-[98%] rounded-4xl top-4 left-4 shadow-2xl fixed h-[96%] text-white flex items-start pt-4 justify-center font-[Satoshi]"
+    className="Projet overflow-y-scroll bg-white sm:w-[98%] w-screen rounded-4xl top-4 sm:left-4 left-0 shadow-2xl fixed sm:h-[96%] h-screen text-white flex items-start pt-4 justify-center font-[Satoshi]"
     style={{ transform: 'translateY(100%)', opacity: 0 }}
   >
       <button 
@@ -609,10 +609,10 @@ export default function Projects() {
         <X size={32} />
       </button>
 
-      <div className='project_div h-auto relative flex justify-start items-start flex-col gap-[3rem]'>
+      <div className='project_div h-auto relative flex justify-start items-center flex-col sm:gap-[3rem] gap-5'>
 
         {/* HERO IMAGE */}
-        <div className='hero_project_div relative h-[90vh] w-[95vw] rounded-2xl overflow-hidden'
+        <div className='hero_project_div relative sm:h-[90vh] h-full sm:w-[95vw] w-84 rounded-2xl overflow-hidden'
              style={{ boxShadow: "rgba(185, 141, 107, 0.5) 1px 10px 20px, rgba(185, 141, 107, 0.2) 0px 0px 0px 10px" }}>
             <img 
               src={selectedProject.image}
@@ -621,21 +621,21 @@ export default function Projects() {
         </div>
 
         {/* DESCRIPTION */}
-        <div className='description relative h-[90vh] w-[95vw] bg-amber-50 rounded-2xl overflow-hidden text-black p-10'>
+        <div className='description relative sm:h-[90vh] h-full w-87 sm:w-[95vw] bg-amber-50 rounded-2xl overflow-hidden text-black sm:p-10 p-3'>
 
-          <h1 className="text-5xl font-bold text-center mb-10">{selectedProject.data.title}</h1>
+          <h1 className="sm:text-5xl text-2xl font-bold text-center mb-10">{selectedProject.data.title}</h1>
 
-          <div className="flex flex-wrap gap-6 justify-center">
+          <div className="flex flex-wrap sm:gap-6 gap-3 justify-center">
 
             {selectedProject.data.title_description.map((item, i) => (
-              <div key={i} className="w-[300px] flex flex-col gap-2">
+              <div key={i} className="sm:w-[300px] w-80 flex flex-col sm:gap-2 gap-0.5">
 
                 
-                  <h2 className="text-xl font-semibold">{item}</h2>
+                  <h2 className="sm:text-xl text-base font-semibold">{item}</h2>
                 
 
                 
-                  <p className="text-base text-black opacity-80 mt-2">
+                  <p className="sm:text-base text-xs text-black opacity-80 mt-2">
                     {selectedProject.data.description[i]}
                   </p>
                 
