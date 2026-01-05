@@ -1,11 +1,8 @@
 'use client';
 import { SpinningText } from "../components/magicui/spinning-text";
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useScroll, ScrollControls } from '@react-three/drei'
-import { OrbitControls, MeshTransmissionMaterial, RoundedBox, Environment, useTexture, Text, Text3D   } from '@react-three/drei';
-import { useControls } from 'leva';
+import { MeshTransmissionMaterial, RoundedBox, Text, Text3D   } from '@react-three/drei';
 import { useAssets } from '../context/AssetContext'
-
 import { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import styles from "./style.module.css"
@@ -111,29 +108,7 @@ function InteractiveCube({ materialProps, setIsHovered }) {
       position={originalPosition.current}
       scale={[responsiveScale, responsiveScale, responsiveScale]}
       
-      // ------- POINTER + TOUCH HANDLERS -------
-      onPointerDown={(e) => {
-        e.stopPropagation();
-        setIsDragging(true);
-        setIsHovered(false);
-      }}
-      onPointerUp={(e) => {
-        e.stopPropagation();
-        setIsDragging(false);
-        setIsHovered(true);
-      }}
-      onPointerMove={(e) => {
-        if (isDragging) {
-          mouse.x = (e.clientX / size.width) * 2 - 1;
-          mouse.y = -(e.clientY / size.height) * 2 + 1;
-        }
-      }}
-      onPointerLeave={() => {
-        setIsDragging(false);
-        setIsHovered(false);
-      }}
-      onPointerOver={() => setIsHovered(true)}
-      onPointerOut={() => setIsHovered(false)}
+      
     >
 
       {/* MATERIAL */}

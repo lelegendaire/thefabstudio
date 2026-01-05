@@ -55,9 +55,11 @@ export const LenisProvider = ({ children }) => {
   if (!lenis || !assets) {
     // 🔹 Tant que Lenis n'est pas prêt OU que les assets ne sont pas chargés
     return (
-      <div className="fixed inset-0 flex items-center justify-center text-sm text-neutral-500">
-        Préchargement…
-      </div>
+    <div className="fixed inset-0 flex flex-col items-center justify-center text-sm text-neutral-500 bg-white z-50">
+      {/* LCP friendly */}
+      <h1 className="text-black text-3xl font-bold">The Fab Studio</h1>
+      <span className='font-[Satoshi] font-bold'>Préchargement…</span>
+    </div>
     )
   }
 

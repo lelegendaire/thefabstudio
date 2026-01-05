@@ -1,10 +1,28 @@
 "use client"
 import { useEffect, useRef,useState } from 'react'
-import * as THREE from 'three'
-import { gsap } from 'gsap';
+import { 
+  Scene, 
+  PerspectiveCamera, 
+  WebGLRenderer, 
+  BoxGeometry, 
+  Mesh, 
+  MeshStandardMaterial,
+  Group,
+  AmbientLight,
+  DirectionalLight,
+  Fog,
+  Raycaster,
+  Vector2,
+  Vector3,
+  Quaternion,
+  Euler,
+  TextureLoader,
+  SRGBColorSpace,
+  Color
+} from 'three'
 import {X} from "lucide-react"
+import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import CopyBloc from "./components/Copy_bloc";
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -18,8 +36,8 @@ export default function Projects() {
     const isDragging = useRef(false)
     const previousMousePosition = useRef({ x: 0, y: 0 })
     const hoveredCube = useRef(null)
-    const raycaster = useRef(new THREE.Raycaster())
-    const mouse = useRef(new THREE.Vector2())
+    const raycaster = useRef(new Raycaster())
+    const mouse = useRef(new Vector2())
     const selectedCube = useRef(null)
    // État pour stocker les données du projet sélectionné
     const [selectedProject, setSelectedProject] = useState(null)
@@ -116,15 +134,15 @@ export default function Projects() {
         '/medias/StudioLens.png',
         '/medias/StudioSongFab.png',
         '/medias/F1.png',
-        'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&q=80',
-        'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
-        'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&q=80',
-        'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80',
-        'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800&q=80',
-        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
-        'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80',
-        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80',
-        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80'
+        'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&q=60&fm=webp',
+        'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=60&fm=webp',
+        'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&q=60&fm=webp',
+        'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=60&fm=webp',
+        'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&q=60&fm=webp',
+        'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=60&fm=webp',
+        'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&q=60&fm=webp',
+        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&q=60&fm=webp',
+        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&q=60&fm=webp'
     ]
 
   
@@ -139,10 +157,10 @@ export default function Projects() {
         const isMobile = window.innerWidth < 768
         console.log(isMobile ? 2 : 1)
         // Scene
-        const scene = new THREE.Scene()
+        const scene = new Scene()
         sceneRef.current = scene
         // Camera
-        const camera = new THREE.PerspectiveCamera(
+        const camera = new PerspectiveCamera(
             isMobile ? 85 : 75,
             canvasRef.current.clientWidth / canvasRef.current.clientHeight,
             0.1,
@@ -153,7 +171,7 @@ export default function Projects() {
         cameraRef.current = camera
 
         // Renderer
-        const renderer = new THREE.WebGLRenderer({ 
+        const renderer = new WebGLRenderer({ 
             canvas: canvasRef.current,
             antialias: true, 
             alpha: true,
@@ -166,15 +184,15 @@ export default function Projects() {
         rendererRef.current = renderer
 
         // Group pour les cubes
-        const cubesGroup = new THREE.Group()
+        const cubesGroup = new Group()
         cubesGroupRef.current = cubesGroup
         scene.add(cubesGroup)
         // TextureLoader
-        const textureLoader = new THREE.TextureLoader()
+        const textureLoader = new TextureLoader()
         // Créer un cercle de cubes
         const numCubes = 12
         const radius = isMobile ? 5 : 4 // Cercle plus grand sur mobile
-         const geometry = new THREE.BoxGeometry(
+         const geometry = new BoxGeometry(
             isMobile ? 0.4 : 0.5,
             isMobile ? 2.5 : 3,
             isMobile ? 1.5 : 2
@@ -212,19 +230,19 @@ export default function Projects() {
                 }
                 tex.needsUpdate = true
             })
-            texture.colorSpace = THREE.SRGBColorSpace
+            texture.colorSpace = SRGBColorSpace
             
             // Créer les matériaux : texture sur les faces longues (gauche et droite), couleur sur les autres
             const materials = [
-                new THREE.MeshStandardMaterial({ map: texture }), // right (face longue avec image)
-                new THREE.MeshStandardMaterial({ map: texture }), // left (face longue avec image)
-                new THREE.MeshStandardMaterial({ color: colors[i] }), // top
-                new THREE.MeshStandardMaterial({ color: colors[i] }), // bottom
-                new THREE.MeshStandardMaterial({ color: colors[i] }), // front
-                new THREE.MeshStandardMaterial({ color: colors[i] }), // back
+                new MeshStandardMaterial({ map: texture }), // right (face longue avec image)
+                new MeshStandardMaterial({ map: texture }), // left (face longue avec image)
+                new MeshStandardMaterial({ color: colors[i] }), // top
+                new MeshStandardMaterial({ color: colors[i] }), // bottom
+                new MeshStandardMaterial({ color: colors[i] }), // front
+                new MeshStandardMaterial({ color: colors[i] }), // back
             ]
             
-            const cube = new THREE.Mesh(geometry, materials)
+            const cube = new Mesh(geometry, materials)
             
             // Position sur le cercle
             const circleX = Math.cos(angle) * radius
@@ -252,18 +270,18 @@ export default function Projects() {
             cubesGroup.add(cube)
         }
 
-        scene.fog = new THREE.Fog(0xf0f0f0, 3, isMobile ? 15 : 13)
+        scene.fog = new Fog(0xf0f0f0, 3, isMobile ? 15 : 13)
 
 
         // Lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
+        const ambientLight = new AmbientLight(0xffffff, 0.6)
         scene.add(ambientLight)
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8)
+        const directionalLight = new DirectionalLight(0xffffff, 0.8)
         directionalLight.position.set(5, 5, 5)
         scene.add(directionalLight)
 
-        const directionalLight2 = new THREE.DirectionalLight(0xffffff, 0.4)
+        const directionalLight2 = new DirectionalLight(0xffffff, 0.4)
         directionalLight2.position.set(-5, -5, -5)
         scene.add(directionalLight2)
 
@@ -283,7 +301,7 @@ export default function Projects() {
                 // Position animation
                 if (cube.userData.useWorldCoordinates) {
                     // Convertir la position cible en coordonnées locales du groupe
-                    const targetWorldPos = new THREE.Vector3(
+                    const targetWorldPos = new Vector3(
                         cube.userData.targetPosition.x,
                         cube.userData.targetPosition.y,
                         cube.userData.targetPosition.z
@@ -438,13 +456,13 @@ export default function Projects() {
                     )
 
                     // Calculer la position du cube dans l'espace monde (en tenant compte de la rotation du groupe)
-                    const worldPosition = new THREE.Vector3()
+                    const worldPosition = new Vector3()
                     clickedCube.getWorldPosition(worldPosition)
                     
                     // Calculer la rotation du cube dans l'espace monde
-                    const worldQuaternion = new THREE.Quaternion()
+                    const worldQuaternion = new Quaternion()
                     clickedCube.getWorldQuaternion(worldQuaternion)
-                    const worldEuler = new THREE.Euler().setFromQuaternion(worldQuaternion)
+                    const worldEuler = new Euler().setFromQuaternion(worldQuaternion)
                     
                     // Position à gauche face à nous, en coordonnées monde
                     clickedCube.userData.targetPosition = { x: 0, y: 0, z: 5 }
@@ -508,8 +526,8 @@ export default function Projects() {
                         // Éclaircir la couleur et ajouter un effet émissif
                         cube.material.forEach((mat, index) => {
                             if (index !== 0 && index !== 1 && cube.userData.originalColors[index]) {
-                                const originalColor = new THREE.Color(cube.userData.originalColors[index])
-                                const lighterColor = originalColor.clone().lerp(new THREE.Color(0xffffff), 0.3)
+                                const originalColor = new Color(cube.userData.originalColors[index])
+                                const lighterColor = originalColor.clone().lerp(new Color(0xffffff), 0.3)
                                 mat.color.copy(lighterColor)
                                 mat.emissive.setHex(cube.userData.originalColors[index])
                                 mat.emissiveIntensity = 0

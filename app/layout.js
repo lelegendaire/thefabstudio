@@ -1,7 +1,6 @@
 // layout.js
 import './globals.css'
-import { LenisProvider } from './context/LenisContext'
-import CustomScrollbar from './components/CustomScrollBar'
+import ClientLayout from './ClientLayout'
 
 export const metadata = {
   title: "The Fab Studio",
@@ -16,10 +15,9 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
       </head>
       <body>
-        <LenisProvider>
+         <ClientLayout>
           {children}
-          <CustomScrollbar />
-        </LenisProvider>
+        </ClientLayout>
       </body>
     </html>
   )

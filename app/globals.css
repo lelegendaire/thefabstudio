@@ -48,6 +48,7 @@
   src: url('/fonts/Dirtyline.ttf') format('truetype'); /* Safari, Android, iOS */
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
     @font-face {
   font-family: "Satoshi";
@@ -63,6 +64,7 @@
   src: url('/fonts/Druk-Medium-Trial.otf') format('truetype'); /* Safari, Android, iOS */
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: 'Satoshi-Light';
