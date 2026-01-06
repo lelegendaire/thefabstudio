@@ -25,7 +25,7 @@
     "lucide": "^0.525.0",
     "lucide-react": "^0.525.0",
     "motion": "^12.23.24",
-    "next": "15.3.5",
+    "next": "^15.3.5",
     "next-intl": "^4.3.4",
     "nodemailer": "^7.0.6",
     "react": "^19.0.0",
