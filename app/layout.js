@@ -10,8 +10,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
-      <meta name="google-site-verification" content="2l0TwK85lNJgb7JEL5G2xStf752_OqrpfDBQzNIN-Z0" />
-      <head>
+        <meta name="google-site-verification" content="V9NcHd727ex_fH4m70oD8FXErvFVqfkp-i2E7oJOk-w" />      <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
       </head>
       <body>
