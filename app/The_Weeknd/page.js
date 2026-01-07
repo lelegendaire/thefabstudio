@@ -19,13 +19,13 @@ const TheWeekndPage = () => {
                 <h1 className="text-[200px] font-bold text-white drop-shadow-2xl font-[Druck] ">
                     THE WEEKND
                 </h1>
-                <Image src={"/medias/The_weeknd_png.webp"} className='absolute h-screen'></Image>
+                <img src={"/medias/The_weeknd_png.webp"} className='absolute h-screen'></img>
                 <h1 className="text-[200px] font-bold text-transparent drop-shadow-2xl font-[Druck] absolute hover-stroke transition-all duration-700 ease-out" >
                     THE WEEKND
                 </h1>
             </div>
 <div className="absolute top-8 right-8 z-20 ">
-                <Image src="/medias/XO.svg" alt="XO Logo" className="h-10 w-auto " />
+                <img src="/medias/XO.svg" alt="XO Logo" className="h-10 w-auto " />
             </div>        
              <div className='absolute top-0 left-0 z-2'>
       <canvas id='fluid' className='w-screen h-screen' />

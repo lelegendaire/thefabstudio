@@ -76,7 +76,7 @@ export default function Projects_1(){
           height: `${dimensions.height}px`,
           clipPath: `path("${pathData}")`,
           margin: '5px'
-        }}><Image src="/medias/Parfum.jpg" ></Image>
+        }}><img src="/medias/Parfum.jpg" ></img>
           
          
         </div>
