@@ -8,6 +8,7 @@ const Projects = dynamic(() => import('./projects'))
 const Team = dynamic(() => import('./team_section'))
 const Contact = dynamic(() => import('./contact_section'))
 const Interaction = dynamic(() => import('./interaction'))
+const Pricing = dynamic(() => import('./pricing'))
 const Footer = dynamic(() => import('./footer_section'))
 
 export default function Sections() {
@@ -20,6 +21,7 @@ export default function Sections() {
       <Team contactRef={contactRef} />
       <Contact ref={contactRef} />
       <Interaction />
+      <Pricing/>
       <Footer />
     </>
   )

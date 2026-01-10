@@ -55,9 +55,9 @@ export default function link({data, index, lien_id, closeL}) {
                         return <div key={index} className={styles.container}>
                             
                             <p>{description}</p>
-                            <div className='w-[80px]'></div>
+                            <div className='w-20'></div>
                             <p>{description}</p>
-                            <div className='w-[80px]'></div>
+                            <div className='w-20'></div>
                             
                     
                         </div>

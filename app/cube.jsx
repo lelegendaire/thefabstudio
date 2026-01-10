@@ -1,5 +1,4 @@
 'use client';
-import { SpinningText } from "../components/magicui/spinning-text";
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { MeshTransmissionMaterial, RoundedBox, Text, Text3D   } from '@react-three/drei';
 import { useAssets } from '../context/AssetContext'
@@ -269,7 +268,6 @@ useEffect(() => {
         {/* <OrbitControls enableZoom={false} /> */}
       </Canvas>
       <div id="cursor-ring" className={`${styles['cursor-ring']} ${isHovered ? styles.visible : ''}`}>
-  <SpinningText duration={7} className="text-white">hold me • hold me • hold me •</SpinningText>
 </div>
 
 

@@ -445,7 +445,7 @@ const isVerySmallScreen = screenWidth < 600;
       </section>
 
       {/* Section Outro */}
-      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-white sm:h-[120vh] h-full bg-black p-4 font-[Satoshi]">
+      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-black sm:h-[120vh] h-full bg-white p-4 font-[Satoshi]">
        
         <Copy><h1 className="font-bold sm:text-6xl text-4xl sm:p-10 p-3">Still not convinced</h1></Copy>
         <Copy><h3 className=" sm:text-3xl text-2xl sm:p-5 p-1 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h3></Copy>
@@ -465,7 +465,7 @@ const isVerySmallScreen = screenWidth < 600;
                 </div>
                 <h1 className="text-xl ">{work.title}</h1>
                 <button 
-                  className="bg-white w-60 rounded-full py-3 px-6 text-black font-medium active:scale-95 transition-transform duration-300 hover:bg-gray-100"
+                  className="bg-black w-60 rounded-full py-3 px-6 text-white font-medium active:scale-95 transition-transform duration-300 hover:bg-gray-100"
                 >
                   See more
                 </button>

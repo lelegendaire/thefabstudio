@@ -109,7 +109,9 @@ const Contact = forwardRef((props, ref) => {
   {
     id: 1,
     content: ( 
-      <div className="w-full h-full flex items-center justify-center  flex-col"><iframe className="w-[80%] h-[80%] object-cover rounded-xl" width="500" height="300" allow="geolocation" src="https://api.maptiler.com/maps/019a29ee-fc6c-7214-992b-1d1cfeb51a7d/?key=OVKTtEmd6oXqJWFoFhnn#11.1/48.85582/2.37502"></iframe>
+      <div className="w-full h-full flex items-center justify-center flex-col">
+        
+        <iframe className="w-[80%] h-[80%] object-cover rounded-xl" width="500" height="300" allow="geolocation" src="https://api.maptiler.com/maps/019a29ee-fc6c-7214-992b-1d1cfeb51a7d/?key=OVKTtEmd6oXqJWFoFhnn#11.1/48.85582/2.37502"></iframe>
       
        <h1 className="font-[Satoshi] font-bold py-4">We are here </h1>
        </div>
@@ -118,12 +120,14 @@ const Contact = forwardRef((props, ref) => {
   {
     id: 2,
     content: (
-      <div className="w-full h-full flex items-center justify-center flex-col">
+      <div className="w-full h-[30vh] flex items-center justify-center flex-col">
         <img
-          className="w-[80%] h-[80%] object-cover rounded-xl"
+          className="w-[70%] h-[200%] object-cover rounded-xl"
           src="/medias/Contact.jpg"
           alt="slide"
+          width="500" height="300"
         />
+        <h1 className="font-[Satoshi] font-bold py-4">Contact us </h1>
       </div>
     ),
   },
@@ -151,7 +155,7 @@ const Contact = forwardRef((props, ref) => {
         ))}
       </div>
         </div>
-        <div className="pt-20 flex w-full h-screen items-center justify-center flex-col font-[Satoshi] ">
+        <div className="pt-20 flex w-full sm:w-1/2 h-screen items-center justify-center flex-col font-[Satoshi] ">
         <h1 className="text-3xl">Formulaire</h1>
         
         <div className="flex gap-1 items-start sm:w-100 w-full pl-5 pt-5"><p>To:</p> <p className="w-auto bg-[#b98d6b8c] pt-0.5 pb-0.5 pr-1.5 pl-1.5 rounded-md">thefabstudio2@gmail.com</p></div>
@@ -198,7 +202,7 @@ const Contact = forwardRef((props, ref) => {
             </p>
           )}
         </div>
-        <div className="h-0.5 w-100 bg-gray-200 rounded-2xl "></div>
+        <div className="h-0.5 w-100/100 bg-gray-200 rounded-2xl "></div>
 
 
         </form>
