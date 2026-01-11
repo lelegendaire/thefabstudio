@@ -3,9 +3,35 @@ import "./globals.css";
 import ClientLayout from "./ClientLayout";
 
 export const metadata = {
-  title: "The Fab Studio",
-  description: "A French Studio who create a site web",
+  title: {
+    default: "The Fab Studio — Creative Web Experiences",
+    template: "%s | The Fab Studio",
+  },
+  description:
+    "The Fab Studio is a creative web studio crafting immersive, high-end digital experiences through design, motion and code.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    title: "The Fab Studio",
+    description:
+      "A creative web studio crafting immersive, premium and accessible digital experiences.",
+    url: "https://thefabstudio.vercel.app",
+    siteName: "The Fab Studio",
+    images: [
+      {
+        url: "https://thefabstudio.vercel.app/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "The Fab Studio",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
+
 
 export default function RootLayout({ children }) {
   return (
