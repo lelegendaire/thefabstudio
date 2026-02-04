@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { useLenis } from './context/LenisContext'
 import { useRouter } from 'next/navigation';
-import { startTransition } from 'react'
+import { dirtyline } from './fonts'
 // Enregistrer les plugins GSAP
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -27,12 +27,12 @@ const Interaction = () => {
     'https://images.unsplash.com/photo-1757317202556-a87236bdb48b?q=80&w=775&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1506942907748-846932449367?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1723871568780-7c838fd46d8e?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1464822759844-d150f76515d6?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    'https://images.unsplash.com/photo-1768045855315-8fb9e0ed2ffe?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -43,7 +43,7 @@ const Interaction = () => {
     'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1444927714506-8492d94b5ba0?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    'https://images.unsplash.com/photo-1769251297393-8178b5988b08?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   ];
   const works = [
     {
@@ -394,8 +394,8 @@ const isVerySmallScreen = screenWidth < 600;
     return(
          <div ref={sectionRef} className="team-section">
       {/* Section Intro */}
-      <section className="relative w-screen h-screen p-8 overflow-hidden flex justify-center items-center bg-[#0f0f0f] text-[#fff]">
-        <h1 className="text-5xl md:text-8xl font-medium tracking-tight leading-[0.9] w-full md:w-1/2 text-center font-[Satoshi]">
+      <section className="relative w-screen h-screen p-8 overflow-hidden flex justify-center items-center bg-[#0f0f0f] text-white">
+        <h1 className="text-5xl md:text-8xl font-medium tracking-tight leading-[0.9] w-full md:w-1/2 text-center">
           Want to discover more  
         </h1>
       </section>
@@ -410,7 +410,7 @@ const isVerySmallScreen = screenWidth < 600;
           {imageUrls.map((imageUrl, index) => (
             <div
               key={index}
-              className="img-element absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[350px] bg-cover bg-center will-change-transform"
+              className="img-element absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-125 h-87.5 bg-cover bg-center will-change-transform"
               style={{
                 backgroundImage: `url('${imageUrl}')`
               }}
@@ -425,27 +425,27 @@ const isVerySmallScreen = screenWidth < 600;
         }}>
           <img
             src="/medias/dune.jpg"
-            alt="Cover"
+            alt="Dune Cover"
             className="w-full h-full object-cover"
           />
         </div>
 
         {/* Headers */}
         <div className="spotlight-intro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-10">
-          <h1 className="text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]">
+          <h1 className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}>
             When art and design meet that create the work of art 
           </h1>
         </div>
 
         <div className="spotlight-outro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-20">
-          <h1 className="text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]">
+          <h1 className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}>
             Nothing scares us when you challenge us
           </h1>
         </div>
       </section>
 
       {/* Section Outro */}
-      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-black sm:h-[120vh] h-full bg-white p-4 font-[Satoshi]">
+      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-black sm:h-[120vh] h-full bg-white p-4">
        
         <Copy><h1 className="font-bold sm:text-6xl text-4xl sm:p-10 p-3">Still not convinced</h1></Copy>
         <Copy><h3 className=" sm:text-3xl text-2xl sm:p-5 p-1 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h3></Copy>
@@ -475,7 +475,7 @@ const isVerySmallScreen = screenWidth < 600;
         {/* Overlay de transition */}
       {transitioning && (
         <div 
-          className="fixed inset-0 z-[9999] pointer-events-none"
+          className="fixed inset-0 z-9999 pointer-events-none"
           style={{
             transformOrigin: `${clickPosition.x}px ${clickPosition.y}px`
           }}

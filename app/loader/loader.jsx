@@ -6,15 +6,18 @@ import { useAssets } from '../../context/AssetContext'
 
 export default function Loader({ children }) {
   const [maskRemoved, setMaskRemoved] = useState(false)
+  const [showMask, setShowMask] = useState(false) // 🔑 Nouveau state
   const controls = useAnimation()
-  const assets = useAssets() // récupère bgTexture et fonts préchargées depuis LenisProvider
+  const assets = useAssets()
 
   useEffect(() => {
     async function animate() {
-      // 🔹 Bloque scroll pendant animation
+      // ⏱️ Petit délai pour laisser le LCP se peindre d'abord
+      await new Promise(resolve => setTimeout(resolve, 100))
+      
+      setShowMask(true) // Active le mask APRÈS le paint initial
       document.body.style.overflow = 'hidden'
 
-      // 🎬 Animation du mask/logo
       await controls.start({
         maskSize: '80%',
         maskPosition: 'center 50%',
@@ -36,7 +39,7 @@ export default function Loader({ children }) {
     <motion.div
       className={styles.stickyMask}
       style={
-        !maskRemoved
+        showMask && !maskRemoved
           ? {
               WebkitMaskImage: 'url(/logo.svg)',
               WebkitMaskRepeat: 'no-repeat',
@@ -50,9 +53,12 @@ export default function Loader({ children }) {
             }
           : {}
       }
-      initial={{ maskSize: '30%', maskPosition: 'center -300%' }}
+      initial={showMask ? { maskSize: '30%', maskPosition: 'center -300%' } : false}
       animate={controls}
     >
+      {/* Précharge le SVG sans affecter le layout */}
+      <link rel="preload" href="/logo.svg" as="image" />
+
       {Children.map(children, (child) =>
         cloneElement(child, { isLoaded: maskRemoved, assets })
       )}

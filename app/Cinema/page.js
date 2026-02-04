@@ -6,7 +6,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { useLenis } from '.././context/LenisContext'
-import Image from 'next/image'
 import setupMarqueeAnimation from './marquee.js'
 const CinemaPage = () => {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -19,6 +18,9 @@ const CinemaPage = () => {
     const lenis = useLenis()
     const cardsRef = useRef(null);
     const introCardRef = useRef(null);
+const isMobile =
+  typeof window !== "undefined" &&
+  window.matchMedia("(max-width: 768px)").matches
 
  useEffect(()=>{
 const id = setTimeout(() => {
@@ -247,13 +249,15 @@ console.log(titles)
                         <li className='no-underline hover:text-black transition-all'><a href='#'>History</a></li>
                     </div>
                     <h1 className="text-9xl font-bold text-white font-[boska]">BEAUTY OF CINEMA</h1>
-                    <Image className="absolute" src="/medias/Runner.webp" alt="Runner" />
+                    <img className="absolute" src="/medias/Runner.webp" alt="Runner" />
                 </section>
             </div>
         );
     }
 
-    const transformStyle = `translate(${displacement.x}px, ${displacement.y}px) scale(1.1)`;
+const transformStyle = isMobile
+  ? "scale(1.05)"
+  : `translate(${displacement.x}px, ${displacement.y}px) scale(1.1)`
    
     return (
         <section className='Cinema_page h-full'>
@@ -279,90 +283,90 @@ console.log(titles)
                   
                        
                     <div className='absolute w-full top-0 m-5 flex items-center justify-center list-none  text-xl text-white font-[montserrat] z-50'>
-                         <div className='font-[melodrama] font-bold text-3xl mr-auto m-5'>
+                         <div className='font-[melodrama] font-bold text-xl text-nowrap sm:text-3xl mr-auto m-5'>
                             <h1>STUDIOFILM &copy;</h1>
                         </div>
-                          <div className='ml-auto gap-5 flex mr-[30px]'>
+                          <div className='ml-auto gap-5 flex mr-7.5 text-xs sm:text-xl'>
                         <li className='no-underline hover:text-black transition-all'><a href='#'>Home</a></li>
                         <li className='no-underline hover:text-black transition-all'><a href='#'>Works</a></li>
                         <li className='no-underline hover:text-black transition-all'><a href='#'>Art</a></li>
                         <li className='no-underline hover:text-black transition-all'><a href='#'>History</a></li>
                     </div>
                     </div>
-                    <h1 className="text-9xl font-bold z-10 text-white font-[boska]">BEAUTY OF CINEMA</h1>
+                    <h1 className="text-5xl text-nowrap sm:text-9xl font-bold z-10 text-white font-[boska]">BEAUTY OF CINEMA</h1>
                     
-                    <Image 
-                        className="image_runner absolute z-20" 
+                    <img 
+                        className="image_runner absolute z-20 scale-[180%] sm:scale-100" 
                         style={{
                             transform: transformStyle,
                         }} 
                         src="/medias/Runner.webp"
                         alt="Runner"
                     />
-                    <div className='absolute bottom-0 font-[montserrat] flex align-center justify-center w-full text-white font-bold'><h3 className='mr-auto m-5'>Composition</h3><h3 className='mr-auto m-5'>Storyline</h3><h3 className='ml-auto m-5'>Plotwist</h3><h3 className='ml-auto m-5'>Lighting</h3></div>
+                    <div className='absolute bottom-0 font-[montserrat] sm:text-xl text-xs flex align-center justify-center w-full text-white font-bold'><h3 className='mr-auto m-5'>Composition</h3><h3 className='mr-auto m-5'>Storyline</h3><h3 className='ml-auto m-5'>Plotwist</h3><h3 className='ml-auto m-5'>Lighting</h3></div>
                 </section>
 
-                {/* Curseur personnalisé */}
-                <div
-                    ref={cursorRef}
-                    className="fixed pointer-events-none z-50 mix-blend-difference"
-                    style={{
-                        left: `${cursorPos.x}px`,
-                        top: `${cursorPos.y}px`,
-                        transform: 'translate(-50%, -50%)',
-                    }}
-                >
-                    {/* Cercle extérieur */}
-                    <div className="w-10 h-10 border-2 border-white rounded-full opacity-50" />
-                    {/* Point central */}
-                    <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2" />
-                </div>
+                {!isMobile && (
+  <div
+    ref={cursorRef}
+    className="fixed pointer-events-none z-50 mix-blend-difference"
+    style={{
+      left: `${cursorPos.x}px`,
+      top: `${cursorPos.y}px`,
+      transform: "translate(-50%, -50%)",
+    }}
+  >
+    <div className="w-10 h-10 border-2 border-white rounded-full opacity-50" />
+    <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full -translate-x-1/2 -translate-y-1/2" />
+  </div>
+)}
+
 
                 {/* Effet de grain/texture */}
                 <div className="absolute inset-0 pointer-events-none opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
             </div>
             <section className='bg-black h-full w-screen text-white '>
                 <h1 className='text-3xl font-[montserrat] p-8'>Composition </h1>
-                 <div ref={cardsRef} className='cards relative w-[100vw] bg-[#0f0f0f] text-white flex flex-col gap-[25svh]'>
-                    <div ref={introCardRef} className='card relative w-full h-[100svh] p-[1.5em]'>
+                 <div ref={cardsRef} className='cards relative w-screen bg-[#0f0f0f] text-white flex flex-col gap-[25svh]'>
+                    <div ref={introCardRef} className='card relative w-full h-svh p-[1.5em]'>
                         <div className='card-marquee w-full absolute top-1/2 left-0 transform-[translateY(-50%)] overflow-hidden'>
                             <div className='marquee flex'>
-                                <h1 className='text-[10vw] font-[600] mr-[30px] whitespace-nowrap '>Design Beyond Boundaries</h1>
-                                <h1 className='text-[10vw] font-[600] mr-[30px] whitespace-nowrap '>Built for Tomorrow</h1>
-                                <h1 className='text-[10vw] font-[600] mr-[30px] whitespace-nowrap '>Real Impact</h1>
-                                <h1 className='text-[10vw] font-[600] mr-[30px] whitespace-nowrap '>Digital Visions</h1>
+                                <h1 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Design Beyond Boundaries</h1>
+                                <h1 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Built for Tomorrow</h1>
+                                <h1 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Real Impact</h1>
+                                <h1 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Digital Visions</h1>
                             </div>
                         </div>
                         <div className='card-wrapper relative w-full h-full will-change-transform'>
                             <div className='card-content absolute w-full h-full flex items-end justify-center z-1'>
-                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-[500] tracking-[-0.1rem] leading-[1.25]'>2001 : a space odyssey</h1></div>
-                                <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-[400] leading-[1.25]'>a new perspection</p></div>
+                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>2001 : a space odyssey</h1></div>
+                                <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-normal leading-tight'>a new perspection</p></div>
                             </div>
-                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><Image className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/space_odyssey.jpg"}></Image></div>
+                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/space_odyssey.jpg"}></img></div>
                         </div>
                     </div>
-                    <div className='card mt-[50vh] relative w-full h-[100svh] p-[1.5em]'>
+                    <div className='card mt-[50vh] relative w-full h-svh p-[1.5em]'>
                         <div className='card-marquee w-full absolute top-1/2 left-0 transform-[translateY(-50%)] overflow-hidden'>
                           
                         </div>
                         <div className='card-wrapper relative w-full h-full will-change-transform'>
                             <div className='card-content absolute w-full h-full flex items-end justify-center z-1'>
-                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-[500] tracking-[-0.1rem] leading-[1.25]'>Interstellar</h1></div>
-                                <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-[400] leading-[1.25]'>a new perspection</p></div>
+                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>Interstellar</h1></div>
+                                <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-normal leading-tight'>a new perspection</p></div>
                             </div>
-                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><Image className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.jpg"}></Image></div>
+                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.jpg"}></img></div>
                         </div>
                     </div>
-                    <div className='card relative w-full h-[100svh] p-[1.5em]'>
+                    <div className='card relative w-full h-svh p-[1.5em]'>
                         <div className='card-marquee w-full absolute top-1/2 left-0 transform-[translateY(-50%)] overflow-hidden'>
                         
                         </div>
                         <div className='card-wrapper relative w-full h-full will-change-transform'>
                             <div className='card-content absolute w-full h-full flex items-end justify-center z-1'>
-                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-[500] tracking-[-0.1rem] leading-[1.25]'>Interstellar</h1></div>
-                                <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-[400] leading-[1.25]'>a new perspection</p></div>
+                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>Interstellar</h1></div>
+                                <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-normal leading-tight'>a new perspection</p></div>
                             </div>
-                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><Image className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.jpg"}></Image></div>
+                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.jpg"}></img></div>
                         </div>
                     </div>
                  </div>
@@ -395,7 +399,7 @@ console.log(titles)
           duration: 0.8,
           ease: "easeInOut",
         }}
-        className="mt-8 bg-gradient-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl  tracking-tight text-transparent md:text-7xl font-[montserrat] font-bold">
+        className="mt-8 bg-linear-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl  tracking-tight text-transparent md:text-7xl font-[montserrat] font-bold">
         Lighting <br /> Is Everythings
       </motion.h1>
                 </LampContainer>

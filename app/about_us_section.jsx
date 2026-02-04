@@ -49,12 +49,12 @@ export default function About_us() {
   return (
     <section
       ref={sectionRef}
-      className="font-[Satoshi] text-white h-full p-4 bg-black relative"
+      className="text-white h-full p-4 bg-black relative"
       id="about_section"
     >
       <div className="z-10  relative">
         <Copy>
-          <h1 className=" font-bold sm:text-8xl text-5xl bg-black sm:w-2xl w-full z-10 relative">
+          <h1 className="font-bold sm:text-8xl text-5xl bg-black sm:w-2xl w-full z-10 relative">
             About Us
           </h1>
         </Copy>
@@ -94,7 +94,7 @@ export default function About_us() {
         viewBox="0 0 868 1448"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="squiggle absolute sm:top-[-250px] top-[0px] left-0 w-full sm:h-[400vh] h-[900px]  pointer-events-none"
+        className="squiggle absolute sm:-top-62.5 top-0 left-0 w-full sm:h-[400vh] h-225  pointer-events-none"
       >
         <path
           className="line_glow"

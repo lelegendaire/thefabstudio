@@ -1,11 +1,10 @@
 import styles from './menu.module.css'
 import { motion } from 'framer-motion';
 import { mountAnim, rotateX } from './anim';
-import Image from 'next/image';
 import { useRef } from 'react';
 import gsap from 'gsap';
 import Link from 'next/link';
-
+import { dirtyline } from '../fonts'
 export default function link({data, index, lien_id, closeL}) {
     const { title, description } = data;
     const outer = useRef(null);
@@ -45,7 +44,7 @@ export default function link({data, index, lien_id, closeL}) {
           variants={rotateX} 
           {...mountAnim}
           custom={index} 
-          className={styles.el}>
+          className={`${dirtyline.className} ${styles.el}`}>
             <Link href={lien_id}>{title}</Link>
             <div ref={outer} className={styles.outer}>
                 <div ref={inner} className={styles.inner}>

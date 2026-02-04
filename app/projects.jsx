@@ -20,7 +20,7 @@ import {
   SRGBColorSpace,
   Color,
 } from "three";
-import { X } from "lucide-react";
+import { X,ArrowDown } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 if (typeof window !== "undefined") {
@@ -42,12 +42,13 @@ export default function Projects() {
   // État pour stocker les données du projet sélectionné
   const [selectedProject, setSelectedProject] = useState(null);
   const isSelecting = useRef(false);
-
+  const bottomRef = useRef(null);
+  const [isAtBottom, setIsAtBottom] = useState(false);
   // Données des projets
   const projectsData = [
     {
       id: 1,
-      title: "Projet de développement web",
+      title: "Studio Lens",
       title_description: [
         "Application web moderne avec React et Three.js",
         "Esse consequat",
@@ -62,7 +63,7 @@ export default function Projects() {
     },
     {
       id: 2,
-      title: "Application mobile",
+      title: "StudioSongFab",
       title_description: [
         "Application web moderne avec React et Three.js",
         "Esse consequat",
@@ -77,7 +78,7 @@ export default function Projects() {
     },
     {
       id: 3,
-      title: "Site e-commerce",
+      title: "The History of F1",
       title_description: [
         "Application web moderne avec React et Three.js",
         "Esse consequat",
@@ -92,7 +93,7 @@ export default function Projects() {
     },
     {
       id: 4,
-      title: "Dashboard analytics",
+      title: "The New Clock",
       title_description: [
         "Application web moderne avec React et Three.js",
         "Esse consequat",
@@ -107,7 +108,7 @@ export default function Projects() {
     },
     {
       id: 5,
-      title: "Plateforme SaaS",
+      title: "Nature",
       title_description: [
         "Application web moderne avec React et Three.js",
         "Esse consequat",
@@ -122,7 +123,7 @@ export default function Projects() {
     },
     {
       id: 6,
-      title: "Jeu vidéo 3D",
+      title: "Widget Apple Weather",
       title_description: [
         "Application web moderne avec React et Three.js",
         "Esse consequat",
@@ -230,9 +231,9 @@ export default function Projects() {
     "/medias/StudioLens.png",
     "/medias/StudioSongFab.png",
     "/medias/F1.png",
-    "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&q=60&fm=webp",
-    "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=60&fm=webp",
-    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=400&q=60&fm=webp",
+    "/medias/Clock.png",
+    "/medias/Nature.png",
+    "/medias/Widget_weather.png",
     "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=60&fm=webp",
     "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&q=60&fm=webp",
     "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=60&fm=webp",
@@ -293,8 +294,18 @@ export default function Projects() {
     );
 
     const colors = [
-      0x000000, 0xf1f1f1, 0x751213, 0x3b82f6, 0x6366f1, 0x8b5cf6, 0xec4899,
-      0xf43f5e, 0xef4444, 0xf97316, 0xf59e0b, 0x10b981,
+      0x000000, // Studio Lens
+      0xf1f1f1, //StudioSongFab
+      0x751213, //
+      0x222222,
+      0x7d4924, 
+      0xacacac,//widget
+      0xec4899,
+      0xf43f5e,
+      0xef4444,
+      0xf97316,
+      0xf59e0b,
+      0x10b981,
     ];
 
     for (let i = 0; i < numCubes; i++) {
@@ -510,14 +521,13 @@ export default function Projects() {
             previousIndex = counterValue;
           }
         }
-        if (self.progress === 1 ) {
+        if (self.progress === 1) {
           handleDeselectCube();
         }
       },
       onLeave: () => {
-  handleDeselectCube(true)
-},
-
+        handleDeselectCube(true);
+      },
     });
     // Mouse events pour drag
     const handleMouseDown = (e) => {
@@ -745,7 +755,7 @@ export default function Projects() {
 
   // Fonction pour désélectionner le cube
   const handleDeselectCube = (force = false) => {
-     if (!selectedCube.current && !force) return
+    if (!selectedCube.current && !force) return;
     if (selectedCube.current) {
       selectedCube.current.userData.targetPosition = {
         ...selectedCube.current.userData.originalPosition,
@@ -776,7 +786,7 @@ export default function Projects() {
       id="project_section"
       className="h-full bg-white p-2 sm:p-4 flex flex-col "
     >
-      <h1 className="font-bold text-4xl sm:text-6xl lg:text-8xl text-black mb-4 sm:mb-8 font-[Satoshi] mr-auto">
+      <h1 className="font-bold text-4xl sm:text-6xl lg:text-8xl text-black mb-4 sm:mb-8 mr-auto">
         Our projects
       </h1>
       <div
@@ -793,18 +803,18 @@ export default function Projects() {
           id="project-counter-container"
           className="absolute top-4 sm:top-6 left-1/2 transform -translate-x-1/2 flex items-center gap-2 sm:gap-4 z-20"
         >
-          <span className="w-4 sm:w-8 h-[1px] bg-black"></span>
+          <span className="w-4 sm:w-8 h-px bg-black"></span>
 
-          <div className="overflow-hidden h-[30px] sm:h-[40px] flex items-center justify-center">
+          <div className="overflow-hidden h-7.5 sm:h-10 flex items-center justify-center">
             <div
               id="project-counter"
-              className="text-black text-2xl sm:text-3xl  font-[Satoshi] flex flex-col"
+              className="text-black text-2xl sm:text-3xl flex flex-col"
             >
               <span>01</span>
             </div>
           </div>
 
-          <span className="w-4 sm:w-8 h-[1px] bg-black"></span>
+          <span className="w-4 sm:w-8 h-px bg-black"></span>
         </div>
 
         <canvas
@@ -813,10 +823,20 @@ export default function Projects() {
         />
       </div>
       {selectedProject && (
+        <>
         <div
           ref={projetDivRef}
-          className="Projet overflow-y-scroll bg-white sm:w-[98%] w-screen rounded-4xl top-4 sm:left-4 left-0 shadow-2xl fixed sm:h-[96%] h-screen text-white flex items-start pt-4 justify-center font-[Satoshi]"
+          className="Projet overflow-y-scroll bg-white sm:w-[98%] w-screen rounded-4xl top-4 sm:left-4 left-0 shadow-2xl fixed sm:h-[96%] h-screen text-white flex items-start pt-4 justify-center"
           style={{ transform: "translateY(100%)", opacity: 0 }}
+          onScroll={() => {
+    const el = projetDivRef.current
+    if (!el) return
+
+    const isBottom =
+      el.scrollTop + el.clientHeight >= el.scrollHeight - 10
+
+    setIsAtBottom(isBottom)
+  }}
         >
           <button
             onClick={handleDeselectCube}
@@ -824,8 +844,8 @@ export default function Projects() {
           >
             <X size={32} />
           </button>
-
-          <div className="project_div h-auto relative flex justify-start items-center flex-col sm:gap-[3rem] gap-5">
+          
+          <div className="project_div h-auto relative flex justify-start items-center flex-col sm:gap-12 gap-5">
             {/* HERO IMAGE */}
             <div
               className="hero_project_div relative sm:h-[90vh] h-full sm:w-[95vw] w-84 rounded-2xl overflow-hidden"
@@ -837,11 +857,15 @@ export default function Projects() {
               <img
                 src={selectedProject.image}
                 className="w-full h-full object-cover"
+                alt={selectedProject.data.title}
               />
             </div>
 
             {/* DESCRIPTION */}
-            <div className="description relative sm:h-[90vh] h-full w-87 sm:w-[95vw] bg-amber-50 rounded-2xl overflow-hidden text-black sm:p-10 p-3">
+            <div
+              ref={bottomRef}
+              className="description relative sm:h-[90vh] h-full w-87 sm:w-[95vw] bg-amber-50 rounded-2xl overflow-hidden text-black sm:p-10 p-3"
+            >
               <h1 className="sm:text-5xl text-2xl font-bold text-center mb-10">
                 {selectedProject.data.title}
               </h1>
@@ -850,7 +874,7 @@ export default function Projects() {
                 {selectedProject.data.title_description.map((item, i) => (
                   <div
                     key={i}
-                    className="sm:w-[300px] w-80 flex flex-col sm:gap-2 gap-0.5"
+                    className="sm:w-75 w-80 flex flex-col sm:gap-2 gap-0.5"
                   >
                     <h2 className="sm:text-xl text-base font-semibold">
                       {item}
@@ -871,9 +895,42 @@ export default function Projects() {
             </div>
           </div>
         </div>
+        <button
+            onClick={() => {
+    if (isAtBottom) {
+      projetDivRef.current?.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      })
+    } else {
+      bottomRef.current?.scrollIntoView({
+        behavior: "smooth",
+      })
+    }
+  }}
+            className="glass_btn hidden sm:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-999 w-14 h-14 rounded-full bg-transparent text-black items-center justify-center shadow-xl hover:scale-105 transition-transform">
+              <span
+  className={`transition-transform duration-300 z-99 ${
+    isAtBottom ? "rotate-180" : ""
+  }`}
+>
+  <ArrowDown />
+</span>
+          </button>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" className="absolute overflow-hidden">
+        <defs>
+            <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%">
+                <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise"></feTurbulence>
+                <feGaussianBlur in="noise" stdDeviation="2" result="blurred"></feGaussianBlur>
+                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="77" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+            </filter>
+        </defs>
+    </svg>
+        </>
       )}
 
       <style jsx>{`
+     
         .Projet::-webkit-scrollbar {
           width: 8px !important;
         }
@@ -903,6 +960,96 @@ export default function Projects() {
           pointer-events: none;
           will-change: transform;
           z-index: 1;
+        }
+          .glass_btn {
+              /* Inner shadow */
+            --shadow-offset: 0;
+            --shadow-blur: 20px;
+            --shadow-spread: -5px;
+            --shadow-color: rgba(255, 255, 255, 0.7);
+
+            /* Painted glass */
+            --tint-color: 0, 0, 0;
+            --tint-opacity: 0.4;
+
+            /* Background frost */
+            --frost-blur: 2px;
+
+            /* SVG noise/distortion */
+            --noise-frequency: 0.008;
+            --distortion-strength: 77;
+
+            /* Outer shadow blur */
+            --outer-shadow-blur: 24px;
+            
+            isolation: isolate;
+            touch-action: none;
+            /* enable pointer dragging on touch */
+            box-shadow: 0px 6px var(--outer-shadow-blur) rgba(0, 0, 0, 0.2);
+        }
+
+        .glass_btn::before {
+          /* Inner shadow */
+            --shadow-offset: 0;
+            --shadow-blur: 20px;
+            --shadow-spread: -5px;
+            --shadow-color: rgba(255, 255, 255, 0.7);
+
+            /* Painted glass */
+            --tint-color: 255, 255, 255;
+            --tint-opacity: 0.4;
+
+            /* Background frost */
+            --frost-blur: 2px;
+
+            /* SVG noise/distortion */
+            --noise-frequency: 0.008;
+            --distortion-strength: 77;
+
+            /* Outer shadow blur */
+            --outer-shadow-blur: 24px;
+            
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: 28px;
+            box-shadow:
+                inset var(--shadow-offset) var(--shadow-offset) var(--shadow-blur) var(--shadow-spread) var(--shadow-color);
+            background-color: rgba(var(--tint-color), var(--tint-opacity));
+        }
+
+        .glass_btn::after {
+          /* Inner shadow */
+            --shadow-offset: 0;
+            --shadow-blur: 20px;
+            --shadow-spread: -5px;
+            --shadow-color: rgba(255, 255, 255, 0.7);
+
+            /* Painted glass */
+            --tint-color: 255, 255, 255;
+            --tint-opacity: 0.4;
+
+            /* Background frost */
+            --frost-blur: 2px;
+
+            /* SVG noise/distortion */
+            --noise-frequency: 0.008;
+            --distortion-strength: 77;
+
+            /* Outer shadow blur */
+            --outer-shadow-blur: 24px;
+            
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: 28px;
+            backdrop-filter: blur(var(--frost-blur));
+            filter: url(#glass-distortion);
+            isolation: isolate;
+            -webkit-backdrop-filter: blur(var(--frost-blur));
+            -webkit-filter: url("#glass-distortion");
         }
       `}</style>
     </section>

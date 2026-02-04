@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import Lenis from '@studio-freight/lenis'
 import { preloadTexture, preloadFont } from '../../utils/preloadAssets'
 import { AssetContext } from '../../context/AssetContext'
-
+import { dirtyline } from '../fonts'
 const LenisContext = createContext(null)
 export const useLenis = () => useContext(LenisContext)
 
@@ -57,8 +57,8 @@ export const LenisProvider = ({ children }) => {
     return (
     <div className="fixed inset-0 flex flex-col items-center justify-center text-sm text-neutral-500 bg-white z-50">
       {/* LCP friendly */}
-      <h1 className="text-black text-3xl font-bold">The Fab Studio</h1>
-      <span className='font-[Satoshi] font-bold'>Préchargement…</span>
+      <h1 className={`${dirtyline.className} text-black text-3xl font-bold`}>The Fab Studio</h1>
+      <span className='font-bold'>Préchargement…</span>
     </div>
     )
   }

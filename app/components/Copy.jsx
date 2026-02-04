@@ -1,97 +1,105 @@
-"use client"
+"use client";
 
-import React, {useRef} from "react";
-import gsap from 'gsap';
-import {SplitText} from "gsap/SplitText";
-import {ScrollTrigger} from "gsap/ScrollTrigger"
-import {useGSAP} from "@gsap/react"
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
-export default function Copy({children, animationOnScroll = true, delay = 0}){
-    const containerRef = useRef(null);
-    const elementRef = useRef([]);
-    const splitRef = useRef([]);
-    const lines = useRef([]);
+export default function Copy({
+  children,
+  animationOnScroll = true,
+  delay = 0,
+}) {
+  const containerRef = useRef(null);
+  const elementRef = useRef([]);
+  const splitRef = useRef([]);
+  const lines = useRef([]);
 
-    useGSAP(
-        () => {
-            if(!containerRef.current) return;
+  useGSAP(
+    () => {
+      if (!containerRef.current) return;
 
-            splitRef.current = []
-            elementRef.current = []
-            lines.current = []
+      splitRef.current = [];
+      elementRef.current = [];
+      lines.current = [];
 
-            let elements = [];
-            if(containerRef.current.hasAttribute("data-copy-wrapper")){
-                elements = Array.from(containerRef.current.children);
+      let elements = [];
+      if (containerRef.current.hasAttribute("data-copy-wrapper")) {
+        elements = Array.from(containerRef.current.children);
+      } else {
+        elements = [containerRef.current];
+      }
 
-            } else {
-                elements = [containerRef.current];
-            }
+      elements.forEach((element) => {
+        elementRef.current.push(element);
+        
+        element.removeAttribute("aria-label");
+        const split = SplitText.create(element, {
+          type: "lines",
+          mask: "lines",
+          linesClass: "line++",
+        });
+        // Cache les éléments générés par GSAP aux lecteurs d'écran
+        split.lines.forEach((line) => {
+          line.setAttribute("aria-hidden", "true");
+        });
 
-            elements.forEach((element)=>{
-                elementRef.current.push(element);
+        splitRef.current.push(split);
 
-                const split = SplitText.create(element,{
-                    type: "lines",
-                    mask: "lines",
-                    linesClass: "line++",
-                });
-                splitRef.current.push(split);
+        const computedStyle = window.getComputedStyle(element);
+        const textIndent = computedStyle.textIndent;
 
-                const computedStyle = window.getComputedStyle(element);
-                const textIndent = computedStyle.textIndent;
-
-                if(textIndent && textIndent === "0px"){
-                    if(split.lines.lenght > 0){
-                        split.lines[0].style.paddingLeft = textIndent;
-
-                    }
-                    element.style.textIndent = "0"
-                }
-                lines.current.push(...split.lines)
-            })
-            gsap.set(lines.current, {y:"100%"});
-
-            const animationProps ={
-                y: "0%",
-                duration: 1,
-                stagger: 0.1,
-                ease: "power4.out",
-                delay: delay,
-            };
-            if(animationOnScroll){
-                gsap.to(lines.current,{
-                    ...animationProps,
-                    scrollTrigger: {
-                        trigger: containerRef.current,
-                        start: "top 75%",
-                        once: true
-                    }
-                })
-            } else {
-                gsap.to(lines.current, animationProps);
-            }
-            return ()=>{
-                splitRef.current.forEach((split)=>{
-                    if(split){
-                        split.revert()
-                    }
-                })
-            }
-        },
-        {
-            scope: containerRef,
-            dependencies: [animationOnScroll, delay],
+        if (textIndent && textIndent === "0px") {
+          if (split.lines.lenght > 0) {
+            split.lines[0].style.paddingLeft = textIndent;
+          }
+          element.style.textIndent = "0";
         }
-);
-if(React.Children.count(children) ===1) {
-    return React.cloneElement(children, {ref : containerRef})
-}
-return (
+        lines.current.push(...split.lines);
+      });
+      gsap.set(lines.current, { y: "100%" });
+
+      const animationProps = {
+        y: "0%",
+        duration: 1,
+        stagger: 0.1,
+        ease: "power4.out",
+        delay: delay,
+      };
+      if (animationOnScroll) {
+        gsap.to(lines.current, {
+          ...animationProps,
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+            once: true,
+          },
+        });
+      } else {
+        gsap.to(lines.current, animationProps);
+      }
+      return () => {
+        splitRef.current.forEach((split) => {
+          if (split) {
+            split.revert();
+          }
+        });
+      };
+    },
+    {
+      scope: containerRef,
+      dependencies: [animationOnScroll, delay],
+    },
+  );
+  if (React.Children.count(children) === 1) {
+    return React.cloneElement(children, { ref: containerRef });
+  }
+  return (
     <div ref={containerRef} data-copy-wrapper="true">
-        {children}
+      {children}
     </div>
-)
+  );
 }

@@ -84,7 +84,7 @@ export function AnimatedLink({ href, children, color,target_on }) {
     >
       {children}
       <motion.span
-        className="absolute left-0 bottom-0 h-[2px]"
+        className="absolute left-0 bottom-0 h-0.5"
         style={{ backgroundColor: color }}
         variants={{
           rest: { width: 0 },
@@ -96,16 +96,16 @@ export function AnimatedLink({ href, children, color,target_on }) {
 }
 export default function Footer(){
     return (
-        <section id="project_section" className="sm:h-[115vh] h-full bg-white pr-4 pl-4 pt-4 relative font-[Satoshi]  w-full">
-            <div className="flex justify-between items-center"><h1 className=" w-1/2 font-[Dirtyline] font-bold sm:text-8xl text-3xl text-black">The <br></br>Fab <br></br>Studi</h1><h1 className="font-[PlayfairDisplay] font-normal sm:text-8xl text-3xl italic absolute sm:top-52 sm:left-62 top-21.5 left-22.5">O</h1>
+        <section id="project_section" className="sm:h-[115vh] h-full bg-white pr-4 pl-4 pt-4 relative w-full">
+            <div className="flex justify-between items-center"><h1 className=" w-1/2 font-[Dirtyline] font-bold sm:text-8xl text-3xl text-black">The <br></br>Fab <br></br>Studi</h1><h1 className="font-[PlayfairDisplay] font-normal sm:text-8xl text-3xl italic absolute sm:top-50 sm:left-62 top-21.5 left-22.5">O</h1>
             <div className="droite w-1/2 flex flex-col">
                 <Copy><h1 className="sm:text-6xl text-xs mb-8 w-full">We are a french studio who developp a site web for you</h1></Copy>
                 <a href="mailto:thefabstudio2@gmail.com" className="underline sm:text-3xl w-full">thefabstudio2@gmail.com</a>
             </div>
-            </div> <div className="flex items-center justify-between gap-[1rem] text-black text-[20px] h-[20px] w-full">
+            </div> <div className="flex items-center justify-between gap-4 text-black text-[20px] h-5 w-full">
                    
                      <motion.div
-          className="star h-[20px] w-[20px] relative mt-auto"
+          className="star h-5 w-5 relative mt-auto"
           animate={{ rotate: [0, 10, -10, 0] }}
           transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
         >
@@ -123,25 +123,26 @@ export default function Footer(){
               />
             </g>
           </svg>
-        </motion.div><div className="line h-[3px] w-full bg-black rounded-4xl"></div><div className="date sm:mr-[50px] mr-[40px]"><p className="font-[Dirtyline] text-[20px]">2025</p></div></div>
+        </motion.div><div className="line h-0.75 w-full bg-black rounded-4xl"></div><div className="date sm:mr-12.5 mr-10"><p className="font-[Dirtyline] text-[20px]">2025</p></div></div>
             <div className="flex justify-between items-start mt-5 h-[40vh] sm:h-[70vh]">
                 <div className="flex flex-col">
                 <div className="flex justify-between items-start">
                 <div className="social w-1/4 list-none">
-                    <h1 className="text-gray-400">Social</h1>
+                    <h1 className="text-[#b98d6b]">Social</h1>
                     <li className="mt-3 sm:text-2xl text-xs"><AnimatedLink color="black" target_on="_blank "href="https://www.instagram.com/thefabstudio2/">Instagram</AnimatedLink></li> </div>
                 <div className="page w-1/4 list-none">
-                    <h1 className="text-gray-400 ">Page</h1>
+                    <h1 className="text-[#b98d6b] ">Page</h1>
+                    <ul>
                     <li className="mt-3 sm:text-2xl text-xs"><AnimatedLink color="black" href="#home_section">Home</AnimatedLink></li>
                     <li className="sm:text-2xl text-xs"><AnimatedLink color="black" href="#about_section">About us</AnimatedLink></li>
                     <li className="sm:text-2xl text-xs"><AnimatedLink color="black" href="#projects_section">Projects</AnimatedLink></li>
                     <li className="sm:text-2xl text-xs"><AnimatedLink color="black" href="#team_section">Team</AnimatedLink></li>
                     <li className="sm:text-2xl text-xs"><AnimatedLink color="black" href="#contact_section">Contact</AnimatedLink></li>
-               </div></div>
+               </ul></div></div>
                <div className="flex items-end justify-start sm:h-50 h-40">
                 <div className="flex items-center justify-center gap-3">
                 <p>EN</p>
-                     <Switch/>
+                <Switch aria-label="Changer la langue du site" />
                 <p>FR</p></div>
       
 
@@ -149,14 +150,14 @@ export default function Footer(){
                </div>
                 <div className="flex items-start justify-start flex-col w-1/2 sm:relative absolute sm:left-0 left-40">
                 <DepthImage src={"/medias/Dune_footer.jpg"}/>
-                <div className="absolute"><h3 className="text-gray-400">Need help ?</h3>
+                <div className="absolute"><h4 className="text-[#b98d6b]">Need help ?</h4>
                 <button className="flex items-center justify-center gap-1  w-auto bg-black text-white rounded-3xl sm:p-3 sm:mt-3 p-1 mt-1 sm:text-base text-xs">Contact<ArrowRight /></button>
                 </div></div>
                 
             </div>
-            <div className="flex items-center relative mt-5 pb-3 justify-between w-full text-gray-400 sm:text-base text-xs">
+            <div className="flex items-center relative mt-5 pb-3 justify-between w-full text-[#b98d6b] sm:text-base text-xs">
                 <h1>&copy; 2025 TheFabStudio. All right reserved </h1>
-                <h1 ><AnimatedLink color="grey" href="/privacy-policy">Terms & Privacy Policy</AnimatedLink></h1>
+                <h1 ><AnimatedLink color="#b98d6b" href="/privacy-policy">Terms & Privacy Policy</AnimatedLink></h1>
             </div>
         </section>
     )

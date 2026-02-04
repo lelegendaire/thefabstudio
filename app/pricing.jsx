@@ -4,8 +4,8 @@ export default function Pricing(){
     return (
         <>
         <section className="pricing bg-black text-white h-[110vh] flex relative items-center justify-center">
-            <h1 className="font-[Satoshi] font-bold text-9xl sm:left-auto left-0 sm:top-10 absolute sm:rotate-0 rotate-90">Investement</h1>
-            <div className="bloc flex items-center justify-center sm:flex-row flex-col gap-5 sm:top-30 absolute font-[Satoshi]">
+            <h1 className="font-bold text-9xl sm:left-auto left-0 sm:top-10 absolute sm:rotate-0 rotate-90">Investement</h1>
+            <div className="bloc flex items-center justify-center sm:flex-row flex-col gap-5 sm:top-30 absolute">
                 <div className="Stater flex items-center justify-center flex-col h-60 w-70 sm:h-120 sm:w-90 bg-transparent rounded-3xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] shadow-[0px_10px_18px_-3px_rgba(255,255,255,0.1),inset_0px_-5px_18px_6px_rgba(255,255,255,0.1)]">
                     <div className="head z-2 sm:h-20 w-full flex items-center justify-center"><h1 className="font-bold text-xl sm:text-2xl">Starter Experience</h1></div>
                     <div className="list z-2 sm:h-80 w-full flex items-center justify-start pt-5 flex-col gap-1 sm:gap-5 text-white rounded-b-2xl ">

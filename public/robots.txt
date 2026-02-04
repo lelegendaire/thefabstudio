@@ -9,5 +9,5 @@ Disallow: /temp/
 Disallow: /preview/
 
 # Indiquer ton sitemap
-Sitemap: https://thefabstudio.onrender.com/sitemap.xml
+Sitemap: https://thefabstudio.vercel.app/sitemap.xml
 

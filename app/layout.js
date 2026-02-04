@@ -1,6 +1,7 @@
 // layout.js
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
+import { satoshi } from './fonts'
 
 export const metadata = {
   title: {
@@ -35,7 +36,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr">
+    <html lang="en">
       <head>
         <meta
           name="google-site-verification"
@@ -43,10 +44,14 @@ export default function RootLayout({ children }) {
         />
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no"
+          content="width=device-width, initial-scale=1.0"
         />
+        <meta name="description" content="The Fab Studio is a creative web studio crafting immersive, high-end digital experiences through design, motion and code."></meta>
+        <link rel="canonical" href="https://thefabstudio.vercel.app/"></link>
+
       </head>
-      <body>
+
+      <body className={satoshi.className}>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
