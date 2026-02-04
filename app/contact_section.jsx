@@ -151,7 +151,7 @@ const Contact = forwardRef((props, ref) => {
   aria-label={`Afficher le slide ${index + 1}`}
   aria-current={index === activeIndex ? "true" : undefined}
   onClick={() => setActiveIndex(index)}
-  className="relative w-11 h-11 flex items-center justify-center"
+  className="relative w-12 h-12 flex items-center justify-center"
 >
    <span
     className={`transition-all duration-300 focus-visible:outline-2 focus-visible:outline-black ${
@@ -175,14 +175,14 @@ const Contact = forwardRef((props, ref) => {
         <form onSubmit={handleSubmit} className="flex flex-col items-start justify-center sm:w-100 w-full">
         <div className="p-5 w-full">
             <h1>Email*</h1>
-            <input type="mail" placeholder="myemail@gmail.com" className=" w-full h-11 min-h-11 outline-0" value={formData.email}
+            <input type="mail" placeholder="myemail@gmail.com" className=" w-full h-12 min-h-12 outline-0" value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
             required></input>
         </div>
         <div className="h-0.5 sm:w-100 w-full bg-gray-200 rounded-2xl "></div>
         <div className="pl-5 pt-5 w-full">
             <h1 className="pt-3 ">Object*</h1>
-            <input type="text" placeholder="An idea, a question, a project... ?" className="w-full outline-0 h-11 min-h-11" value={formData.object}
+            <input type="text" placeholder="An idea, a question, a project... ?" className="w-full outline-0 h-12 min-h-12" value={formData.object}
             onChange={(e) => handleChange('object', e.target.value)}
             required></input>
             <div className="flex gap-2 sm:gap-3 mt-4">
@@ -190,7 +190,7 @@ const Contact = forwardRef((props, ref) => {
           <button
             key={tab.key}
             onClick={() => setSelectedTab(tab.key)}
-            className={`min-h-11 rounded-2xl px-4 py-2 text-sm transition-all duration-200 flex items-center justify-center${
+            className={`min-h-12 rounded-2xl px-4 py-3 text-sm transition-all duration-200 flex items-center justify-center${
               selectedTab === tab.key
                 ? "bg-black text-white"
                 : "bg-[#f5eeee] text-black"
@@ -204,11 +204,11 @@ const Contact = forwardRef((props, ref) => {
         </div>
         <div className="p-5 w-full">
             <h1 className="pt-3 pb-3">Your message*</h1>
-            <textarea type="text" placeholder="Tell us all about it! Tell us about your idea, your desires or what you're looking for." className="h-40 min-h-30 w-full outline-0" value={formData.message}
+            <textarea type="text" placeholder="Tell us all about it! Tell us about your idea, your desires or what you're looking for." className="h-48 min-h-48 w-full outline-0" value={formData.message}
             onChange={(e) => handleChange('message', e.target.value)}
             required></textarea>
             <button  type="submit"
-            disabled={isLoading} className="bg-black text-white rounded-2xl px-3 py-2 flex items-center justify-center">{isLoading ? 'Envoi en cours...' : 'Send'}</button>
+            disabled={isLoading} className="bg-black text-white rounded-2xl px-4 py-3 flex items-center justify-center">{isLoading ? 'Envoi en cours...' : 'Send'}</button>
             {status && (
             <p className={`mt-2 text-sm ${status.includes('✅') ? 'text-green-600' : 'text-red-600'}`}>
               {status}

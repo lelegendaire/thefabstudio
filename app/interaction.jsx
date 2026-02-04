@@ -1,16 +1,12 @@
 "use client"
 import Copy from "./components/Copy"
 import { useEffect, useRef, useState  } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplitText } from 'gsap/SplitText';
+
 import { useLenis } from './context/LenisContext'
 import { useRouter } from 'next/navigation';
 import { dirtyline } from './fonts'
 // Enregistrer les plugins GSAP
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, SplitText);
-}
+
 
 const Interaction = () => {
   const router = useRouter();
@@ -62,43 +58,61 @@ const Interaction = () => {
       url: "/Cinema"
     }
   ];
- const handleNavigation = (image, url, e) => {
-    // Récupérer la position du clic
-    const rect = e.currentTarget.querySelector('img').getBoundingClientRect();
-    setClickPosition({
-      x: rect.left + rect.width / 2,
-      y: rect.top + rect.height / 2
-    });
+const handleNavigation = async (image, url, e) => {
+  // Charger GSAP si pas encore chargé
+  if (!window.gsap) {
+    const gsapModule = await import('gsap');
+    const scrollTriggerModule = await import('gsap/ScrollTrigger');
+    window.gsap = gsapModule.gsap;
+    window.ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+  }
 
-    // Démarrer la transition
-    setTransitionImage(image);
-    setTransitioning(true);
+  const rect = e.currentTarget.querySelector('img').getBoundingClientRect();
+  setClickPosition({
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2
+  });
 
-    // Naviguer après l'animation
-    setTimeout(() => {
-      // Annuler le requestAnimationFrame
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
-      }
-      
-      // Tuer tous les ScrollTriggers
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      
-     
-      router.push(url);
-    }, 800);
-  };
-  useEffect(() => {
-  if (!lenis || animationInitialized.current ) return;
+  setTransitionImage(image);
+  setTransitioning(true);
+
+  setTimeout(() => {
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
+    
+    window.ScrollTrigger?.getAll().forEach(trigger => trigger.kill());
+    router.push(url);
+  }, 800);
+};
+ useEffect(() => {
+  if (!lenis || animationInitialized.current) return;
 
   let timeoutId;
   let started = false;
+  let gsap, ScrollTrigger, SplitText; // ✅ Déclarer ici
+
+  // ✅ Fonction pour charger GSAP
+  const loadGSAP = async () => {
+    const gsapModule = await import('gsap');
+    const scrollTriggerModule = await import('gsap/ScrollTrigger');
+    const splitTextModule = await import('gsap/SplitText');
+    
+    gsap = gsapModule.gsap;
+    ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+    SplitText = splitTextModule.SplitText;
+    
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+  };
 
   // Fonction d'animation principale
-  const startAnimations = () => {
+  const startAnimations = async () => { // ✅ Rendre async
     if (started) return;
     started = true;
+
+    // ✅ Charger GSAP d'abord
+    await loadGSAP();
 
     // Boucle Lenis
     const tick = (time) => {
@@ -108,10 +122,9 @@ const Interaction = () => {
     rafIdRef.current = requestAnimationFrame(tick);
 
     // Init des ScrollTriggers
-    initSpotlightAnimations();
+    initSpotlightAnimations(gsap, ScrollTrigger, SplitText); // ✅ Passer en paramètres
     animationInitialized.current = true;
 
-    // ⚠️ Attendre un peu pour laisser Lenis stabiliser le layout
     timeoutId = setTimeout(() => {
       ScrollTrigger.update();
     }, 600);
@@ -124,22 +137,20 @@ const Interaction = () => {
   };
 
   lenis.on('scroll', handleScrollStart);
-
-  // Fallback : démarrage automatique après 800 ms si aucun scroll
   timeoutId = setTimeout(startAnimations, 800);
 
   return () => {
     if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
     if (timeoutId) clearTimeout(timeoutId);
     lenis.off('scroll', handleScrollStart);
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    ScrollTrigger?.getAll().forEach(trigger => trigger.kill()); // ✅ Optional chaining
     animationInitialized.current = false;
   };
 }, [lenis]);
 
 
 
-  const initSpotlightAnimations = () => {
+  const initSpotlightAnimations = (gsap, ScrollTrigger, SplitText) => {
     if (!sectionRef.current) return;
 
     const images = sectionRef.current.querySelectorAll(".img-element");
@@ -448,7 +459,7 @@ const isVerySmallScreen = screenWidth < 600;
       <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-black sm:h-[120vh] h-full bg-white p-4">
        
         <Copy><h1 className="font-bold sm:text-6xl text-4xl sm:p-10 p-3">Still not convinced</h1></Copy>
-        <Copy><h3 className=" sm:text-3xl text-2xl sm:p-5 p-1 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h3></Copy>
+        <Copy><h2 className=" sm:text-3xl text-2xl sm:p-5 p-1 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h2></Copy>
         <div className="flex items-center justify-center gap-3 flex-col sm:flex-row">
            {works.map((work, index) => (
               <div 

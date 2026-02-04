@@ -21,11 +21,7 @@ import {
   Color,
 } from "three";
 import { X,ArrowDown } from "lucide-react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+
 export default function Projects() {
   const canvasRef = useRef(null);
   const projetDivRef = useRef(null); // 🟢 nouvelle ref pour ton div Projet
@@ -247,6 +243,20 @@ export default function Projects() {
   // Initialisation Three.js - se re-déclenche quand isMobile change
   useEffect(() => {
     if (!canvasRef.current) return;
+     // ✅ AJOUTER CES LIGNES ICI
+  let gsap, ScrollTrigger;
+  
+  async function loadGSAP() {
+    const gsapModule = await import('gsap');
+    const scrollTriggerModule = await import('gsap/ScrollTrigger');
+    
+    gsap = gsapModule.gsap;
+    ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+    gsap.registerPlugin(ScrollTrigger);
+  }
+  
+  // Charger GSAP avant d'utiliser ScrollTrigger
+  loadGSAP().then(() => {
     const isMobile = window.innerWidth < 768;
     console.log(isMobile ? 2 : 1);
     // Scene
@@ -744,13 +754,14 @@ export default function Projects() {
       window.removeEventListener("mouseup", handleMouseUp);
       window.removeEventListener("touchend", handleMouseUp);
       geometry.dispose();
-
       cubesGroup.children.forEach((cube) => {
         cube.geometry.dispose();
         cube.material.forEach((m) => m.dispose());
       });
+      ScrollTrigger?.getAll().forEach(st => st.kill());
       renderer.dispose();
     };
+  });
   }, []);
 
   // Fonction pour désélectionner le cube

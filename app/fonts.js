@@ -3,14 +3,14 @@ import localFont from 'next/font/local'
 export const dirtyline = localFont({
   src: '../public/fonts/Dirtyline.ttf',
   display: 'swap',
-  preload: true, // branding critique
+  preload: false, // branding critique
   variable: '--font-dirtyline',
 })
 
 export const satoshi = localFont({
-  src: '../public/fonts/Satoshi/WEB/fonts/Satoshi-Variable.woff2',
+  src: '../public/fonts/Satoshi-Variable.ttf',
   display: 'swap',
-  preload: false,
+  preload: true,
   variable: '--font-satoshi',
 })
 

@@ -2,6 +2,7 @@
 import { HyperText } from "../components/magicui/hyper-text";
 import CubeOverlay from "./cube";
 import Header from "./header";
+import { dirtyline } from "./fonts";
 export default function Hero({ isLoaded }) {
   return (
     <>
@@ -30,7 +31,7 @@ export default function Hero({ isLoaded }) {
             </svg>
           </div>
           <div className="line h-0.75 w-full bg-white rounded-4xl"></div>
-          <div className="date mr-2.5 sm:mr-12.5">
+          <div className={`${dirtyline.className} date mr-2.5 sm:mr-12.5`}>
             <HyperText className="text-[20px]">2025</HyperText>
           </div>
         </div>

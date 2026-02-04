@@ -1,18 +1,45 @@
 'use client';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { MeshTransmissionMaterial, RoundedBox, Text, Text3D   } from '@react-three/drei';
+
 import { useAssets } from '../context/AssetContext'
 import { useRef, useEffect, useState } from 'react';
-import * as THREE from 'three';
+
 import styles from "./style.module.css"
 
+// ✅ Lazy load de toutes les dépendances Three.js
+let Canvas, useFrame, useThree;
+let MeshTransmissionMaterial, RoundedBox, Text;
+let THREE;
+
+async function loadThreeJS() {
+  if (Canvas) return; // Déjà chargé
+  
+  const [fiber, drei, three] = await Promise.all([
+    import('@react-three/fiber'),
+    import('@react-three/drei'),
+    import('three')
+  ]);
+  
+  Canvas = fiber.Canvas;
+  useFrame = fiber.useFrame;
+  useThree = fiber.useThree;
+  
+  MeshTransmissionMaterial = drei.MeshTransmissionMaterial;
+  RoundedBox = drei.RoundedBox;
+  Text = drei.Text;
+  
+  THREE = three;
+}
 
 function BackgroundPlane() {
-  const { bgTexture } = useAssets()
+  const assets = useAssets()
+  
+  if (!assets?.bgTexture || !THREE) {
+    return null
+  }
   return (
     <mesh position={[0, 0, -2]} scale={[10, 10, 1]}>
       <planeGeometry args={[2.5, 1.5]} />
-      <meshBasicMaterial map={bgTexture} />
+      <meshBasicMaterial map={assets.bgTexture} />
     </mesh>
   );
 }
@@ -225,7 +252,28 @@ const gap = isPhone ? [0.63,0.03] : isTablet ? [0.43,0.5] : [0.23,0.05]
 
 
 export default function CubeOverlay({ isLoaded}) {
-    if (!isLoaded) return null
+const [threeLoaded, setThreeLoaded] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    // ✅ Charger Three.js seulement quand le loader est terminé
+    const timer = setTimeout(() => {
+      loadThreeJS().then(() => {
+        setThreeLoaded(true);
+      });
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, [isLoaded]);
+
+ 
+
+  // ✅ Afficher un placeholder pendant le chargement de Three.js
+  if (!isLoaded || !threeLoaded || !Canvas) {
+    return null;
+  }
 
   
   const materialProps = {
@@ -242,19 +290,8 @@ export default function CubeOverlay({ isLoaded}) {
   simples: 8,
   backside: true,
 };
-const [isHovered, setIsHovered] = useState(false);
 
-useEffect(() => {
-  const ring = document.getElementById('cursor-ring');
-  const handleMouseMove = (e) => {
-    if (ring) {
-      ring.style.left = `${e.clientX}px`;
-      ring.style.top = `${e.clientY}px`;
-    }
-  };
-  window.addEventListener('mousemove', handleMouseMove);
-  return () => window.removeEventListener('mousemove', handleMouseMove);
-}, []);
+
 
   return (
     <div className="absolute top-0 left-0 w-screen h-full pointer-events-none ">
@@ -267,8 +304,7 @@ useEffect(() => {
 
         {/* <OrbitControls enableZoom={false} /> */}
       </Canvas>
-      <div id="cursor-ring" className={`${styles['cursor-ring']} ${isHovered ? styles.visible : ''}`}>
-</div>
+    
 
 
     </div>
