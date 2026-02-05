@@ -4,7 +4,7 @@
 import dynamic from 'next/dynamic'
 import {useRef} from 'react'
 const AboutUs = dynamic(() => import('./about_us_section'))
-const Projects = dynamic(() => import('./projects'),{ssr:false})
+const Projects = dynamic(() => import('./projects'))
 const Team = dynamic(() => import('./team_section'),{ssr:false})
 const Contact = dynamic(() => import('./contact_section'))
 const Interaction = dynamic(() => import('./interaction'),{srr:false})

@@ -3,8 +3,6 @@
 import { useAssets } from '../context/AssetContext'
 import { useRef, useEffect, useState } from 'react';
 
-import styles from "./style.module.css"
-
 // ✅ Lazy load de toutes les dépendances Three.js
 let Canvas, useFrame, useThree;
 let MeshTransmissionMaterial, RoundedBox, Text;

@@ -2,12 +2,13 @@
 import { HyperText } from "../components/magicui/hyper-text";
 import CubeOverlay from "./cube";
 import Header from "./header";
+import Loader from './loader/loader'
 import { dirtyline } from "./fonts";
 export default function Hero({ isLoaded }) {
   return (
     <>
       <CubeOverlay isLoaded />
-      <h1 className="absolute -z-10">TheFabStudio</h1>
+      <h1 className="absolute -z-999 text-white">TheFabStudio</h1>
       <section className="hero text-[180px] h-screen flex items-center justify-center z-10 pointer-events-none">
         <div className="btn_home absolute top-0 right-0 p-5 pointer-events-auto">
           <Header />
