@@ -326,20 +326,20 @@ const transformStyle = isMobile
                 <div className="absolute inset-0 pointer-events-none opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
             </div>
             <section className='bg-black h-full w-screen text-white '>
-                <h1 className='text-3xl font-[montserrat] p-8'>Composition </h1>
+                <h2 className='text-3xl font-[montserrat] p-8'>Composition </h2>
                  <div ref={cardsRef} className='cards relative w-screen bg-[#0f0f0f] text-white flex flex-col gap-[25svh]'>
                     <div ref={introCardRef} className='card relative w-full h-svh p-[1.5em]'>
                         <div className='card-marquee w-full absolute top-1/2 left-0 transform-[translateY(-50%)] overflow-hidden'>
                             <div className='marquee flex'>
-                                <h1 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Design Beyond Boundaries</h1>
-                                <h1 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Built for Tomorrow</h1>
-                                <h1 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Real Impact</h1>
-                                <h1 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Digital Visions</h1>
+                                <h3 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Design Beyond Boundaries</h3>
+                                <h3 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Built for Tomorrow</h3>
+                                <h3 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Real Impact</h3>
+                                <h3 className='text-[10vw] font-semibold mr-7.5 whitespace-nowrap '>Digital Visions</h3>
                             </div>
                         </div>
                         <div className='card-wrapper relative w-full h-full will-change-transform'>
                             <div className='card-content absolute w-full h-full flex items-end justify-center z-1'>
-                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>2001 : a space odyssey</h1></div>
+                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h2 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>2001 : a space odyssey</h2></div>
                                 <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-normal leading-tight'>a new perspection</p></div>
                             </div>
                             <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/space_odyssey.webp"}></img></div>
@@ -351,7 +351,7 @@ const transformStyle = isMobile
                         </div>
                         <div className='card-wrapper relative w-full h-full will-change-transform'>
                             <div className='card-content absolute w-full h-full flex items-end justify-center z-1'>
-                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>Interstellar</h1></div>
+                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h2 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>Interstellar</h2></div>
                                 <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-normal leading-tight'>a new perspection</p></div>
                             </div>
                             <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.webp"}></img></div>
@@ -363,7 +363,7 @@ const transformStyle = isMobile
                         </div>
                         <div className='card-wrapper relative w-full h-full will-change-transform'>
                             <div className='card-content absolute w-full h-full flex items-end justify-center z-1'>
-                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>Interstellar</h1></div>
+                                <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h2 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>Interstellar</h2></div>
                                 <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-normal leading-tight'>a new perspection</p></div>
                             </div>
                             <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.webp"}></img></div>
@@ -372,7 +372,7 @@ const transformStyle = isMobile
                  </div>
             </section>
             <section className='bg-black h-screen w-screen text-white'>
-                <h1 className='text-3xl font-[montserrat] p-8'>Storyline </h1>
+                <h2 className='text-3xl font-[montserrat] p-8'>Storyline </h2>
                 <div className="w-[200vw] h-[70vh] grid grid-cols-3 md:grid-cols-6 grid-rows-3 md:grid-rows-3 gap-2 md:gap-5 m-4 ">
       <div className="hidden bg-[url('https://images.unsplash.com/photo-1763152496539-302ef51ef66f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-center bg-no-repeat md:block md:col-start-1 md:row-start-1 md:col-span-1 md:row-span-3 bg-gray-300 rounded-md p-10">0</div>
       <div className="hidden bg-[url('https://images.unsplash.com/photo-1763152496539-302ef51ef66f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-center bg-no-repeat md:block md:col-start-2 md:row-start-1 md:col-span-1 md:row-span-3 bg-gray-300 rounded-md p-10">1</div>
@@ -386,10 +386,10 @@ const transformStyle = isMobile
     </div>
             </section>
             <section className='bg-black h-screen w-screen text-white'>
-                <h1 className='text-3xl font-[montserrat] p-8'>Color </h1>
+                <h2 className='text-3xl font-[montserrat] p-8'>Color </h2>
             </section>
             <section className='bg-black h-screen w-screen text-white'>
-                <h1 className='text-3xl font-[montserrat] p-8'>Lighting </h1>
+                <h2 className='text-3xl font-[montserrat] p-8'>Lighting </h2>
                 <LampContainer>
                     <motion.h1
         initial={{ opacity: 0.5, y: 100 }}

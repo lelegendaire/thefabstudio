@@ -108,22 +108,22 @@ export default function Footer() {
       className="sm:h-[115vh] h-full bg-white pr-4 pl-4 pt-4 relative w-full"
     >
       <div className="flex justify-between items-center">
-        <h1
+        <h2
           className={`${dirtyline.className} w-1/2 font-bold sm:text-8xl text-3xl text-black`}
         >
           The <br></br>Fab <br></br>Studi
-        </h1>
-        <h1 className="font-[PlayfairDisplay] font-normal sm:text-8xl text-3xl italic absolute sm:top-50 sm:left-62 top-21.5 left-22.5">
+        </h2>
+        <h2 className="font-[PlayfairDisplay] font-normal sm:text-8xl text-3xl italic absolute sm:top-50 sm:left-62 top-21.5 left-22.5">
           O
-        </h1>
+        </h2>
         <div className="droite w-1/2 flex flex-col">
           <Copy>
-            <h1 className="sm:text-6xl text-xs mb-8 w-full">
+            <h3 className="sm:text-6xl text-xs mb-8 w-full">
               We are a french studio who developp a site web for you
-            </h1>
+            </h3>
           </Copy>
           <a
-            href="mailto:thefabstudio2@gmail.com"
+            href="contact&#64;thefabstudio.com"
             className="underline sm:text-3xl w-full"
           >
             thefabstudio2@gmail.com
@@ -160,14 +160,15 @@ export default function Footer() {
         <div className="flex flex-col">
           <div className="flex justify-between items-start">
             <div className="social w-1/4 list-none">
-              <h1 className={`${dirtyline.className} text-black text-2xl `}>
+              <h2 className={`${dirtyline.className} text-black text-2xl `}>
                 Social
-              </h1>
+              </h2>
               <ul>
                 <li className="mt-3 sm:text-2xl text-xs">
                   <AnimatedLink
                     color="black"
-                    target_on="_blank "
+                    target_on="_blank"
+                    rel="noopener noreferrer"
                     href="https://www.instagram.com/thefabstudio2/"
                   >
                     Instagram
@@ -176,9 +177,9 @@ export default function Footer() {
               </ul>
             </div>
             <div className="page w-1/4 list-none">
-              <h1 className={`${dirtyline.className} text-black text-2xl `}>
+              <h2 className={`${dirtyline.className} text-black text-2xl `}>
                 Page
-              </h1>
+              </h2>
               <ul>
                 <li className="mt-3 sm:text-2xl text-xs">
                   <AnimatedLink color="black" href="#home_section">
@@ -219,7 +220,7 @@ export default function Footer() {
         <div className="flex items-start justify-start flex-col w-1/2 sm:relative absolute sm:left-0 left-40">
           <DepthImage src={"/medias/Dune_footer.webp"} />
           <div className="absolute">
-            <h1 className="text-black">Need help ?</h1>
+            <h2 className="text-black">Need help ?</h2>
             <button
               type="button"
               className="flex items-center justify-center gap-1 w-31 bg-black text-white rounded-2xl sm:p-3 sm:mt-3 p-1 mt-1 sm:text-base text-xs"
@@ -231,12 +232,12 @@ export default function Footer() {
         </div>
       </div>
       <div className="flex items-center relative mt-5 pb-3 justify-between w-full text-black sm:text-base text-xs">
-        <h1>&copy; 2025 TheFabStudio. All right reserved </h1>
-        <h1>
+        <h2>&copy; 2025 TheFabStudio. All right reserved </h2>
+        <h2>
           <AnimatedLink color="black" href="/privacy-policy">
             Terms & Privacy Policy
           </AnimatedLink>
-        </h1>
+        </h2>
       </div>
     </section>
   );

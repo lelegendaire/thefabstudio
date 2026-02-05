@@ -527,9 +527,9 @@ isAnimatingRef.current = false; // ✅ VERY IMPORTANT
       />
       
       <div className="absolute top-0 left-0 min-w-full h-full select-none z-10 text-white" ref={slideContentRef} >
-        <h1 className="font-bold text-8xl text-white m-4">Our team</h1>
+        <h2 className="font-bold text-8xl text-white m-4">Our team</h2>
         <div className="relative top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center" >
-          <h1 className="uppercase text-[12vw] sm:text-[7vw] font-bold leading-none flex justify-center whitespace-pre-line gap-[1em] flex-col sm:flex-row">
+          <h3 className="uppercase text-[12vw] sm:text-[7vw] font-bold leading-none flex justify-center whitespace-pre-line gap-[1em] flex-col sm:flex-row">
             {currentSlide.title.split(' ').map((word, i) => (
               <div className="word flex" key={i}>
                 {word.split('').map((char, j) => (
@@ -539,7 +539,7 @@ isAnimatingRef.current = false; // ✅ VERY IMPORTANT
                 ))}
               </div>
             ))}
-          </h1>
+          </h3>
         </div>
         
         <div className="relative sm:top-[30%] top-[40%] left-[70%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden ">

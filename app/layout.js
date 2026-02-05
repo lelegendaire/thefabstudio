@@ -38,6 +38,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+
+
         <meta
           name="google-site-verification"
           content="V9NcHd727ex_fH4m70oD8FXErvFVqfkp-i2E7oJOk-w"
@@ -47,6 +49,8 @@ export default function RootLayout({ children }) {
           content="width=device-width, initial-scale=1.0"
         />
         <meta name="description" content="The Fab Studio is a creative web studio crafting immersive, high-end digital experiences through design, motion and code."></meta>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        
         <link rel="canonical" href="https://thefabstudio.vercel.app/"></link>
 
       </head>

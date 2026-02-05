@@ -156,8 +156,8 @@ const isMobile = window.innerWidth < 768;
 
     const images = sectionRef.current.querySelectorAll(".img-element");
     const coverImg = sectionRef.current.querySelector(".spotlight-cover-img");
-    const introHeader = sectionRef.current.querySelector(".spotlight-intro-header h1");
-    const outroHeader = sectionRef.current.querySelector(".spotlight-outro-header h1");
+    const introHeader = sectionRef.current.querySelector(".spotlight-intro-header h2");
+    const outroHeader = sectionRef.current.querySelector(".spotlight-outro-header h2");
 
     if (!images.length || !coverImg || !introHeader || !outroHeader) return;
      const screenWidth = window.innerWidth;
@@ -407,9 +407,9 @@ const isVerySmallScreen = screenWidth < 600;
          <div ref={sectionRef} className="team-section">
       {/* Section Intro */}
       <section className="relative w-screen h-screen p-8 overflow-hidden flex justify-center items-center bg-[#0f0f0f] text-white">
-        <h1 className="text-5xl md:text-8xl font-medium tracking-tight leading-[0.9] w-full md:w-1/2 text-center">
+        <h2 className="text-5xl md:text-8xl font-medium tracking-tight leading-[0.9] w-full md:w-1/2 text-center">
           Want to discover more  
-        </h1>
+        </h2>
       </section>
 
       {/* Section Spotlight */}
@@ -444,23 +444,23 @@ const isVerySmallScreen = screenWidth < 600;
 
         {/* Headers */}
         <div className="spotlight-intro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-10">
-          <h1 className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}>
+          <h2 className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}>
             When art and design meet that create the work of art 
-          </h1>
+          </h2>
         </div>
 
         <div className="spotlight-outro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-20">
-          <h1 className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}>
+          <h2 className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}>
             Nothing scares us when you challenge us
-          </h1>
+          </h2>
         </div>
       </section>
 
       {/* Section Outro */}
       <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-black sm:h-[120vh] h-full bg-white p-4">
        
-        <Copy><h1 className="font-bold sm:text-6xl text-4xl sm:p-10 p-3">Still not convinced</h1></Copy>
-        <Copy><h2 className=" sm:text-3xl text-2xl sm:p-5 p-1 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h2></Copy>
+        <Copy><h2 className="font-bold sm:text-6xl text-4xl sm:p-10 p-3">Still not convinced</h2></Copy>
+        <Copy><h3 className=" sm:text-3xl text-2xl sm:p-5 p-1 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h3></Copy>
         <div className="flex items-center justify-center gap-3 flex-col sm:flex-row">
            {works.map((work, index) => (
               <div 
@@ -475,7 +475,7 @@ const isVerySmallScreen = screenWidth < 600;
                     alt={work.title}
                   />
                 </div>
-                <h1 className="text-xl ">{work.title}</h1>
+                <h2 className="text-xl ">{work.title}</h2>
                 <button 
                   className="bg-black w-60 rounded-full py-3 px-6 text-white font-medium active:scale-95 transition-transform duration-300 hover:bg-[#b98d6b] hover:text-black"
                 >

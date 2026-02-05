@@ -102,7 +102,7 @@ const Contact = forwardRef((props, ref) => {
             <Bar dataKey="client" fill="#b98d6b" radius={20} />
           </BarChart>
         </ChartContainer>
-        <h1 className=" font-bold py-4">We have lot of client </h1>
+        <h2 className=" font-bold py-4">We have lot of client </h2>
       </div>
     ),
   },
@@ -113,7 +113,7 @@ const Contact = forwardRef((props, ref) => {
         
         <iframe className="w-[80%] h-[80%] object-cover rounded-xl" width="500" height="300" allow="geolocation" src="https://api.maptiler.com/maps/019a29ee-fc6c-7214-992b-1d1cfeb51a7d/?key=OVKTtEmd6oXqJWFoFhnn#11.1/48.85582/2.37502"></iframe>
       
-       <h1 className=" font-bold py-4">We are here </h1>
+       <h2 className=" font-bold py-4">We are here </h2>
        </div>
     ),
   },
@@ -127,15 +127,15 @@ const Contact = forwardRef((props, ref) => {
           alt="Dune with beige fog"
           width="500" height="300"
         />
-        <h1 className=" font-bold py-4">Contact us </h1>
+        <h2 className=" font-bold py-4">Contact us </h2>
       </div>
     ),
   },
 ]
     return (
         <section id="contact_section" ref={ref} className="h-[150vh] w-full bg-white p-4 rounded-4xl relative" style={{ transform: "translateY(-105%) scale(0.05)" }}>
-            <h1 className="font-bold sm:text-8xl text-3xl text-black">Let’s work together</h1>
-            <h1 className="font-bold sm:text-3xl text-sm"> — even just to explore.</h1>
+            <h2 className="font-bold sm:text-8xl text-3xl text-black">Let’s work together</h2>
+            <h3 className="font-bold sm:text-3xl text-sm"> — even just to explore.</h3>
             <div className="flex items-center justify-between flex-col sm:flex-row">
              <div className="flex sm:w-1/2 w-full sm:h-[80vh] h-[40vh] flex-col items-center justify-center"> 
              <div className="slider w-full h-full flex items-center justify-center">
@@ -160,28 +160,26 @@ const Contact = forwardRef((props, ref) => {
         : "w-2 h-2 rounded-full bg-gray-400"
     }`}
   />
-  <span className="sr-only">
-    Afficher le slide {index + 1}
-  </span>
+  
 </button>
 
         ))}
       </div>
         </div>
         <div className="pt-20 flex w-full sm:w-1/2 h-screen items-center justify-center flex-col">
-        <h1 className="text-3xl">Formulaire</h1>
+        <h2 className="text-3xl">Formulaire</h2>
         
         <div className="flex gap-1 items-start sm:w-100 w-full pl-5 pt-5"><p>To:</p> <p className="w-auto bg-[#b98d6b8c] pt-0.5 pb-0.5 pr-1.5 pl-1.5 rounded-md">thefabstudio2@gmail.com</p></div>
         <form onSubmit={handleSubmit} className="flex flex-col items-start justify-center sm:w-100 w-full">
         <div className="p-5 w-full">
-            <h1>Email*</h1>
+            <h3>Email*</h3>
             <input type="mail" placeholder="myemail@gmail.com" className=" w-full h-12 min-h-12 outline-0" value={formData.email}
             onChange={(e) => handleChange('email', e.target.value)}
             required></input>
         </div>
         <div className="h-0.5 sm:w-100 w-full bg-gray-200 rounded-2xl "></div>
         <div className="pl-5 pt-5 w-full">
-            <h1 className="pt-3 ">Object*</h1>
+            <h3 className="pt-3 ">Object*</h3>
             <input type="text" placeholder="An idea, a question, a project... ?" className="w-full outline-0 h-12 min-h-12" value={formData.object}
             onChange={(e) => handleChange('object', e.target.value)}
             required></input>
@@ -203,7 +201,7 @@ const Contact = forwardRef((props, ref) => {
             
         </div>
         <div className="p-5 w-full">
-            <h1 className="pt-3 pb-3">Your message*</h1>
+            <h3 className="pt-3 pb-3">Your message*</h3>
             <textarea type="text" placeholder="Tell us all about it! Tell us about your idea, your desires or what you're looking for." className="h-48 min-h-48 w-full outline-0" value={formData.message}
             onChange={(e) => handleChange('message', e.target.value)}
             required></textarea>

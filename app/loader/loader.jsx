@@ -57,7 +57,7 @@ export default function Loader({ children }) {
       animate={controls}
     >
       {/* Précharge le SVG sans affecter le layout */}
-      <link rel="preload" href="/logo.svg" as="image" crossorigin="anonymous" />
+      <link rel="preload" href="/logo.svg" as="image" crossOrigin="anonymous" />
 
       {Children.map(children, (child) =>
         cloneElement(child, { isLoaded: maskRemoved, assets })

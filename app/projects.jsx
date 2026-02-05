@@ -812,9 +812,9 @@ export default function Projects() {
       id="project_section"
       className="h-full bg-white p-2 sm:p-4 flex flex-col "
     >
-      <h1 className="font-bold text-4xl sm:text-6xl lg:text-8xl text-black mb-4 sm:mb-8 mr-auto">
+      <h2 className="font-bold text-4xl sm:text-6xl lg:text-8xl text-black mb-4 sm:mb-8 mr-auto">
         Our projects
-      </h1>
+      </h2>
       <div
         className="static_div flex-1 relative rounded-lg shadow-2xl"
         style={{
@@ -892,9 +892,9 @@ export default function Projects() {
               ref={bottomRef}
               className="description relative sm:h-[90vh] h-full w-87 sm:w-[95vw] bg-amber-50 rounded-2xl overflow-hidden text-black sm:p-10 p-3"
             >
-              <h1 className="sm:text-5xl text-2xl font-bold text-center mb-10">
+              <h2 className="sm:text-5xl text-2xl font-bold text-center mb-10">
                 {selectedProject.data.title}
-              </h1>
+              </h2>
 
               <div className="flex flex-wrap sm:gap-6 gap-3 justify-center">
                 {selectedProject.data.title_description.map((item, i) => (

@@ -69,12 +69,12 @@ const [lenis, setLenis] = useState(null);
       <div className="flex-1 px-8 py-10 space-y-20">
      
 
-        <p className="font-[Satoshi] font-bold">Last Updated: 30/07/2025</p>
+        <p className=" font-bold">Last Updated: 05/02/2026</p>
 
         {sections.map((section) => (
           <div key={section.id} id={section.id} className="scroll-mt-28 space-y-6">
             <h2 className="text-3xl font-semibold">{section.title}</h2>
-            <div className="font-[Satoshi] text-[18px] max-w-4xl leading-relaxed">
+            <div className="text-[18px] max-w-4xl leading-relaxed">
               {getSectionContent(section.id)}
             </div>
           </div>

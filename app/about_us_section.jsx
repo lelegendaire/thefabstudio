@@ -63,9 +63,9 @@ window.addEventListener("scroll", optimizedScroll);
     >
       <div className="z-10  relative">
         <Copy>
-          <h1 className="font-bold sm:text-8xl text-5xl bg-black sm:w-2xl w-full z-10 relative">
+          <h2 className="font-bold sm:text-8xl text-5xl bg-black sm:w-2xl w-full z-10 relative">
             About Us
-          </h1>
+          </h2>
         </Copy>
         <Copy>
           <p className="sm:w-2xl w-xs ml-auto sm:text-2xl text-xs">
