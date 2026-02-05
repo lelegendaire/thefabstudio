@@ -43,11 +43,10 @@ function BackgroundPlane() {
 }
 
 
-function InteractiveCube({ materialProps, setIsHovered }) {
+function InteractiveCube({ materialProps, canvasContainerRef }) {
   const ref = useRef();
   const sphereRef = useRef();
   const ringRef = useRef();
-const canvasContainerRef = useRef(null);
 
   const { size, viewport, mouse } = useThree();
   const [isDragging, setIsDragging] = useState(false);
@@ -268,6 +267,7 @@ const gap = isPhone ? [0.63,0.03] : isTablet ? [0.43,0.5] : [0.23,0.05]
 export default function CubeOverlay({ isLoaded}) {
 const [threeLoaded, setThreeLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+const canvasContainerRef = useRef(null);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -314,7 +314,7 @@ const [threeLoaded, setThreeLoaded] = useState(false);
   
 {/* Fond dupliqué dans la scène WebGL */}
  <BackgroundPlane />    
-  <InteractiveCube materialProps={materialProps} setIsHovered={setIsHovered} />
+  <InteractiveCube ref={canvasContainerRef} materialProps={materialProps} setIsHovered={setIsHovered} />
    <Logo3D isLoaded />
 
         {/* <OrbitControls enableZoom={false} /> */}
