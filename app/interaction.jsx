@@ -477,7 +477,7 @@ const isVerySmallScreen = screenWidth < 600;
                 </div>
                 <h1 className="text-xl ">{work.title}</h1>
                 <button 
-                  className="bg-black w-60 rounded-full py-3 px-6 text-white font-medium active:scale-95 transition-transform duration-300 hover:bg-gray-100"
+                  className="bg-black w-60 rounded-full py-3 px-6 text-white font-medium active:scale-95 transition-transform duration-300 hover:bg-[#b98d6b] hover:text-black"
                 >
                   See more
                 </button>

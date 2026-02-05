@@ -190,7 +190,7 @@ const Contact = forwardRef((props, ref) => {
           <button
             key={tab.key}
             onClick={() => setSelectedTab(tab.key)}
-            className={`min-h-12 rounded-2xl px-4 py-3 text-sm transition-all duration-200 flex items-center justify-center${
+            className={`min-h-12 rounded-2xl px-4 py-3 text-sm transition-all duration-200 flex items-center justify-center ${
               selectedTab === tab.key
                 ? "bg-black text-white"
                 : "bg-[#f5eeee] text-black"
