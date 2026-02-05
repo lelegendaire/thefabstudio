@@ -1,6 +1,6 @@
 "use client"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { useState, forwardRef  } from "react";
+import { useEffect,useState, forwardRef  } from "react";
 
 import {
   ChartConfig,
