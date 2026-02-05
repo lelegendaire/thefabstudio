@@ -3,6 +3,7 @@
 import { useAssets } from '../context/AssetContext'
 import { useRef, useEffect, useState } from 'react';
 
+
 // ✅ Lazy load de toutes les dépendances Three.js
 let Canvas, useFrame, useThree;
 let MeshTransmissionMaterial, RoundedBox, Text;
@@ -43,7 +44,7 @@ function BackgroundPlane() {
 }
 
 
-function InteractiveCube({ materialProps, canvasContainerRef,setIsHovered }) {
+function InteractiveCube({ materialProps, setIsHovered }) {
   const ref = useRef();
   const sphereRef = useRef();
   const ringRef = useRef();
@@ -72,23 +73,8 @@ function InteractiveCube({ materialProps, canvasContainerRef,setIsHovered }) {
       originalPosition.current = [...ref.current.position.toArray()];
     }
   }, []);
-const [isVisible, setIsVisible] = useState(false);
-
-useEffect(() => {
-  if (!canvasContainerRef.current) return;
-
-  const observer = new IntersectionObserver(([entry]) => {
-    setIsVisible(entry.isIntersecting);
-  });
-
-  observer.observe(canvasContainerRef.current);
-  return () => observer.disconnect();
-}, []);
-
 
   useFrame((state, delta) => {
-    if (!isVisible) return; // 🚫 stop render quand hors écran
-    if (isMobile) delta *= 0.5; // ralenti sur mobile
     if (!ref.current) return;
 
     // NORMAL ROTATION
@@ -267,7 +253,6 @@ const gap = isPhone ? [0.63,0.03] : isTablet ? [0.43,0.5] : [0.23,0.05]
 export default function CubeOverlay({ isLoaded}) {
 const [threeLoaded, setThreeLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-const canvasContainerRef = useRef(null);
 
   useEffect(() => {
     if (!isLoaded) return;
@@ -307,14 +292,13 @@ const canvasContainerRef = useRef(null);
 
 
 
-
   return (
-    <div ref={canvasContainerRef} className="absolute top-0 left-0 w-screen h-full pointer-events-none ">
-<Canvas frameloop="demand" gl={{ alpha: true, premultipliedAlpha: false }}  dpr={[1, 1.5]} style={{ background: 'transparent' }}>
+    <div className="absolute top-0 left-0 w-screen h-full pointer-events-none ">
+<Canvas gl={{ alpha: true, premultipliedAlpha: false }}  dpr={[1, 1.5]} style={{ background: 'transparent' }}>
   
 {/* Fond dupliqué dans la scène WebGL */}
  <BackgroundPlane />    
-  <InteractiveCube canvasContainerRef={canvasContainerRef} materialProps={materialProps} setIsHovered={setIsHovered} />
+  <InteractiveCube materialProps={materialProps} setIsHovered={setIsHovered} />
    <Logo3D isLoaded />
 
         {/* <OrbitControls enableZoom={false} /> */}
