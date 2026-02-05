@@ -43,7 +43,7 @@ function BackgroundPlane() {
 }
 
 
-function InteractiveCube({ materialProps, canvasContainerRef }) {
+function InteractiveCube({ materialProps, canvasContainerRef,setIsHovered }) {
   const ref = useRef();
   const sphereRef = useRef();
   const ringRef = useRef();
@@ -314,7 +314,7 @@ const canvasContainerRef = useRef(null);
   
 {/* Fond dupliqué dans la scène WebGL */}
  <BackgroundPlane />    
-  <InteractiveCube ref={canvasContainerRef} materialProps={materialProps} setIsHovered={setIsHovered} />
+  <InteractiveCube canvasContainerRef={canvasContainerRef} materialProps={materialProps} setIsHovered={setIsHovered} />
    <Logo3D isLoaded />
 
         {/* <OrbitControls enableZoom={false} /> */}
