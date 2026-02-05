@@ -47,6 +47,7 @@ function InteractiveCube({ materialProps, setIsHovered }) {
   const ref = useRef();
   const sphereRef = useRef();
   const ringRef = useRef();
+const canvasContainerRef = useRef(null);
 
   const { size, viewport, mouse } = useThree();
   const [isDragging, setIsDragging] = useState(false);
@@ -75,12 +76,16 @@ function InteractiveCube({ materialProps, setIsHovered }) {
 const [isVisible, setIsVisible] = useState(false);
 
 useEffect(() => {
+  if (!canvasContainerRef.current) return;
+
   const observer = new IntersectionObserver(([entry]) => {
     setIsVisible(entry.isIntersecting);
   });
+
   observer.observe(canvasContainerRef.current);
   return () => observer.disconnect();
 }, []);
+
 
   useFrame((state, delta) => {
     if (!isVisible) return; // 🚫 stop render quand hors écran
@@ -302,9 +307,10 @@ const [threeLoaded, setThreeLoaded] = useState(false);
 
 
 
+
   return (
-    <div className="absolute top-0 left-0 w-screen h-full pointer-events-none ">
-<Canvas gl={{ alpha: true, premultipliedAlpha: false }}  dpr={[1, 1.5]} style={{ background: 'transparent' }}>
+    <div ref={canvasContainerRef} className="absolute top-0 left-0 w-screen h-full pointer-events-none ">
+<Canvas frameloop="demand" gl={{ alpha: true, premultipliedAlpha: false }}  dpr={[1, 1.5]} style={{ background: 'transparent' }}>
   
 {/* Fond dupliqué dans la scène WebGL */}
  <BackgroundPlane />    
