@@ -1,7 +1,7 @@
 "use client";
 import "./style_footer.css";
 import { ArrowRight } from "lucide-react";
-import { useState, useRef } from "react";
+import { useEffect,useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import { Switch } from "./components/ui/switch";
@@ -101,6 +101,25 @@ export function AnimatedLink({ href, children, color, target_on }) {
     </motion.a>
   );
 }
+export function MailLink() {
+  const [email, setEmail] = useState('');
+
+  useEffect(() => {
+    // On assemble l'email côté client
+    const user = 'thefabstudio2';
+    const domain = 'gmail.com';
+    setEmail(`${user}@${domain}`);
+  }, []);
+
+  return (
+    <a
+      href={`mailto:${email}`}
+      className="underline sm:text-3xl w-full"
+    >
+      {email}
+    </a>
+  );
+}
 export default function Footer() {
   return (
     <section
@@ -122,12 +141,7 @@ export default function Footer() {
               We are a french studio who developp a site web for you
             </h3>
           </Copy>
-          <a
-            href="contact&#64;thefabstudio.com"
-            className="underline sm:text-3xl w-full"
-          >
-            thefabstudio2@gmail.com
-          </a>
+          <MailLink/>
         </div>
       </div>{" "}
       <div className="flex items-center justify-between gap-4 text-black text-[20px] h-5 w-full">
