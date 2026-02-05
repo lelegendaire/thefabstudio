@@ -13,7 +13,7 @@ const TheWeekndPage = () => {
         <>
   
    
-        <section className="relative h-screen w-full  flex items-center justify-center bg-[url('/medias/The_weeknd.jpg')] bg-cover bg-center">
+        <section className="relative h-screen w-full  flex items-center justify-center bg-[url('/medias/The_weeknd.webp')] bg-cover bg-center">
            
             <div className="relative z-10 h-screen flex items-center justify-center p-8 ">
                 <h1 className="text-[200px] font-bold text-white drop-shadow-2xl font-[Druck] ">

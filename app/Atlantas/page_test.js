@@ -100,7 +100,7 @@ export default function Page() {
       <div className="w-screen h-screen bg-black fixed top-0 left-0">
         <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
           {/* Fond cover */}
-          <BackgroundPlane textureUrl="/medias/noir_bg.jpg" />
+          <BackgroundPlane textureUrl="/medias/noir_bg.webp" />
 
           {/* Lumières améliorées */}
           <pointLight position={[0, 0, 0]} intensity={30} color="white" />

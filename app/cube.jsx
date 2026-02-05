@@ -72,8 +72,19 @@ function InteractiveCube({ materialProps, setIsHovered }) {
       originalPosition.current = [...ref.current.position.toArray()];
     }
   }, []);
+const [isVisible, setIsVisible] = useState(false);
+
+useEffect(() => {
+  const observer = new IntersectionObserver(([entry]) => {
+    setIsVisible(entry.isIntersecting);
+  });
+  observer.observe(canvasContainerRef.current);
+  return () => observer.disconnect();
+}, []);
 
   useFrame((state, delta) => {
+    if (!isVisible) return; // 🚫 stop render quand hors écran
+    if (isMobile) delta *= 0.5; // ralenti sur mobile
     if (!ref.current) return;
 
     // NORMAL ROTATION

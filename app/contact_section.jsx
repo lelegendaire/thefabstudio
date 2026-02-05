@@ -123,7 +123,7 @@ const Contact = forwardRef((props, ref) => {
       <div className="w-full h-[30vh] flex items-center justify-center flex-col">
         <img
           className="w-[70%] h-[200%] object-cover rounded-xl"
-          src="/medias/Contact.jpg"
+          src="/medias/Contact.webp"
           alt="Dune with beige fog"
           width="500" height="300"
         />

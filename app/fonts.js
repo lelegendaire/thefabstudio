@@ -3,7 +3,7 @@ import localFont from 'next/font/local'
 export const dirtyline = localFont({
   src: '../public/fonts/Dirtyline.ttf',
   display: 'swap',
-  preload: false, // branding critique
+  preload: true, // branding critique
   variable: '--font-dirtyline',
 })
 

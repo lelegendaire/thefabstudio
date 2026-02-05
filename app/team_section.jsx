@@ -14,7 +14,7 @@ const slides = [
     type: "Web developper",
     field: "Foundator",
     date: "2 years",
-    image: "/medias/Fabien.jpg" // Real image URL
+    image: "/medias/Fabien.webp" // Real image URL
   },
   {
     title: "Noah CHEVALIER",
@@ -22,7 +22,7 @@ const slides = [
     type: "Community manager",
     field: "CO-foundator",
     date: "2 years",
-    image: "/medias/Noah.jpg" // Real image URL
+    image: "/medias/Noah.webp" // Real image URL
   },
   {
     title: "Rafaël ASTRO",
@@ -30,7 +30,7 @@ const slides = [
     type: "Fronted and backend",
     field: "Employe",
     date: "4 years",
-    image: "/medias/Rafaël.jpg" // Real image URL
+    image: "/medias/Rafaël.webp" // Real image URL
   }
 ];
 

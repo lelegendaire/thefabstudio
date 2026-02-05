@@ -3,7 +3,11 @@
 
 import dynamic from 'next/dynamic'
 import {useRef} from 'react'
-const AboutUs = dynamic(() => import('./about_us_section'),{srr:false})
+const AboutUs = dynamic(() => import('./about_us_section'), {
+  ssr: false,
+  loading: () => <div className="min-h-[200px]"></div>,
+});
+
 const Projects = dynamic(() => import('./projects'))
 const Team = dynamic(() => import('./team_section'),{ssr:false})
 const Contact = dynamic(() => import('./contact_section'))

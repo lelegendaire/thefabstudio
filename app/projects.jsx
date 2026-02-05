@@ -224,12 +224,12 @@ export default function Projects() {
     },
   ];
   const projectImages = [
-    "/medias/StudioLens.png",
-    "/medias/StudioSongFab.png",
-    "/medias/F1.png",
-    "/medias/Clock.png",
-    "/medias/Nature.png",
-    "/medias/Widget_weather.png",
+    "/medias/StudioLens.webp",
+    "/medias/StudioSongFab.webp",
+    "/medias/F1.webp",
+    "/medias/Clock.webp",
+    "/medias/Nature.webp",
+    "/medias/Widget_weather.webp",
     "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=60&fm=webp",
     "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&q=60&fm=webp",
     "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=60&fm=webp",
@@ -258,7 +258,7 @@ export default function Projects() {
   // Charger GSAP avant d'utiliser ScrollTrigger
   loadGSAP().then(() => {
     const isMobile = window.innerWidth < 768;
-    console.log(isMobile ? 2 : 1);
+    
     // Scene
     const scene = new Scene();
     sceneRef.current = scene;
@@ -407,9 +407,10 @@ export default function Projects() {
     const directionalLight2 = new DirectionalLight(0xffffff, 0.4);
     directionalLight2.position.set(-5, -5, -5);
     scene.add(directionalLight2);
-
+    let running = true;
     // Animation
     const animate = () => {
+      if (!running || isMobile) return;
       requestAnimationFrame(animate);
 
       // Animer le scale et la position des cubes
@@ -471,9 +472,22 @@ export default function Projects() {
       renderer.render(scene, camera);
     };
     animate();
+    if (isMobile) running = false;
     let previousIndex = -1; //
     // ✅ ScrollTrigger créé une seule fois ici
-    ScrollTrigger.create({
+   
+    if (isMobile) {
+  // Ne pas utiliser ScrollTrigger avec pin + scrub
+  // Ou diminuer la durée, enlever pin
+  ScrollTrigger.create({
+    trigger: ".static_div",
+    start: "top top",
+    end: `+=${window.innerHeight * 2}px`, // raccourci sur mobile
+    pin: false, // désactive pin
+    scrub: 0.5,
+  });
+} else{
+   ScrollTrigger.create({
       trigger: ".static_div",
       start: "top top",
       end: `+=${window.innerHeight * (isMobile ? 5 : 7)}px`,
@@ -539,6 +553,7 @@ export default function Projects() {
         handleDeselectCube(true);
       },
     });
+}
     // Mouse events pour drag
     const handleMouseDown = (e) => {
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;

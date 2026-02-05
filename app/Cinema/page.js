@@ -342,7 +342,7 @@ const transformStyle = isMobile
                                 <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>2001 : a space odyssey</h1></div>
                                 <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-normal leading-tight'>a new perspection</p></div>
                             </div>
-                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/space_odyssey.jpg"}></img></div>
+                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/space_odyssey.webp"}></img></div>
                         </div>
                     </div>
                     <div className='card mt-[50vh] relative w-full h-svh p-[1.5em]'>
@@ -354,7 +354,7 @@ const transformStyle = isMobile
                                 <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>Interstellar</h1></div>
                                 <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-normal leading-tight'>a new perspection</p></div>
                             </div>
-                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.jpg"}></img></div>
+                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.webp"}></img></div>
                         </div>
                     </div>
                     <div className='card relative w-full h-svh p-[1.5em]'>
@@ -366,7 +366,7 @@ const transformStyle = isMobile
                                 <div className='card-title w-full absolute top-1/2 left-1/2 transform-[translate(-50%,-50%)] text-center'><h1 className='text-[5rem] font-medium tracking-[-0.1rem] leading-tight'>Interstellar</h1></div>
                                 <div className='card-description text-center w-[40%] mb-[3em] relative transform-[translateX(40px)] opacity-0'><p className='text-[1.125rem] font-normal leading-tight'>a new perspection</p></div>
                             </div>
-                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.jpg"}></img></div>
+                            <div className='card-img absolute w-full h-full rounded-[150px] overflow-hidden'><img className='image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]' src={"/medias/bg_final.webp"}></img></div>
                         </div>
                     </div>
                  </div>

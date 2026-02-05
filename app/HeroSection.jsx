@@ -7,7 +7,8 @@ import Hero from './hero'
 
 export default function HeroSection() {
   return (
-
+    <Loader>
       <Hero />
+    </Loader>
   )
 }

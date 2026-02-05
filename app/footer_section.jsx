@@ -217,7 +217,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex items-start justify-start flex-col w-1/2 sm:relative absolute sm:left-0 left-40">
-          <DepthImage src={"/medias/Dune_footer.jpg"} />
+          <DepthImage src={"/medias/Dune_footer.webp"} />
           <div className="absolute">
             <h1 className="text-black">Need help ?</h1>
             <button

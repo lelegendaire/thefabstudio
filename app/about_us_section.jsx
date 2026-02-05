@@ -36,7 +36,16 @@ export default function About_us() {
     };
     // Intersection Observer : active/désactive l’animation
     handleScroll(); // au cas où on recharge en plein milieu de la page
-    window.addEventListener("scroll", handleScroll);
+    let lastTick = 0;
+const optimizedScroll = () => {
+  if (performance.now() - lastTick > 50) { // throttle ~20fps
+    handleScroll();
+    lastTick = performance.now();
+  }
+}
+
+window.addEventListener("scroll", optimizedScroll);
+
     window.addEventListener("resize", () => {
       pathLength = updatePathLength();
       handleScroll();

@@ -44,17 +44,17 @@ const Interaction = () => {
   const works = [
     {
       title: "Atlantas XI",
-      image: "/medias/Example.png",
+      image: "/medias/Example.webp",
       url: "/Atlantas"
     },
     {
       title: "The Weeknd : An artist like no other",
-      image: "/medias/The_weeknd.png",
+      image: "/medias/The_weeknd.webp",
       url: "/The_Weeknd"
     },
     {
       title: "The new vision of cinema",
-      image: "/medias/Cinema.png",
+      image: "/medias/Cinema.webp",
       url: "/Cinema"
     }
   ];
@@ -113,9 +113,10 @@ const handleNavigation = async (image, url, e) => {
 
     // ✅ Charger GSAP d'abord
     await loadGSAP();
-
+const isMobile = window.innerWidth < 768;
     // Boucle Lenis
     const tick = (time) => {
+      if (isMobile) return; // STOP sur mobile
       lenis.raf(time);
       rafIdRef.current = requestAnimationFrame(tick);
     };
@@ -435,7 +436,7 @@ const isVerySmallScreen = screenWidth < 600;
           perspective: '2000px'
         }}>
           <img
-            src="/medias/dune.jpg"
+            src="/medias/dune.webp"
             alt="Dune Cover"
             className="w-full h-full object-cover"
           />

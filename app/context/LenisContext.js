@@ -43,15 +43,13 @@ export const LenisProvider = ({ children }) => {
         const { preloadTexture, preloadFont } = await import('../../utils/preloadAssets')
         
         const [bgTexture] = await Promise.all([
-          preloadTexture('/medias/bg_final.jpg'),
-          preloadFont('/fonts/Dirtyline.ttf'),
-          preloadFont('/fonts/PlayfairDisplay.ttf'),
+          preloadTexture('/medias/bg_final.webp'),
         ])
         
         const teamTextures = await Promise.all([
-          preloadTexture('/medias/Fabien.jpg'),
-          preloadTexture('/medias/Noah.jpg'),
-          preloadTexture('/medias/Rafaël.jpg'),
+          preloadTexture('/medias/Fabien.webp'),
+          preloadTexture('/medias/Noah.webp'),
+          preloadTexture('/medias/Rafaël.webp'),
         ])
         
         setAssets({
