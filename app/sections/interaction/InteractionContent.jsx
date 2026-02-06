@@ -1,10 +1,10 @@
 "use client"
-import Copy from "./components/Copy"
+import Copy from "../../components/Copy"
 import { useEffect, useRef, useState  } from 'react';
 
-import { useLenis } from './context/LenisContext'
+import { useLenis } from '../../context/LenisContext'
 import { useRouter } from 'next/navigation';
-import { dirtyline } from './fonts'
+import { dirtyline } from '../../fonts'
 // Enregistrer les plugins GSAP
 
 
