@@ -1,7 +1,7 @@
 // layout.js
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
-import { satoshi } from './fonts'
+import { satoshi } from "./fonts";
 
 export const metadata = {
   title: {
@@ -33,26 +33,30 @@ export const metadata = {
   },
 };
 
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-
-
         <meta
           name="google-site-verification"
           content="V9NcHd727ex_fH4m70oD8FXErvFVqfkp-i2E7oJOk-w"
         />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
-        />
-        <meta name="description" content="The Fab Studio is a creative web studio crafting immersive, high-end digital experiences through design, motion and code."></meta>
+          name="description"
+          content="The Fab Studio is a creative web studio crafting immersive, high-end digital experiences through design, motion and code."
+        ></meta>
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        
-        <link rel="canonical" href="https://thefabstudio.vercel.app/"></link>
 
+        <link rel="canonical" href="https://thefabstudio.vercel.app/"></link>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "The Fab Studio",
+            url: "https://thefabstudio.vercel.app/",
+          })}
+        </script>
       </head>
 
       <body className={satoshi.className}>
