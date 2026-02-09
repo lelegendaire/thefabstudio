@@ -202,7 +202,7 @@ export function Team() {
 }
 export function NeedHelp() {
   const { t } = useLanguage();
-  return <h4 className="text-black">{t("footer.home")}</h4>;
+  return <h4 className="text-black">{t("footer.needHelp")}</h4>;
 }
 export function Rights() {
   const { t } = useLanguage();
