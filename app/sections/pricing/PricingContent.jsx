@@ -1,22 +1,39 @@
 // app/sections/pricing/PricingContent.jsx (PAS de "use client")
+"use client";
 import {
-  Squircle, Sparkles, ArrowLeftRight, RefreshCcw, Cone, Zap,
-  RulerDimensionLine, LayoutTemplate, LineSquiggle, Scroll,
-  GalleryVerticalEnd, Box, ScrollText, Flame, SquareMousePointer
-} from 'lucide-react'
-
+  Squircle,
+  Sparkles,
+  ArrowLeftRight,
+  RefreshCcw,
+  Cone,
+  Zap,
+  RulerDimensionLine,
+  LayoutTemplate,
+  LineSquiggle,
+  Scroll,
+  GalleryVerticalEnd,
+  Box,
+  ScrollText,
+  Flame,
+  SquareMousePointer,
+} from "lucide-react";
+import { useLanguage } from "../../../context/LanguageContext";
 export default function PricingContent() {
+  const { t } = useLanguage();
+
   return (
-    <section className="pricing bg-black text-white h-[110vh] flex relative items-center justify-center">
+    <>
       <h1 className="font-bold text-9xl sm:left-auto left-0 sm:top-10 absolute sm:rotate-0 rotate-90">
-        Investment
+        {t("pricing.title")}
       </h1>
 
       <div className="bloc flex items-center justify-center sm:flex-row flex-col gap-5 sm:top-30 absolute">
         {/* Starter Experience */}
         <div className="Starter flex items-center justify-center flex-col h-60 w-70 sm:h-120 sm:w-90 bg-transparent rounded-3xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] shadow-[0px_10px_18px_-3px_rgba(255,255,255,0.1),inset_0px_-5px_18px_6px_rgba(255,255,255,0.1)]">
           <div className="head z-2 sm:h-20 w-full flex items-center justify-center">
-            <h2 className="font-bold text-xl sm:text-2xl">Starter Experience</h2>
+            <h2 className="font-bold text-xl sm:text-2xl">
+              {t("pricing.starter.name")}{" "}
+            </h2>
           </div>
 
           <div className="list z-2 sm:h-80 w-full flex items-center justify-start pt-5 flex-col gap-1 sm:gap-5 text-white rounded-b-2xl">
@@ -26,47 +43,59 @@ export default function PricingContent() {
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <Squircle size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Landing Page</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.starter.features.0")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <Sparkles size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Art Direction (Light)</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.starter.features.1")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <ArrowLeftRight size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Responsive Design</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.starter.features.2")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <RefreshCcw size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Smooth Animations</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.starter.features.3")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <Cone size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>SEO Basics</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.starter.features.4")}</p>
+              </div>
             </div>
           </div>
 
           <button className="btn hover:scale-[110%] ease-in-out rounded-3xl w-40 sm:w-60 h-7 sm:h-10 bg-[#0d0d0d] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 sm:mt-0 mb-0 sm:mb-5 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] hover:shadow-[inset_0px_1px_1px_1px_rgba(0,0,0,0.5)]">
-            Let's collaborate
+            {t("pricing.cta")}
           </button>
         </div>
 
         {/* Signature Experience */}
         <div className="Signature flex scale-[105%] items-center justify-center flex-col h-60 w-70 sm:h-120 sm:w-90 bg-transparent rounded-3xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] shadow-[0px_10px_18px_-3px_rgba(255,255,255,0.1),inset_0px_-5px_18px_6px_rgba(255,255,255,0.1)]">
           <div className="head z-2 sm:h-20 w-full flex items-center justify-center">
-            <h2 className="font-bold text-xl sm:text-2xl">Signature Experience</h2>
+            <h2 className="font-bold text-xl sm:text-2xl">
+              {t("pricing.signature.name")}
+            </h2>
           </div>
 
           <div className="list z-2 sm:h-80 w-full flex items-center justify-start pt-5 flex-col gap-1 sm:gap-5 text-white rounded-b-2xl">
@@ -76,47 +105,59 @@ export default function PricingContent() {
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <LayoutTemplate size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Custom Website</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.signature.features.0")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <LineSquiggle size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Advanced Animations</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.signature.features.1")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <Scroll size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Storytelling Layout</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.signature.features.2")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <GalleryVerticalEnd size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Scroll Experience</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.signature.features.3")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <Zap size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Performance & SEO</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.signature.features.4")}</p>
+              </div>
             </div>
           </div>
 
           <button className="btn hover:scale-[110%] ease-in-out rounded-3xl w-40 sm:w-60 h-7 sm:h-10 bg-[#0d0d0d] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 sm:mt-0 mb-0 sm:mb-5 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] hover:shadow-[inset_0px_1px_1px_1px_rgba(0,0,0,0.5)]">
-            Let's collaborate
+            {t("pricing.cta")}
           </button>
         </div>
 
         {/* Immersive Experience */}
         <div className="Immersive flex items-center justify-center flex-col h-60 w-70 sm:h-120 sm:w-90 bg-transparent rounded-3xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] shadow-[0px_10px_18px_-3px_rgba(255,255,255,0.1),inset_0px_-5px_18px_6px_rgba(255,255,255,0.1)]">
           <div className="head z-2 sm:h-20 w-full flex items-center justify-center">
-            <h2 className="font-bold text-xl sm:text-2xl text-nowrap">Immersive Experience</h2>
+            <h2 className="font-bold text-xl sm:text-2xl text-nowrap">
+              {t("pricing.immersive.name")}
+            </h2>
           </div>
 
           <div className="list z-2 sm:h-80 w-full flex items-center justify-start pt-5 flex-col gap-1 sm:gap-5 text-white rounded-b-2xl">
@@ -126,43 +167,53 @@ export default function PricingContent() {
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <RulerDimensionLine size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Bespoke Experience</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.immersive.features.0")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <Box size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>3D / WebGL</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.immersive.features.1")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <SquareMousePointer size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Experimental Interactions</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.immersive.features.2")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <Flame size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>High-end Performance</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.immersive.features.3")}</p>
+              </div>
             </div>
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 sm:w-7 sm:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
                 <ScrollText size={16} />
               </div>
-              <div className="name text-xs sm:text-xl"><p>Immersive Storytelling</p></div>
+              <div className="name text-xs sm:text-xl">
+                <p>{t("pricing.immersive.features.4")}</p>
+              </div>
             </div>
           </div>
 
           <button className="btn hover:scale-[110%] ease-in-out rounded-3xl w-40 sm:w-60 h-7 sm:h-10 bg-[#0d0d0d] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 sm:mt-0 mb-0 sm:mb-5 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] hover:shadow-[inset_0px_1px_1px_1px_rgba(0,0,0,0.5)]">
-            Let's collaborate
+            {t("pricing.cta")}
           </button>
         </div>
       </div>
-    </section>
-  )
+    </>
+  );
 }

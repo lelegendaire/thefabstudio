@@ -1,0 +1,203 @@
+{
+  "header": {
+    "title": "TheFabStudio",
+    "year": "2025",
+    "skipToContent": "Aller au contenu principal"
+  },
+  "menu": {
+    "items": [
+      {
+        "title": "Accueil",
+        "description": "Pour revenir à l'accueil",
+        "id": "#home"
+      },
+      {
+        "title": "À propos",
+        "description": "Pour en savoir plus sur nous",
+        "id": "#about_section"
+      },
+      {
+        "title": "Projets",
+        "description": "Pour découvrir nos projets",
+        "id": "#project_section"
+      },
+      {
+        "title": "Équipe",
+        "description": "Pour savoir qui crée votre site",
+        "id": "#team_section"
+      },
+      {
+        "title": "Contact",
+        "description": "Pour collaborer avec nous",
+        "id": "#contact_section"
+      }
+    ]
+  },
+  "about": {
+    "title": "À propos",
+    "paragraph1": "Tout a commencé par une simple pensée, un après-midi d'été 2023 : et si je créais un studio capable de concevoir des sites web vraiment uniques, adaptés à chaque personne ? Ce n'était qu'un rêve, mais déjà une forte conviction.",
+    "paragraph2": "Pendant un an, j'ai travaillé sur mon premier site – un projet qui permettrait aux gens de créer facilement des sites web personnalisables. Une année de tests, de code et d'innombrables nuits à imaginer comment rendre le web plus original.",
+    "paragraph3": "Après des mois de travail, le site a finalement été déployé. The Fab Studio a officiellement vu le jour. J'ai créé un compte Instagram pour partager mes idées et mes premières créations.",
+    "paragraph4": "The Fab Studio est né d'un désir de repousser les limites du web. Un laboratoire visuel où innovation, esthétique et interactivité se rencontrent pour inventer des expériences uniques."
+  },
+  "projects": {
+    "title": "Nos projets",
+    "cta": "Voir le projet"
+  },
+  "team": {
+    "title": "Notre équipe",
+    "members": {
+      "1": {
+        "name": "Fabien CHEVALLEREAU",
+        "description": "Un jeune passionné d'informatique capable de créer des choses infinies avec de l'imagination.",
+        "type": "Développeur web",
+        "field": "Poste. Fondateur",
+        "date": "2 ans"
+      },
+      "2": {
+        "name": "Noah CHEVALIER",
+        "description": "Personne ne peut mieux expliquer l'informatique brute aux gens que lui.",
+        "type": "Community manager",
+        "field": "Poste. Co-fondateur",
+        "date": "2 ans"
+      },
+      "3": {
+        "name": "Rafaël ASTRO",
+        "description": "Le meilleur développeur parmi nous, capable de créer plusieurs projets en même temps",
+        "type": "Frontend et backend",
+        "field": "Poste. Employé",
+        "date": "4 ans"
+      }
+    }
+  },
+  "contact": {
+    "title": "Travaillons ensemble",
+    "subtitle": "— même juste pour explorer.",
+    
+    "clients": "Nous avons beaucoup de clients",
+    "maps": "Nous sommes ici",
+    "img": "Contactez-nous",
+    "form": {
+      "title": "Formulaire",
+      "to": "À :",
+      "object": "Objet*",
+      "objectPlaceholder": "Une idée, une question, un projet... ?",
+    "email": "monmail@gmail.com",
+      "options": {
+        "idea": "Idée",
+        "question": "Question",
+        "project": "Projet"
+      },
+      "message": "Votre message*",
+      "messagePlaceholder": "Racontez-nous tout ! Parlez-nous de votre idée, de vos envies ou de ce que vous recherchez.",
+      "send": "Envoyer",
+      "sendProgress": "Envoi en cours...",
+      "sendConfirm": "Envoyé !"
+    }
+  },
+  "discover": {
+    "title": "Envie d'en découvrir plus",
+    "tagline1": "Quand l'art et le design se rencontrent, ils créent l'œuvre d'art",
+    "tagline2": "Rien ne nous fait peur quand vous nous défiez",
+    "notConvinced": "Toujours pas convaincu",
+    "description": "Ici vous pouvez essayer notre prototype et personnaliser chaque site selon votre vision pour avoir un aperçu",
+    "seeMore": "Voir plus"
+  },
+  "pricing": {
+    "title": "Investissement",
+    "cta": "Collaborons ensemble",
+    "starter": {
+      "name": "Expérience Starter",
+      "features": [
+        "Landing Page",
+        "Direction artistique (Light)",
+        "Design responsive",
+        "Animations fluides",
+        "SEO de base"
+      ]
+    },
+    "signature": {
+      "name": "Expérience Signature",
+      "features": [
+        "Site web sur mesure",
+        "Animations avancées",
+        "Mise en page narrative",
+        "Expérience de scroll",
+        "Performance & SEO"
+      ]
+    },
+    "immersive": {
+      "name": "Expérience Immersive",
+      "features": [
+        "Expérience sur mesure",
+        "3D / WebGL",
+        "Interactions expérimentales",
+        "Performance haut de gamme",
+        "Storytelling immersif"
+      ]
+    }
+  },
+  "footer": {
+    "description": "Nous sommes un studio français qui développe des sites web pour vous",
+    "social": "Réseaux",
+    "home": "Accueil",
+    "about": "À propos",
+    "projects": "Projets",
+    "team": "Équipe",
+    "needHelp": "Besoin d'aide ?",
+    "rights": "© 2025 TheFabStudio. Tous droits réservés",
+    "privacy": "Conditions générales & Politique de confidentialité"
+  },
+  "privacyPolicy": {
+    "title": "Politique de confidentialité",
+    "lastUpdated": "Dernière mise à jour : 05/02/2026",
+    "backToHome": "Retour à l'accueil",
+    "sections": {
+      "data": {
+        "title": "Quelles données collectons-nous ?",
+        "paragraph1": "Nous collectons les données personnelles que vous fournissez volontairement lorsque vous interagissez avec nos services. Cela inclut votre nom, votre adresse e-mail et toute information que vous saisissez dans les formulaires de contact ou d'inscription à la newsletter.",
+        "paragraph2": "De plus, nous utilisons des outils d'analyse comme Google Analytics pour collecter des statistiques d'utilisation anonymes telles que les pages visitées, le temps passé sur le site et les sources de référencement. Aucune donnée sensible ou financière n'est collectée."
+      },
+      "use": {
+        "title": "Comment utilisons-nous vos données",
+        "paragraph1": "Nous utilisons vos données uniquement à des fins qui améliorent votre expérience et notre communication. Par exemple, si vous remplissez un formulaire, nous pouvons utiliser votre e-mail pour vous répondre.",
+        "paragraph2": "Nous analysons les données de trafic agrégées pour comprendre le comportement des utilisateurs et optimiser la structure et le contenu de notre site web. Vos données ne sont jamais vendues ni partagées avec des tiers."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "paragraph1": "Les cookies sont utilisés pour améliorer votre expérience de navigation. Les cookies fonctionnels assurent une navigation fluide et mémorisent vos préférences.",
+        "paragraph2": "Les cookies analytiques nous aident à recueillir des statistiques. Vous pouvez refuser les cookies à tout moment via les paramètres de votre navigateur, bien que cela puisse affecter certaines fonctionnalités."
+      },
+      "security": {
+        "title": "Sécurité",
+        "paragraph1": "Nous appliquons les meilleures pratiques de sécurité telles que le cryptage HTTPS, les protections par pare-feu et des audits réguliers pour garantir que vos données restent protégées contre tout accès ou exposition non autorisés.",
+        "paragraph2": "Nous ne stockons jamais vos données sur des plateformes accessibles au public."
+      },
+      "retention": {
+        "title": "Durée de conservation",
+        "paragraph1": "Vos données personnelles ne sont conservées que le temps nécessaire. Les données de contact sont conservées pendant un maximum de 12 mois après la dernière communication, sauf si des obligations légales l'exigent autrement.",
+        "paragraph2": "Les données analytiques sont anonymisées et utilisées indéfiniment à des fins statistiques."
+      },
+      "rights": {
+        "title": "Vos droits",
+        "intro": "Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez de plusieurs droits concernant vos données personnelles. Vous pouvez :",
+        "list": [
+          "Demander l'accès aux données que nous détenons sur vous.",
+          "Demander des corrections si les données sont inexactes ou obsolètes.",
+          "Demander la suppression de vos données dans certaines circonstances.",
+          "Retirer votre consentement à tout moment, notamment concernant les cookies ou la communication marketing."
+        ],
+        "conclusion": "Pour exercer l'un de ces droits ou si vous avez des préoccupations concernant vos données, vous pouvez nous contacter directement à",
+        "email": "thefabstudio2@gmail.com",
+        "commitment": "Nous nous engageons à traiter votre demande de manière rapide et respectueuse."
+      },
+      "contact": {
+        "title": "Contact",
+        "paragraph1": "Si vous avez des questions, des préoccupations ou souhaitez plus d'informations sur nos pratiques en matière de confidentialité, n'hésitez pas à nous contacter.",
+        "paragraph2": "Nous nous engageons pleinement à maintenir une communication ouverte et honnête. Veuillez nous écrire à :",
+        "email": "thefabstudio2@gmail.com",
+        "response": "et nous ferons de notre mieux pour répondre rapidement."
+      }
+    }
+  }
+}

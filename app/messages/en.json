@@ -1,0 +1,205 @@
+{
+  "header": {
+    "title": "TheFabStudio",
+    "year": "2025",
+    "skipToContent": "Skip to main content"
+  },
+  "menu": {
+    "items": [
+      {
+        "title": "Home",
+        "description": "To return home",
+        "id": "#home"
+      },
+      {
+        "title": "About us",
+        "description": "To learn more about us",
+        "id": "#about_section"
+      },
+      {
+        "title": "Projects",
+        "description": "To discover our projects",
+        "id": "#project_section"
+      },
+      {
+        "title": "Team",
+        "description": "To know who create your site",
+        "id": "#team_section"
+      },
+      {
+        "title": "Contact",
+        "description": "To collaborate with us",
+        "id": "#contact_section"
+      }
+    ]
+  },
+  "about": {
+    "title": "About Us",
+    "paragraph1": "It all started with a simple thought, on a summer afternoon in 2023: what if I built a studio capable of creating truly unique websites, tailored to every person? It was just a dream, but already a strong conviction.",
+    "paragraph2": "For a year, I worked on my first site – a project that would eventually allow people to easily create customizable websites. A year of testing, coding, and countless nights imagining how to make the web more original.",
+    "paragraph3": "After months of work, the site was finally deployed. The Fab Studio officially came to life. I created an Instagram account to share ideas and my first creations.",
+    "paragraph4": "The Fab Studio was born of a desire to push back the boundaries of the web. A visual laboratory where innovation, aesthetics and interactivity meet to invent unique experiences."
+  },
+  "projects": {
+    "title": "Our projects",
+    "cta": "See the project"
+  },
+  "team": {
+    "title": "Our team",
+    "members": {
+      "1": {
+        "name": "Fabien CHEVALLEREAU",
+        "description": "A young passionate of computer science able to create infinite things with imagination.",
+        "type": "Web developer",
+        "field": "Field. Founder",
+        "date": "2 years"
+      },
+      "2": {
+        "name": "Noah CHEVALIER",
+        "description": "Nobody can be better than him to explain the raw computer science to people.",
+        "type": "Community manager",
+        "field": "Field. CO-founder",
+        "date": "2 years"
+      },
+      "3": {
+        "name": "Rafaël ASTRO",
+        "description": "The best developer among us able to create few projects at the same time",
+        "type": "Frontend and backend",
+        "field": "Field. Employee",
+        "date": "4 years"
+      }
+    }
+  },
+  "contact": {
+    "title": "Let's work together",
+    "subtitle": "— even just to explore.",
+    "clients": "We have lot of clients",
+    "maps": "We are here",
+    "img": "Contact us",
+    "form": {
+    "title": "Form",
+      "to": "To:",
+      "object": "Object*",
+            "objectPlaceholder": "An idea, a question, a project... ?",
+
+      "email": "myemail@gmail.com",
+      
+      "options": {
+        "idea": "Idea",
+        "question": "Question",
+        "project": "Project"
+      },
+      "message": "Your message*",
+      "messagePlaceholder": "Tell us all about it! Tell us about your idea, your desires or what you're looking for.",
+      "send": "Send",
+      "sendProgress": "Sending...",
+      "sendConfirm": "Send !"
+
+    }
+  },
+  "discover": {
+    "title": "Want to discover more",
+    "tagline1": "When art and design meet that create the work of art",
+    "tagline2": "Nothing scares us when you challenge us",
+    "notConvinced": "Still not convinced",
+    "description": "Here you can try our prototype and personalize each site in your vision to have a glimpse",
+    "seeMore": "See more"
+  },
+  "pricing": {
+    "title": "Investment",
+    "cta": "Let's collaborate",
+    "starter": {
+      "name": "Starter Experience",
+      "features": [
+        "Landing Page",
+        "Art Direction (Light)",
+        "Responsive Design",
+        "Smooth Animations",
+        "SEO Basics"
+      ]
+    },
+    "signature": {
+      "name": "Signature Experience",
+      "features": [
+        "Custom Website",
+        "Advanced Animations",
+        "Storytelling Layout",
+        "Scroll Experience",
+        "Performance & SEO"
+      ]
+    },
+    "immersive": {
+      "name": "Immersive Experience",
+      "features": [
+        "Bespoke Experience",
+        "3D / WebGL",
+        "Experimental Interactions",
+        "High-end Performance",
+        "Immersive Storytelling"
+      ]
+    }
+  },
+  "footer": {
+    "description": "We are a french studio who develop websites for you",
+    "social": "Social",
+    "home": "Home",
+    "about": "About us",
+    "projects": "Projects",
+    "team": "Team",
+    "needHelp": "Need help ?",
+    "rights": "© 2025 TheFabStudio. All rights reserved",
+    "privacy": "Terms & Privacy Policy"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last Updated: 05/02/2026",
+    "backToHome": "Back to home",
+    "sections": {
+      "data": {
+        "title": "What data do we collect?",
+        "paragraph1": "We collect personal data you voluntarily provide when you interact with our services. This includes your name, email address, and any information you enter into contact or newsletter forms.",
+        "paragraph2": "Additionally, we use analytical tools like Google Analytics to collect anonymous usage statistics such as pages visited, time spent on the site, and referral sources. No sensitive or financial data is collected."
+      },
+      "use": {
+        "title": "How we use your data",
+        "paragraph1": "We use your data solely for purposes that improve your experience and communication. For instance, if you fill in a form, we may use your email to respond.",
+        "paragraph2": "We analyze aggregated traffic data to understand user behavior and optimize the structure and content of our website. Your data is never sold or shared with third parties."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "paragraph1": "Cookies are used to enhance your browsing experience. Functional cookies ensure smooth navigation and remember your preferences.",
+        "paragraph2": "Analytical cookies help us gather statistics. You can refuse cookies at any time through your browser settings, though this may impact certain features."
+      },
+      "security": {
+        "title": "Security",
+        "paragraph1": "We apply security best practices such as HTTPS encryption, firewall protections, and regular audits to ensure your data remains safe from unauthorized access or exposure.",
+        "paragraph2": "We never store your data on publicly accessible platforms."
+      },
+      "retention": {
+        "title": "Shelf life",
+        "paragraph1": "Your personal data is stored only as long as necessary. Contact data is retained for a maximum of 12 months after the last communication unless legal obligations require otherwise.",
+        "paragraph2": "Analytical data is anonymized and used indefinitely for statistical purposes."
+      },
+      "rights": {
+        "title": "Your rights",
+        "intro": "In accordance with the General Data Protection Regulation (GDPR), you have several rights concerning your personal data. You may:",
+        "list": [
+          "Request access to the data we hold about you.",
+          "Ask for corrections if the data is inaccurate or outdated.",
+          "Request the deletion of your data under specific circumstances.",
+          "Withdraw your consent at any time, particularly regarding cookies or marketing communication."
+        ],
+        "conclusion": "To exercise any of these rights or if you have concerns about your data, you may contact us directly at",
+        "email": "thefabstudio2@gmail.com",
+        "commitment": "We are committed to addressing your request in a timely and respectful manner."
+      },
+      "contact": {
+        "title": "Contact",
+        "paragraph1": "If you have any questions, concerns, or would like more information about our privacy practices, feel free to reach out.",
+        "paragraph2": "We are fully committed to maintaining open and honest communication. Please write to us at:",
+        "email": "thefabstudio2@gmail.com",
+        "response": "and we will do our best to respond promptly."
+      }
+    }
+  }
+}

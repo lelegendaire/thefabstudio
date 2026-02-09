@@ -1,173 +1,174 @@
-"use client"
-import Copy from "../../components/Copy"
-import { useEffect, useRef, useState  } from 'react';
-
-import { useLenis } from '../../context/LenisContext'
-import { useRouter } from 'next/navigation';
-import { dirtyline } from '../../fonts'
+"use client";
+import Copy from "../../components/Copy";
+import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../../../context/LanguageContext";
+import { useLenis } from "../../context/LenisContext";
+import { useRouter } from "next/navigation";
+import { dirtyline } from "../../fonts";
 // Enregistrer les plugins GSAP
 
-
 const Interaction = () => {
+  const { t } = useLanguage();
   const router = useRouter();
   const [transitioning, setTransitioning] = useState(false);
-  const [transitionImage, setTransitionImage] = useState('');
+  const [transitionImage, setTransitionImage] = useState("");
   const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef(null);
-  const lenis = useLenis()
+  const lenis = useLenis();
   const animationInitialized = useRef(false);
   const rafIdRef = useRef(null);
-
-// Collection d'images variées
+  // Collection d'images variées
   const imageUrls = [
-    'https://images.unsplash.com/photo-1757317202556-a87236bdb48b?q=80&w=775&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1723871568780-7c838fd46d8e?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1768045855315-8fb9e0ed2ffe?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1533450718592-29d45635f0a9?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1769251297393-8178b5988b08?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    "https://images.unsplash.com/photo-1757317202556-a87236bdb48b?q=80&w=775&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1723871568780-7c838fd46d8e?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1768045855315-8fb9e0ed2ffe?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1533450718592-29d45635f0a9?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1769251297393-8178b5988b08?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   ];
   const works = [
     {
       title: "Atlantas XI",
       image: "/medias/Example.webp",
-      url: "/Atlantas"
+      url: "/Atlantas",
     },
     {
       title: "The Weeknd : An artist like no other",
       image: "/medias/The_weeknd.webp",
-      url: "/The_Weeknd"
+      url: "/The_Weeknd",
     },
     {
       title: "The new vision of cinema",
       image: "/medias/Cinema.webp",
-      url: "/Cinema"
-    }
+      url: "/Cinema",
+    },
   ];
-const handleNavigation = async (image, url, e) => {
-  // Charger GSAP si pas encore chargé
-  if (!window.gsap) {
-    const gsapModule = await import('gsap');
-    const scrollTriggerModule = await import('gsap/ScrollTrigger');
-    window.gsap = gsapModule.gsap;
-    window.ScrollTrigger = scrollTriggerModule.ScrollTrigger;
-  }
-
-  const rect = e.currentTarget.querySelector('img').getBoundingClientRect();
-  setClickPosition({
-    x: rect.left + rect.width / 2,
-    y: rect.top + rect.height / 2
-  });
-
-  setTransitionImage(image);
-  setTransitioning(true);
-
-  setTimeout(() => {
-    if (rafIdRef.current) {
-      cancelAnimationFrame(rafIdRef.current);
-      rafIdRef.current = null;
+  const handleNavigation = async (image, url, e) => {
+    // Charger GSAP si pas encore chargé
+    if (!window.gsap) {
+      const gsapModule = await import("gsap");
+      const scrollTriggerModule = await import("gsap/ScrollTrigger");
+      window.gsap = gsapModule.gsap;
+      window.ScrollTrigger = scrollTriggerModule.ScrollTrigger;
     }
-    
-    window.ScrollTrigger?.getAll().forEach(trigger => trigger.kill());
-    router.push(url);
-  }, 800);
-};
- useEffect(() => {
-  if (!lenis || animationInitialized.current) return;
 
-  let timeoutId;
-  let started = false;
-  let gsap, ScrollTrigger, SplitText; // ✅ Déclarer ici
+    const rect = e.currentTarget.querySelector("img").getBoundingClientRect();
+    setClickPosition({
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+    });
 
-  // ✅ Fonction pour charger GSAP
-  const loadGSAP = async () => {
-    const gsapModule = await import('gsap');
-    const scrollTriggerModule = await import('gsap/ScrollTrigger');
-    const splitTextModule = await import('gsap/SplitText');
-    
-    gsap = gsapModule.gsap;
-    ScrollTrigger = scrollTriggerModule.ScrollTrigger;
-    SplitText = splitTextModule.SplitText;
-    
-    gsap.registerPlugin(ScrollTrigger, SplitText);
+    setTransitionImage(image);
+    setTransitioning(true);
+
+    setTimeout(() => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+
+      window.ScrollTrigger?.getAll().forEach((trigger) => trigger.kill());
+      router.push(url);
+    }, 800);
   };
+  useEffect(() => {
+    if (!lenis || animationInitialized.current) return;
 
-  // Fonction d'animation principale
-  const startAnimations = async () => { // ✅ Rendre async
-    if (started) return;
-    started = true;
+    let timeoutId;
+    let started = false;
+    let gsap, ScrollTrigger, SplitText; // ✅ Déclarer ici
 
-    // ✅ Charger GSAP d'abord
-    await loadGSAP();
-const isMobile = window.innerWidth < 768;
-    // Boucle Lenis
-    const tick = (time) => {
-      if (isMobile) return; // STOP sur mobile
-      lenis.raf(time);
-      rafIdRef.current = requestAnimationFrame(tick);
+    // ✅ Fonction pour charger GSAP
+    const loadGSAP = async () => {
+      const gsapModule = await import("gsap");
+      const scrollTriggerModule = await import("gsap/ScrollTrigger");
+      const splitTextModule = await import("gsap/SplitText");
+
+      gsap = gsapModule.gsap;
+      ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+      SplitText = splitTextModule.SplitText;
+
+      gsap.registerPlugin(ScrollTrigger, SplitText);
     };
-    rafIdRef.current = requestAnimationFrame(tick);
 
-    // Init des ScrollTriggers
-    initSpotlightAnimations(gsap, ScrollTrigger, SplitText); // ✅ Passer en paramètres
-    animationInitialized.current = true;
+    // Fonction d'animation principale
+    const startAnimations = async () => {
+      // ✅ Rendre async
+      if (started) return;
+      started = true;
 
-    timeoutId = setTimeout(() => {
-      ScrollTrigger.update();
-    }, 600);
-  };
+      // ✅ Charger GSAP d'abord
+      await loadGSAP();
+      const isMobile = window.innerWidth < 768;
+      // Boucle Lenis
+      const tick = (time) => {
+        if (isMobile) return; // STOP sur mobile
+        lenis.raf(time);
+        rafIdRef.current = requestAnimationFrame(tick);
+      };
+      rafIdRef.current = requestAnimationFrame(tick);
 
-  // Attendre que Lenis commence à scroller avant de démarrer
-  const handleScrollStart = () => {
-    startAnimations();
-    lenis.off('scroll', handleScrollStart);
-  };
+      // Init des ScrollTriggers
+      initSpotlightAnimations(gsap, ScrollTrigger, SplitText); // ✅ Passer en paramètres
+      animationInitialized.current = true;
 
-  lenis.on('scroll', handleScrollStart);
-  timeoutId = setTimeout(startAnimations, 800);
+      timeoutId = setTimeout(() => {
+        ScrollTrigger.update();
+      }, 600);
+    };
 
-  return () => {
-    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
-    if (timeoutId) clearTimeout(timeoutId);
-    lenis.off('scroll', handleScrollStart);
-    ScrollTrigger?.getAll().forEach(trigger => trigger.kill()); // ✅ Optional chaining
-    animationInitialized.current = false;
-  };
-}, [lenis]);
+    // Attendre que Lenis commence à scroller avant de démarrer
+    const handleScrollStart = () => {
+      startAnimations();
+      lenis.off("scroll", handleScrollStart);
+    };
 
+    lenis.on("scroll", handleScrollStart);
+    timeoutId = setTimeout(startAnimations, 800);
 
+    return () => {
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      if (timeoutId) clearTimeout(timeoutId);
+      lenis.off("scroll", handleScrollStart);
+      ScrollTrigger?.getAll().forEach((trigger) => trigger.kill()); // ✅ Optional chaining
+      animationInitialized.current = false;
+    };
+  }, [lenis]);
 
   const initSpotlightAnimations = (gsap, ScrollTrigger, SplitText) => {
     if (!sectionRef.current) return;
 
     const images = sectionRef.current.querySelectorAll(".img-element");
     const coverImg = sectionRef.current.querySelector(".spotlight-cover-img");
-    const introHeader = sectionRef.current.querySelector(".spotlight-intro-header h2");
-    const outroHeader = sectionRef.current.querySelector(".spotlight-outro-header h2");
+    const introHeader = sectionRef.current.querySelector(
+      ".spotlight-intro-header h2",
+    );
+    const outroHeader = sectionRef.current.querySelector(
+      ".spotlight-outro-header h2",
+    );
 
     if (!images.length || !coverImg || !introHeader || !outroHeader) return;
-     const screenWidth = window.innerWidth;
+    const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
     const isMobile = screenWidth < 1000;
-const isVerySmallScreen = screenWidth < 600;
+    const isVerySmallScreen = screenWidth < 600;
 
     // 🔥 VERSION SIMPLIFIÉE POUR PETITS ÉCRANS (sans scroll pin)
     if (isVerySmallScreen) {
-      
       // Animation simple au scroll sans pin
       gsap.set(images, { opacity: 0, scale: 0.5 });
       gsap.set(coverImg, { opacity: 0, scale: 0.8 });
@@ -176,56 +177,59 @@ const isVerySmallScreen = screenWidth < 600;
 
       // Intro text fade out
       ScrollTrigger.create({
-        trigger: sectionRef.current.querySelector('.spotlight'),
+        trigger: sectionRef.current.querySelector(".spotlight"),
         start: "top center",
         end: "center center",
         scrub: 1,
         onUpdate: (self) => {
           gsap.set(introHeader, { opacity: 1 - self.progress });
-        }
+        },
       });
 
       // Images apparition simple
       ScrollTrigger.create({
-        trigger: sectionRef.current.querySelector('.spotlight'),
+        trigger: sectionRef.current.querySelector(".spotlight"),
         start: "top center",
         end: "center top",
         scrub: 1,
         onUpdate: (self) => {
           images.forEach((img, index) => {
             const delay = index * 0.05;
-            const progress = Math.max(0, Math.min(1, (self.progress - delay) * 2));
-            gsap.set(img, { 
+            const progress = Math.max(
+              0,
+              Math.min(1, (self.progress - delay) * 2),
+            );
+            gsap.set(img, {
               opacity: progress,
-              scale: 0.5 + (progress * 0.5)
+              scale: 0.5 + progress * 0.5,
             });
           });
-        }
+        },
       });
 
       // Cover image apparition
       ScrollTrigger.create({
-        trigger: sectionRef.current.querySelector('.spotlight'),
+        trigger: sectionRef.current.querySelector(".spotlight"),
         start: "center top",
         end: "bottom center",
         scrub: 1,
         onUpdate: (self) => {
-          gsap.set(coverImg, { 
+          gsap.set(coverImg, {
             opacity: self.progress,
-            scale: 0.8 + (self.progress * 0.2)
+            scale: 0.8 + self.progress * 0.2,
           });
-        }
+        },
       });
 
       // Outro text fade in
       ScrollTrigger.create({
-        trigger: sectionRef.current.querySelector('.spotlight'),
+        trigger: sectionRef.current.querySelector(".spotlight"),
         start: "center top",
         end: "bottom center",
         scrub: 1,
         onUpdate: (self) => {
           gsap.set(outroHeader, { opacity: self.progress });
-        }
+        },
       });
 
       return; // Exit early - pas besoin du reste
@@ -234,8 +238,8 @@ const isVerySmallScreen = screenWidth < 600;
     let outroHeaderSplit = null;
 
     // Nettoyer les animations précédentes
-    ScrollTrigger.getAll().forEach(trigger => {
-      if (trigger.trigger === sectionRef.current.querySelector('.spotlight')) {
+    ScrollTrigger.getAll().forEach((trigger) => {
+      if (trigger.trigger === sectionRef.current.querySelector(".spotlight")) {
         trigger.kill();
       }
     });
@@ -245,12 +249,12 @@ const isVerySmallScreen = screenWidth < 600;
       const introOriginalText = introHeader.textContent;
       const outroOriginalText = outroHeader.textContent;
 
-      introHeaderSplit = new SplitText(introHeader, {type: "words"});
-      gsap.set(introHeaderSplit.words, {opacity: 1});
+      introHeaderSplit = new SplitText(introHeader, { type: "words" });
+      gsap.set(introHeaderSplit.words, { opacity: 1 });
 
-      outroHeaderSplit = new SplitText(outroHeader, {type: "words"});
-      gsap.set(outroHeaderSplit.words, {opacity: 0});
-      gsap.set(outroHeader, {opacity: 1});
+      outroHeaderSplit = new SplitText(outroHeader, { type: "words" });
+      gsap.set(outroHeaderSplit.words, { opacity: 0 });
+      gsap.set(outroHeader, { opacity: 1 });
 
       // Stocker les instances pour le nettoyage
       introHeaderSplit._originalText = introOriginalText;
@@ -260,34 +264,53 @@ const isVerySmallScreen = screenWidth < 600;
       // Alternative simple si SplitText n'est pas disponible
       const splitTextSimple = (element) => {
         const text = element.textContent;
-        const words = text.split(' ');
-        element.innerHTML = words.map(word => `<span class="word inline-block">${word}</span>`).join(' ');
-        return element.querySelectorAll('.word');
+        const words = text.split(" ");
+        element.innerHTML = words
+          .map((word) => `<span class="word inline-block">${word}</span>`)
+          .join(" ");
+        return element.querySelectorAll(".word");
       };
 
       introHeaderSplit = { words: splitTextSimple(introHeader) };
-      gsap.set(introHeaderSplit.words, {opacity: 1});
+      gsap.set(introHeaderSplit.words, { opacity: 1 });
 
       outroHeaderSplit = { words: splitTextSimple(outroHeader) };
-      gsap.set(outroHeaderSplit.words, {opacity: 0});
-      gsap.set(outroHeader, {opacity: 1});
+      gsap.set(outroHeaderSplit.words, { opacity: 0 });
+      gsap.set(outroHeader, { opacity: 1 });
     }
 
     const scatterDirections = [
-      {x: 1.3, y: 0.7 }, {x: -1.5, y: 1.0 }, {x: 1.1, y: -1.3 }, {x: -1.7, y: 0.8 },
-      {x: 0.8, y: 1.5 }, {x: -1.0, y: -1.4 }, {x: 1.6, y: 0.3 }, {x: -0.7, y: 1.7 },
-      {x: 1.2, y: -1.6 }, {x: -1.4, y: 0.9 }, {x: 1.8, y: -0.5 }, {x: -1.1, y: -1.8 },
-      {x: 0.9, y: 1.8 }, {x: -1.9, y: 0.4 }, {x: 1.0, y: -1.9 }, {x: -0.8, y: 1.9 },
-      {x: 1.7, y: -1.0 }, {x: -1.3, y: -1.2 }, {x: 0.7, y: 2.0 }, {x: 1.25, y: -0.2 },
+      { x: 1.3, y: 0.7 },
+      { x: -1.5, y: 1.0 },
+      { x: 1.1, y: -1.3 },
+      { x: -1.7, y: 0.8 },
+      { x: 0.8, y: 1.5 },
+      { x: -1.0, y: -1.4 },
+      { x: 1.6, y: 0.3 },
+      { x: -0.7, y: 1.7 },
+      { x: 1.2, y: -1.6 },
+      { x: -1.4, y: 0.9 },
+      { x: 1.8, y: -0.5 },
+      { x: -1.1, y: -1.8 },
+      { x: 0.9, y: 1.8 },
+      { x: -1.9, y: 0.4 },
+      { x: 1.0, y: -1.9 },
+      { x: -0.8, y: 1.9 },
+      { x: 1.7, y: -1.0 },
+      { x: -1.3, y: -1.2 },
+      { x: 0.7, y: 2.0 },
+      { x: 1.25, y: -0.2 },
     ];
 
-   
     const scatterMultiplier = isMobile ? 2.5 : 0.5;
 
     // 🔥 FIX PRINCIPAL: Réduire drastiquement la durée du scroll sur mobile
     const scrollDuration = isMobile ? 8 : 15; // 8x viewport au lieu de 15x
     const startPositions = Array.from(images).map(() => ({
-      x: 0, y: 0, z: -1000, scale: 0,
+      x: 0,
+      y: 0,
+      z: -1000,
+      scale: 0,
     }));
 
     const endPositions = scatterDirections.map((dir) => ({
@@ -302,11 +325,14 @@ const isVerySmallScreen = screenWidth < 600;
     });
 
     gsap.set(coverImg, {
-      z: -1000, scale: 0, x: 0, y: 0,
+      z: -1000,
+      scale: 0,
+      x: 0,
+      y: 0,
     });
 
     ScrollTrigger.create({
-      trigger: sectionRef.current.querySelector('.spotlight'),
+      trigger: sectionRef.current.querySelector(".spotlight"),
       start: "top top",
       end: `+=${window.innerHeight * scrollDuration}px`,
       pin: true,
@@ -332,7 +358,11 @@ const isVerySmallScreen = screenWidth < 600;
           const end = endPositions[index];
 
           const zValue = gsap.utils.interpolate(start.z, end.z, imageProgress);
-          const scaleValue = gsap.utils.interpolate(start.scale, end.scale, imageProgress * scaleMultiplier);
+          const scaleValue = gsap.utils.interpolate(
+            start.scale,
+            end.scale,
+            imageProgress * scaleMultiplier,
+          );
           const xValue = gsap.utils.interpolate(start.x, end.x, imageProgress);
           const yValue = gsap.utils.interpolate(start.y, end.y, imageProgress);
 
@@ -344,7 +374,10 @@ const isVerySmallScreen = screenWidth < 600;
         const coverScaleValue = Math.min(1, coverProgress * 2);
 
         gsap.set(coverImg, {
-          z: coverZValue, scale: coverScaleValue, x: 0, y: 0,
+          z: coverZValue,
+          scale: coverScaleValue,
+          x: 0,
+          y: 0,
         });
 
         // Animation du texte intro
@@ -358,24 +391,24 @@ const isVerySmallScreen = screenWidth < 600;
               const fadeRange = 0.1;
 
               if (introFadeProgress >= wordFadeProgress + fadeRange) {
-                gsap.set(word, {opacity: 0});
+                gsap.set(word, { opacity: 0 });
               } else if (introFadeProgress <= wordFadeProgress) {
-                gsap.set(word, {opacity: 1});
+                gsap.set(word, { opacity: 1 });
               } else {
-                const wordOpacity = 1 - (introFadeProgress - wordFadeProgress) / fadeRange;
-                gsap.set(word, {opacity: wordOpacity});
+                const wordOpacity =
+                  1 - (introFadeProgress - wordFadeProgress) / fadeRange;
+                gsap.set(word, { opacity: wordOpacity });
               }
             });
           } else if (progress < 0.6) {
-            gsap.set(introHeaderSplit.words, {opacity: 1});
+            gsap.set(introHeaderSplit.words, { opacity: 1 });
           } else if (progress > 0.75) {
-            gsap.set(introHeaderSplit.words, {opacity: 0});
+            gsap.set(introHeaderSplit.words, { opacity: 0 });
           }
         }
 
         // Animation du texte outro
         if (outroHeaderSplit && outroHeaderSplit.words.length > 0) {
-         
           if (progress >= 0.85 && progress <= 1.0) {
             const outroRevealProgress = (progress - 0.85) / 0.15;
             const totalWords = outroHeaderSplit.words.length;
@@ -385,56 +418,63 @@ const isVerySmallScreen = screenWidth < 600;
               const fadeRange = 0.15;
 
               if (outroRevealProgress >= wordRevealProgress + fadeRange) {
-                gsap.set(word, {opacity: 1});
+                gsap.set(word, { opacity: 1 });
               } else if (outroRevealProgress <= wordRevealProgress) {
-                gsap.set(word, {opacity: 0});
+                gsap.set(word, { opacity: 0 });
               } else {
-                const wordOpacity = (outroRevealProgress - wordRevealProgress) / fadeRange;
-                gsap.set(word, {opacity: wordOpacity});
+                const wordOpacity =
+                  (outroRevealProgress - wordRevealProgress) / fadeRange;
+                gsap.set(word, { opacity: wordOpacity });
               }
             });
           } else if (progress < 0.85) {
-            gsap.set(outroHeaderSplit.words, {opacity: 0});
+            gsap.set(outroHeaderSplit.words, { opacity: 0 });
           } else if (progress > 1) {
-            gsap.set(outroHeaderSplit.words, {opacity: 1});
+            gsap.set(outroHeaderSplit.words, { opacity: 1 });
           }
         }
       },
     });
   };
 
-    return(
-         <div ref={sectionRef} className="team-section">
+  return (
+    <div ref={sectionRef} className="team-section">
       {/* Section Intro */}
       <section className="relative w-screen h-screen p-8 overflow-hidden flex justify-center items-center bg-[#0f0f0f] text-white">
         <h2 className="text-5xl md:text-8xl font-medium tracking-tight leading-[0.9] w-full md:w-1/2 text-center">
-          Want to discover more  
+          {t("discover.title")}
         </h2>
       </section>
 
       {/* Section Spotlight */}
       <section className="spotlight relative w-screen h-screen p-8 overflow-hidden bg-[#0f0f0f] text-[#d7dbd2]">
         {/* Images Container */}
-        <div className="spotlight-images absolute inset-0 w-full h-full" style={{
-          transformStyle: 'preserve-3d',
-          perspective: '2000px'
-        }}>
+        <div
+          className="spotlight-images absolute inset-0 w-full h-full"
+          style={{
+            transformStyle: "preserve-3d",
+            perspective: "2000px",
+          }}
+        >
           {imageUrls.map((imageUrl, index) => (
             <div
               key={index}
               className="img-element absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-125 h-87.5 bg-cover bg-center will-change-transform"
               style={{
-                backgroundImage: `url('${imageUrl}')`
+                backgroundImage: `url('${imageUrl}')`,
               }}
             />
           ))}
         </div>
 
         {/* Cover Image */}
-        <div className="spotlight-cover-img absolute inset-0 w-full h-full will-change-transform" style={{
-          transformStyle: 'preserve-3d',
-          perspective: '2000px'
-        }}>
+        <div
+          className="spotlight-cover-img absolute inset-0 w-full h-full will-change-transform"
+          style={{
+            transformStyle: "preserve-3d",
+            perspective: "2000px",
+          }}
+        >
           <img
             src="/medias/dune.webp"
             alt="Dune Cover"
@@ -444,90 +484,100 @@ const isVerySmallScreen = screenWidth < 600;
 
         {/* Headers */}
         <div className="spotlight-intro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-10">
-          <h2 className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}>
-            When art and design meet that create the work of art 
+          <h2
+            className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}
+          >
+            {t("discover.tagline1")}
           </h2>
         </div>
 
         <div className="spotlight-outro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-20">
-          <h2 className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}>
-            Nothing scares us when you challenge us
+          <h2
+            className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}
+          >
+            {t("discover.tagline2")}
           </h2>
         </div>
       </section>
 
       {/* Section Outro */}
       <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-black sm:h-[120vh] h-full bg-white p-4">
-       
-        <Copy><h2 className="font-bold sm:text-6xl text-4xl sm:p-10 p-3">Still not convinced</h2></Copy>
-        <Copy><h3 className=" sm:text-3xl text-2xl sm:p-5 p-1 text-center">Here you can try our prototype and personalisable each site in your vision to have a glimpse</h3></Copy>
+        <Copy>
+          <h2 className="font-bold sm:text-6xl text-4xl sm:p-10 p-3">
+            {t("discover.notConvinced")}
+          </h2>
+        </Copy>
+        <Copy>
+          <h3 className=" sm:text-3xl text-2xl sm:p-5 p-1 text-center">
+            {t("discover.description")}
+          </h3>
+        </Copy>
         <div className="flex items-center justify-center gap-3 flex-col sm:flex-row">
-           {works.map((work, index) => (
-              <div 
-                key={index} 
-                className="flex items-center justify-center flex-col gap-3 cursor-pointer"
-                onClick={(e) => handleNavigation(work.image, work.url, e)}
-              >
-                <div className="h-64 w-full rounded-2xl overflow-hidden transition-all duration-500">
-                  <img 
-                    className="w-full h-full object-cover transition-transform duration-500 object-center hover:scale-110" 
-                    src={work.image}
-                    alt={work.title}
-                  />
-                </div>
-                <h2 className="text-xl ">{work.title}</h2>
-                <button 
-                  className="bg-black w-60 rounded-full py-3 px-6 text-white font-medium active:scale-95 transition-transform duration-300 hover:bg-[#b98d6b] hover:text-black"
-                >
-                  See more
-                </button>
+          {works.map((work, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-center flex-col gap-3 cursor-pointer"
+              onClick={(e) => handleNavigation(work.image, work.url, e)}
+            >
+              <div className="h-64 w-full rounded-2xl overflow-hidden transition-all duration-500">
+                <img
+                  className="w-full h-full object-cover transition-transform duration-500 object-center hover:scale-110"
+                  src={work.image}
+                  alt={work.title}
+                />
               </div>
-            ))}
+              <h2 className="text-xl ">{work.title}</h2>
+              <button className="bg-black w-60 rounded-full py-3 px-6 text-white font-medium active:scale-95 transition-transform duration-300 hover:bg-[#b98d6b] hover:text-black">
+                {t("discover.seeMore")}
+              </button>
+            </div>
+          ))}
         </div>
         {/* Overlay de transition */}
-      {transitioning && (
-        <div 
-          className="fixed inset-0 z-9999 pointer-events-none"
-          style={{
-            transformOrigin: `${clickPosition.x}px ${clickPosition.y}px`
-          }}
-        >
-          <div 
-            className="absolute bg-black rounded-2xl overflow-hidden animate-expand"
+        {transitioning && (
+          <div
+            className="fixed inset-0 z-9999 pointer-events-none"
             style={{
-              left: clickPosition.x,
-              top: clickPosition.y,
-              transform: 'translate(-50%, -50%)',
-              animation: 'expandToFull 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards'
+              transformOrigin: `${clickPosition.x}px ${clickPosition.y}px`,
             }}
           >
-            <img 
-              className="w-full h-full object-cover" 
-              src={transitionImage}
-              alt="Transition"
-            />
+            <div
+              className="absolute bg-black rounded-2xl overflow-hidden animate-expand"
+              style={{
+                left: clickPosition.x,
+                top: clickPosition.y,
+                transform: "translate(-50%, -50%)",
+                animation:
+                  "expandToFull 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards",
+              }}
+            >
+              <img
+                className="w-full h-full object-cover"
+                src={transitionImage}
+                alt="Transition"
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <style jsx>{`
-        @keyframes expandToFull {
-          0% {
-            width: 320px;
-            height: 256px;
-            border-radius: 1rem;
+        <style jsx>{`
+          @keyframes expandToFull {
+            0% {
+              width: 320px;
+              height: 256px;
+              border-radius: 1rem;
+            }
+            100% {
+              width: 100vw;
+              height: 100vh;
+              border-radius: 0;
+              left: 50%;
+              top: 50%;
+            }
           }
-          100% {
-            width: 100vw;
-            height: 100vh;
-            border-radius: 0;
-            left: 50%;
-            top: 50%;
-          }
-        }
-      `}</style>
+        `}</style>
       </section>
     </div>
-        
-    )}
+  );
+};
 export default Interaction;

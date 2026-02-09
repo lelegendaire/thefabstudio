@@ -2,7 +2,6 @@
 import { HyperText } from "../components/magicui/hyper-text";
 import CubeOverlay from "./cube";
 import Header from "./header";
-import Loader from './loader/loader'
 import { dirtyline } from "./fonts";
 export default function Hero({ isLoaded }) {
   return (
@@ -14,7 +13,7 @@ export default function Hero({ isLoaded }) {
           <Header />
         </div>
 
-        <div className="footer_hero absolute bottom-px flex items-center justify-between w-screen gap-4 text-white text-[20px] h-5">
+        <div className="footer_hero absolute bottom-px flex items-center justify-between w-screen gap-4 text-white text-[20px] h-5 z-8">
           <div className="star ml-2.5 sm:ml-12.5 h-5 w-5 relative mt-auto">
             <svg
               version="1.1"
@@ -33,11 +32,11 @@ export default function Hero({ isLoaded }) {
           </div>
           <div className="line h-0.75 w-full bg-white rounded-4xl"></div>
           <div className={`${dirtyline.className} date mr-2.5 sm:mr-12.5`}>
-            <HyperText className="text-[20px]">2025</HyperText>
+            <HyperText className="text-[20px]">2026</HyperText>
           </div>
         </div>
         <a href="#main-content" className="sr-only focus:not-sr-only">
-          Aller au contenu principal
+          Go to main content
         </a>
       </section>
     </>

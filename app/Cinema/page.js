@@ -29,7 +29,7 @@ const id = setTimeout(() => {
      const cards = cardsRef.current.querySelectorAll(".card");
         const introCard = introCardRef.current;
 const titles = introCardRef.current.querySelectorAll(".card-title h1");
-console.log(titles)
+
   titles.forEach((title) => {
     const split = new SplitText(title, {
       type: "char",

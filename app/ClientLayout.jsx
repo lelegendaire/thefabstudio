@@ -3,11 +3,13 @@
 
 import { LenisProvider } from './context/LenisContext'
 import CustomScrollbar from './components/CustomScrollBar'
-
+import { LanguageProvider } from '../context/LanguageContext';
 export default function ClientLayout({ children }) {
   return (
     <LenisProvider>
-      {children}
+       <LanguageProvider>
+          {children}
+        </LanguageProvider>
       <CustomScrollbar />
     </LenisProvider>
   )

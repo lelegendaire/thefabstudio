@@ -20,9 +20,11 @@ import {
   SRGBColorSpace,
   Color,
 } from "three";
-import { X,ArrowDown } from "lucide-react";
+import { X, ArrowDown } from "lucide-react";
+import { useLanguage } from "../../../context/LanguageContext";
 
 export default function Projects() {
+  const { t } = useLanguage();
   const canvasRef = useRef(null);
   const projetDivRef = useRef(null); // 🟢 nouvelle ref pour ton div Projet
   const sceneRef = useRef(null);
@@ -243,540 +245,531 @@ export default function Projects() {
   // Initialisation Three.js - se re-déclenche quand isMobile change
   useEffect(() => {
     if (!canvasRef.current) return;
-     // ✅ AJOUTER CES LIGNES ICI
-  let gsap, ScrollTrigger;
-  
-  async function loadGSAP() {
-    const gsapModule = await import('gsap');
-    const scrollTriggerModule = await import('gsap/ScrollTrigger');
-    
-    gsap = gsapModule.gsap;
-    ScrollTrigger = scrollTriggerModule.ScrollTrigger;
-    gsap.registerPlugin(ScrollTrigger);
-  }
-  
-  // Charger GSAP avant d'utiliser ScrollTrigger
-  loadGSAP().then(() => {
-    const isMobile = window.innerWidth < 768;
-    
-    // Scene
-    const scene = new Scene();
-    sceneRef.current = scene;
-    // Camera
-    const camera = new PerspectiveCamera(
-      isMobile ? 85 : 75,
-      canvasRef.current.clientWidth / canvasRef.current.clientHeight,
-      0.1,
-      1000
-    );
-    camera.position.z = isMobile ? 10 : 8;
-    camera.position.y = 0;
-    cameraRef.current = camera;
+    // ✅ AJOUTER CES LIGNES ICI
+    let gsap, ScrollTrigger;
 
-    // Renderer
-    const renderer = new WebGLRenderer({
-      canvas: canvasRef.current,
-      antialias: true,
-      alpha: true,
-    });
+    async function loadGSAP() {
+      const gsapModule = await import("gsap");
+      const scrollTriggerModule = await import("gsap/ScrollTrigger");
 
-    renderer.setSize(
-      canvasRef.current.clientWidth,
-      canvasRef.current.clientHeight * (isMobile ? 2 : 1)
-    );
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0);
-    rendererRef.current = renderer;
-
-    // Group pour les cubes
-    const cubesGroup = new Group();
-    cubesGroupRef.current = cubesGroup;
-    scene.add(cubesGroup);
-    // TextureLoader
-    const textureLoader = new TextureLoader();
-    // Créer un cercle de cubes
-    const numCubes = 12;
-    const radius = isMobile ? 5 : 4; // Cercle plus grand sur mobile
-    const geometry = new BoxGeometry(
-      isMobile ? 0.4 : 0.5,
-      isMobile ? 2.5 : 3,
-      isMobile ? 1.5 : 2
-    );
-
-    const colors = [
-      0x000000, // Studio Lens
-      0xf1f1f1, //StudioSongFab
-      0x751213, //
-      0x222222,
-      0x7d4924, 
-      0xacacac,//widget
-      0xec4899,
-      0xf43f5e,
-      0xef4444,
-      0xf97316,
-      0xf59e0b,
-      0x10b981,
-    ];
-
-    for (let i = 0; i < numCubes; i++) {
-      const angle = (i / numCubes) * Math.PI * 2;
-
-      // Charger la texture pour ce projet
-      const texture = textureLoader.load(projectImages[i], (tex) => {
-        // Une fois l'image chargée, calculer le ratio pour le mode "cover"
-        const faceWidth = isMobile ? 1.5 : 2;
-        const faceHeight = isMobile ? 2.5 : 3;
-        const faceAspect = faceWidth / faceHeight; // 2/3 = 0.666
-
-        const imgAspect = tex.image.width / tex.image.height;
-
-        // Mode "cover" : on veut remplir toute la face
-        if (imgAspect > faceAspect) {
-          // Image plus large : elle doit être ajustée en hauteur
-          const scale = imgAspect / faceAspect;
-          tex.repeat.set(1 / scale, 1);
-          tex.offset.set((1 - 1 / scale) / 2, 0);
-        } else {
-          // Image plus haute : elle doit être ajustée en largeur
-          const scale = faceAspect / imgAspect;
-          tex.repeat.set(1, 1 / scale);
-          tex.offset.set(0, (1 - 1 / scale) / 2);
-        }
-        tex.needsUpdate = true;
-      });
-      texture.colorSpace = SRGBColorSpace;
-
-      // Créer les matériaux : texture sur les faces longues (gauche et droite), couleur sur les autres
-      const materials = [
-        new MeshStandardMaterial({ map: texture }), // right (face longue avec image)
-        new MeshStandardMaterial({ map: texture }), // left (face longue avec image)
-        new MeshStandardMaterial({ color: colors[i] }), // top
-        new MeshStandardMaterial({ color: colors[i] }), // bottom
-        new MeshStandardMaterial({ color: colors[i] }), // front
-        new MeshStandardMaterial({ color: colors[i] }), // back
-      ];
-
-      const cube = new Mesh(geometry, materials);
-
-      // Position sur le cercle
-      const circleX = Math.cos(angle) * radius;
-      const circleZ = Math.sin(angle) * radius;
-
-      cube.position.x = circleX;
-      cube.position.z = circleZ;
-
-      cube.lookAt(0, 0, 0);
-
-      // Stocker les données d'origine pour le hover
-      cube.userData = {
-        originalScale: 1,
-        targetScale: 1,
-        originalColors: materials.map((m, idx) =>
-          idx === 4 ? null : m.color.getHex()
-        ),
-        isHovered: false,
-        originalPosition: { x: circleX, y: 0, z: circleZ },
-        targetPosition: { x: circleX, y: 0, z: circleZ },
-        originalRotation: {
-          x: cube.rotation.x,
-          y: cube.rotation.y,
-          z: cube.rotation.z,
-        },
-        targetRotation: {
-          x: cube.rotation.x,
-          y: cube.rotation.y,
-          z: cube.rotation.z,
-        },
-        isSelected: false,
-        projectIndex: i,
-      };
-
-      cubesGroup.add(cube);
+      gsap = gsapModule.gsap;
+      ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
     }
 
-    scene.fog = new Fog(0xf0f0f0, 3, isMobile ? 15 : 13);
+    // Charger GSAP avant d'utiliser ScrollTrigger
+    loadGSAP().then(() => {
+      const isMobile = window.innerWidth < 768;
 
-    // Lights
-    const ambientLight = new AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
+      // Scene
+      const scene = new Scene();
+      sceneRef.current = scene;
+      // Camera
+      const camera = new PerspectiveCamera(
+        isMobile ? 85 : 75,
+        canvasRef.current.clientWidth / canvasRef.current.clientHeight,
+        0.1,
+        1000,
+      );
+      camera.position.z = isMobile ? 10 : 8;
+      camera.position.y = 0;
+      cameraRef.current = camera;
 
-    const directionalLight = new DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(5, 5, 5);
-    scene.add(directionalLight);
-
-    const directionalLight2 = new DirectionalLight(0xffffff, 0.4);
-    directionalLight2.position.set(-5, -5, -5);
-    scene.add(directionalLight2);
-    let running = true;
-    // Animation
-    const animate = () => {
-      if (!running || isMobile) return;
-      requestAnimationFrame(animate);
-
-      // Animer le scale et la position des cubes
-      cubesGroup.children.forEach((cube) => {
-        // Scale animation
-        const currentScale = cube.scale.x;
-        const targetScale = cube.userData.targetScale;
-        const newScale = currentScale + (targetScale - currentScale) * 0.1;
-        cube.scale.set(newScale, newScale, newScale);
-
-        // Position animation
-        if (cube.userData.useWorldCoordinates) {
-          // Convertir la position cible en coordonnées locales du groupe
-          const targetWorldPos = new Vector3(
-            cube.userData.targetPosition.x,
-            cube.userData.targetPosition.y,
-            cube.userData.targetPosition.z
-          );
-          const targetLocalPos = cubesGroup.worldToLocal(
-            targetWorldPos.clone()
-          );
-
-          cube.position.x += (targetLocalPos.x - cube.position.x) * 0.1;
-          cube.position.y += (targetLocalPos.y - cube.position.y) * 0.1;
-          cube.position.z += (targetLocalPos.z - cube.position.z) * 0.1;
-        } else {
-          cube.position.x +=
-            (cube.userData.targetPosition.x - cube.position.x) * 0.1;
-          cube.position.y +=
-            (cube.userData.targetPosition.y - cube.position.y) * 0.1;
-          cube.position.z +=
-            (cube.userData.targetPosition.z - cube.position.z) * 0.1;
-        }
-
-        // Rotation animation
-        if (cube.userData.useWorldCoordinates) {
-          // Convertir la rotation cible en rotation locale
-          const groupRotationInverse = -cubesGroup.rotation.y;
-          const targetLocalRotY =
-            cube.userData.targetRotation.y + groupRotationInverse;
-
-          cube.rotation.x +=
-            (cube.userData.targetRotation.x - cube.rotation.x) * 0.1;
-          cube.rotation.y += (targetLocalRotY - cube.rotation.y) * 0.1;
-          cube.rotation.z +=
-            (cube.userData.targetRotation.z - cube.rotation.z) * 0.1;
-        } else {
-          cube.rotation.x +=
-            (cube.userData.targetRotation.x - cube.rotation.x) * 0.1;
-          cube.rotation.y +=
-            (cube.userData.targetRotation.y - cube.rotation.y) * 0.1;
-          cube.rotation.z +=
-            (cube.userData.targetRotation.z - cube.rotation.z) * 0.1;
-        }
+      // Renderer
+      const renderer = new WebGLRenderer({
+        canvas: canvasRef.current,
+        antialias: true,
+        alpha: true,
       });
 
-      // Animer l'opacité du texte
+      renderer.setSize(
+        canvasRef.current.clientWidth,
+        canvasRef.current.clientHeight * (isMobile ? 2 : 1),
+      );
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setClearColor(0x000000, 0);
+      rendererRef.current = renderer;
 
-      renderer.render(scene, camera);
-    };
-    animate();
-    if (isMobile) running = false;
-    let previousIndex = -1; //
-    // ✅ ScrollTrigger créé une seule fois ici
-   
-    if (isMobile) {
-  // Ne pas utiliser ScrollTrigger avec pin + scrub
-  // Ou diminuer la durée, enlever pin
-  ScrollTrigger.create({
-    trigger: ".static_div",
-    start: "top top",
-    end: `+=${window.innerHeight * 2}px`, // raccourci sur mobile
-    pin: false, // désactive pin
-    scrub: 0.5,
-  });
-} else{
-   ScrollTrigger.create({
-      trigger: ".static_div",
-      start: "top top",
-      end: `+=${window.innerHeight * (isMobile ? 5 : 7)}px`,
-      pin: true,
-      pinSpacing: true,
-      scrub: 1,
-      onUpdate: (self) => {
-        if (
-          cubesGroupRef.current &&
-          !selectedCube.current &&
-          !isDragging.current &&
-          !isSelecting.current
-        ) {
-          const numCubes = cubesGroupRef.current.children.length;
-          const rotation = self.progress * Math.PI * (isMobile ? 3 : 4);
-          cubesGroupRef.current.rotation.y = rotation;
-
-          const totalRotation = Math.PI * 2;
-          const step = totalRotation / numCubes;
-
-          let currentIndex = Math.floor((rotation % totalRotation) / step);
-          if (currentIndex < 0) currentIndex = 0;
-
-          let counterValue = (currentIndex % numCubes) + 1;
-
-          if (counterValue !== previousIndex) {
-            const counterContainer = document.getElementById("project-counter");
-            if (counterContainer) {
-              const newNumber = String(counterValue).padStart(2, "0");
-
-              // Crée un nouvel élément
-              const newSpan = document.createElement("span");
-              newSpan.textContent = newNumber;
-              newSpan.style.transform = "translateY(100%)";
-              newSpan.style.transition = "transform 0.4s ease-out";
-
-              // Ajoute le nouveau span
-              counterContainer.appendChild(newSpan);
-
-              // Anime le défilement vertical
-              requestAnimationFrame(() => {
-                const spans = counterContainer.querySelectorAll("span");
-                spans.forEach((s, i) => {
-                  s.style.transform = `translateY(${(i - (spans.length - 1)) * 100}%)`;
-                });
-              });
-
-              // Supprime les anciens nombres après l’animation
-              setTimeout(() => {
-                const spans = counterContainer.querySelectorAll("span");
-                if (spans.length > 1) spans[0].remove();
-              }, 500);
-            }
-
-            previousIndex = counterValue;
-          }
-        }
-        if (self.progress === 1) {
-          handleDeselectCube();
-        }
-      },
-      onLeave: () => {
-        handleDeselectCube(true);
-      },
-    });
-}
-    // Mouse events pour drag
-    const handleMouseDown = (e) => {
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      const rect = canvasRef.current.getBoundingClientRect();
-      mouse.current.x = ((clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.current.y = -((clientY - rect.top) / rect.height) * 2 + 1;
-
-      // Vérifier si on clique sur un cube
-      raycaster.current.setFromCamera(mouse.current, camera);
-      const intersects = raycaster.current.intersectObjects(
-        cubesGroup.children
+      // Group pour les cubes
+      const cubesGroup = new Group();
+      cubesGroupRef.current = cubesGroup;
+      scene.add(cubesGroup);
+      // TextureLoader
+      const textureLoader = new TextureLoader();
+      // Créer un cercle de cubes
+      const numCubes = 12;
+      const radius = isMobile ? 5 : 4; // Cercle plus grand sur mobile
+      const geometry = new BoxGeometry(
+        isMobile ? 0.4 : 0.5,
+        isMobile ? 2.5 : 3,
+        isMobile ? 1.5 : 2,
       );
 
-      if (intersects.length > 0) {
-        isDragging.current = false;
-        const clickedCube = intersects[0].object;
+      const colors = [
+        0x000000, // Studio Lens
+        0xf1f1f1, //StudioSongFab
+        0x751213, //
+        0x222222,
+        0x7d4924,
+        0xacacac, //widget
+        0xec4899,
+        0xf43f5e,
+        0xef4444,
+        0xf97316,
+        0xf59e0b,
+        0x10b981,
+      ];
 
-        // Si on clique sur le cube déjà sélectionné, le désélectionner
-        if (selectedCube.current === clickedCube) {
-          // Retour à la position d'origine
-          clickedCube.userData.targetPosition = {
-            ...clickedCube.userData.originalPosition,
-          };
-          clickedCube.userData.targetRotation = {
-            ...clickedCube.userData.originalRotation,
-          };
-          clickedCube.userData.targetScale = 1;
-          clickedCube.userData.isSelected = false;
-          clickedCube.userData.useWorldCoordinates = false;
-          selectedCube.current = null;
+      for (let i = 0; i < numCubes; i++) {
+        const angle = (i / numCubes) * Math.PI * 2;
 
-          gsap.to(projetDivRef.current, {
-            y: "100%",
-            opacity: 0,
-            duration: 0.6,
-            ease: "power2.inOut",
-            onComplete: () => setSelectedProject(null), // <-- fermeture finale
-          });
-          return;
-        } else {
-          // Désélectionner l'ancien cube si existant
-          if (selectedCube.current) {
-            selectedCube.current.userData.targetPosition = {
-              ...selectedCube.current.userData.originalPosition,
-            };
-            selectedCube.current.userData.targetRotation = {
-              ...selectedCube.current.userData.originalRotation,
-            };
-            selectedCube.current.userData.targetScale = 1;
-            selectedCube.current.userData.isSelected = false;
-            selectedCube.current.userData.useWorldCoordinates = false;
+        // Charger la texture pour ce projet
+        const texture = textureLoader.load(projectImages[i], (tex) => {
+          // Une fois l'image chargée, calculer le ratio pour le mode "cover"
+          const faceWidth = isMobile ? 1.5 : 2;
+          const faceHeight = isMobile ? 2.5 : 3;
+          const faceAspect = faceWidth / faceHeight; // 2/3 = 0.666
+
+          const imgAspect = tex.image.width / tex.image.height;
+
+          // Mode "cover" : on veut remplir toute la face
+          if (imgAspect > faceAspect) {
+            // Image plus large : elle doit être ajustée en hauteur
+            const scale = imgAspect / faceAspect;
+            tex.repeat.set(1 / scale, 1);
+            tex.offset.set((1 - 1 / scale) / 2, 0);
+          } else {
+            // Image plus haute : elle doit être ajustée en largeur
+            const scale = faceAspect / imgAspect;
+            tex.repeat.set(1, 1 / scale);
+            tex.offset.set(0, (1 - 1 / scale) / 2);
+          }
+          tex.needsUpdate = true;
+        });
+        texture.colorSpace = SRGBColorSpace;
+
+        // Créer les matériaux : texture sur les faces longues (gauche et droite), couleur sur les autres
+        const materials = [
+          new MeshStandardMaterial({ map: texture }), // right (face longue avec image)
+          new MeshStandardMaterial({ map: texture }), // left (face longue avec image)
+          new MeshStandardMaterial({ color: colors[i] }), // top
+          new MeshStandardMaterial({ color: colors[i] }), // bottom
+          new MeshStandardMaterial({ color: colors[i] }), // front
+          new MeshStandardMaterial({ color: colors[i] }), // back
+        ];
+
+        const cube = new Mesh(geometry, materials);
+
+        // Position sur le cercle
+        const circleX = Math.cos(angle) * radius;
+        const circleZ = Math.sin(angle) * radius;
+
+        cube.position.x = circleX;
+        cube.position.z = circleZ;
+
+        cube.lookAt(0, 0, 0);
+
+        // Stocker les données d'origine pour le hover
+        cube.userData = {
+          originalScale: 1,
+          targetScale: 1,
+          originalColors: materials.map((m, idx) =>
+            idx === 4 ? null : m.color.getHex(),
+          ),
+          isHovered: false,
+          originalPosition: { x: circleX, y: 0, z: circleZ },
+          targetPosition: { x: circleX, y: 0, z: circleZ },
+          originalRotation: {
+            x: cube.rotation.x,
+            y: cube.rotation.y,
+            z: cube.rotation.z,
+          },
+          targetRotation: {
+            x: cube.rotation.x,
+            y: cube.rotation.y,
+            z: cube.rotation.z,
+          },
+          isSelected: false,
+          projectIndex: i,
+        };
+
+        cubesGroup.add(cube);
+      }
+
+      scene.fog = new Fog(0xf0f0f0, 3, isMobile ? 15 : 13);
+
+      // Lights
+      const ambientLight = new AmbientLight(0xffffff, 0.6);
+      scene.add(ambientLight);
+
+      const directionalLight = new DirectionalLight(0xffffff, 0.8);
+      directionalLight.position.set(5, 5, 5);
+      scene.add(directionalLight);
+
+      const directionalLight2 = new DirectionalLight(0xffffff, 0.4);
+      directionalLight2.position.set(-5, -5, -5);
+      scene.add(directionalLight2);
+      // Animation
+      const animate = () => {
+        requestAnimationFrame(animate);
+
+        // Animer le scale et la position des cubes
+        cubesGroup.children.forEach((cube) => {
+          // Scale animation
+          const currentScale = cube.scale.x;
+          const targetScale = cube.userData.targetScale;
+          const newScale = currentScale + (targetScale - currentScale) * 0.1;
+          cube.scale.set(newScale, newScale, newScale);
+
+          // Position animation
+          if (cube.userData.useWorldCoordinates) {
+            // Convertir la position cible en coordonnées locales du groupe
+            const targetWorldPos = new Vector3(
+              cube.userData.targetPosition.x,
+              cube.userData.targetPosition.y,
+              cube.userData.targetPosition.z,
+            );
+            const targetLocalPos = cubesGroup.worldToLocal(
+              targetWorldPos.clone(),
+            );
+
+            cube.position.x += (targetLocalPos.x - cube.position.x) * 0.1;
+            cube.position.y += (targetLocalPos.y - cube.position.y) * 0.1;
+            cube.position.z += (targetLocalPos.z - cube.position.z) * 0.1;
+          } else {
+            cube.position.x +=
+              (cube.userData.targetPosition.x - cube.position.x) * 0.1;
+            cube.position.y +=
+              (cube.userData.targetPosition.y - cube.position.y) * 0.1;
+            cube.position.z +=
+              (cube.userData.targetPosition.z - cube.position.z) * 0.1;
           }
 
-          // Sélectionner le nouveau cube
-          selectedCube.current = clickedCube;
-          clickedCube.userData.isSelected = true;
-          isSelecting.current = true;
+          // Rotation animation
+          if (cube.userData.useWorldCoordinates) {
+            // Convertir la rotation cible en rotation locale
+            const groupRotationInverse = -cubesGroup.rotation.y;
+            const targetLocalRotY =
+              cube.userData.targetRotation.y + groupRotationInverse;
 
-          const index = clickedCube.userData.projectIndex;
-          setSelectedProject({
-            image: projectImages[index],
-            data: projectsData[index],
-          });
+            cube.rotation.x +=
+              (cube.userData.targetRotation.x - cube.rotation.x) * 0.1;
+            cube.rotation.y += (targetLocalRotY - cube.rotation.y) * 0.1;
+            cube.rotation.z +=
+              (cube.userData.targetRotation.z - cube.rotation.z) * 0.1;
+          } else {
+            cube.rotation.x +=
+              (cube.userData.targetRotation.x - cube.rotation.x) * 0.1;
+            cube.rotation.y +=
+              (cube.userData.targetRotation.y - cube.rotation.y) * 0.1;
+            cube.rotation.z +=
+              (cube.userData.targetRotation.z - cube.rotation.z) * 0.1;
+          }
+        });
 
-          requestAnimationFrame(() => {
-            if (!projetDivRef.current) return;
+        // Animer l'opacité du texte
 
-            gsap.fromTo(
-              projetDivRef.current,
-              { y: "100%", opacity: 0 },
-              { y: "0%", opacity: 1, duration: 0.8, ease: "power3.out" }
-            );
-          });
+        renderer.render(scene, camera);
+      };
+      animate();
+      let previousIndex = -1; //
+      // ✅ ScrollTrigger créé une seule fois ici
 
-          // Calculer la position du cube dans l'espace monde (en tenant compte de la rotation du groupe)
-          const worldPosition = new Vector3();
-          clickedCube.getWorldPosition(worldPosition);
+      ScrollTrigger.create({
+        trigger: ".static_div",
+        start: "top top",
+        end: `+=${window.innerHeight * (isMobile ? 5 : 7)}px`,
+        pin: true,
+        pinSpacing: true,
+        scrub: 1,
+        onUpdate: (self) => {
+          if (
+            cubesGroupRef.current &&
+            !selectedCube.current &&
+            !isDragging.current &&
+            !isSelecting.current
+          ) {
+            const numCubes = cubesGroupRef.current.children.length;
+            const rotation = self.progress * Math.PI * (isMobile ? 3 : 4);
+            cubesGroupRef.current.rotation.y = rotation;
 
-          // Calculer la rotation du cube dans l'espace monde
-          const worldQuaternion = new Quaternion();
-          clickedCube.getWorldQuaternion(worldQuaternion);
-          const worldEuler = new Euler().setFromQuaternion(worldQuaternion);
+            const totalRotation = Math.PI * 2;
+            const step = totalRotation / numCubes;
 
-          // Position à gauche face à nous, en coordonnées monde
-          clickedCube.userData.targetPosition = { x: 0, y: 0, z: 5 };
-          clickedCube.userData.targetRotation = { x: 0, y: Math.PI / 2, z: 0 };
-          clickedCube.userData.targetScale = isMobile ? 1.3 : 1.5;
-          clickedCube.userData.useWorldCoordinates = true;
-        }
-      } else {
-        isDragging.current = true;
-        previousMousePosition.current = { x: clientX, y: clientY };
-        canvasRef.current.style.cursor = "grabbing";
-      }
-    };
+            let currentIndex = Math.floor((rotation % totalRotation) / step);
+            if (currentIndex < 0) currentIndex = 0;
 
-    const handleMouseMove = (e) => {
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      // Calculer la position de la souris en coordonnées normalisées
-      const rect = canvasRef.current.getBoundingClientRect();
-      mouse.current.x = ((clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.current.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+            let counterValue = (currentIndex % numCubes) + 1;
 
-      if (isDragging.current && cubesGroupRef.current) {
-        const deltaX = clientX - previousMousePosition.current.x;
-        const deltaY = clientY - previousMousePosition.current.y;
+            if (counterValue !== previousIndex) {
+              const counterContainer =
+                document.getElementById("project-counter");
+              if (counterContainer) {
+                const newNumber = String(counterValue).padStart(2, "0");
 
-        cubesGroupRef.current.rotation.y += deltaX * 0.01;
-        cubesGroupRef.current.rotation.x += deltaY * 0.01;
+                // Crée un nouvel élément
+                const newSpan = document.createElement("span");
+                newSpan.textContent = newNumber;
+                newSpan.style.transform = "translateY(100%)";
+                newSpan.style.transition = "transform 0.4s ease-out";
 
-        previousMousePosition.current = { x: clientX, y: clientY };
-      } else if (!selectedCube.current) {
-        // Raycasting pour détecter le hover
+                // Ajoute le nouveau span
+                counterContainer.appendChild(newSpan);
+
+                // Anime le défilement vertical
+                requestAnimationFrame(() => {
+                  const spans = counterContainer.querySelectorAll("span");
+                  spans.forEach((s, i) => {
+                    s.style.transform = `translateY(${(i - (spans.length - 1)) * 100}%)`;
+                  });
+                });
+
+                // Supprime les anciens nombres après l’animation
+                setTimeout(() => {
+                  const spans = counterContainer.querySelectorAll("span");
+                  if (spans.length > 1) spans[0].remove();
+                }, 500);
+              }
+
+              previousIndex = counterValue;
+            }
+          }
+          if (self.progress === 1) {
+            handleDeselectCube();
+          }
+        },
+        onLeave: () => {
+          handleDeselectCube(true);
+        },
+      });
+
+      // Mouse events pour drag
+      const handleMouseDown = (e) => {
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const rect = canvasRef.current.getBoundingClientRect();
+        mouse.current.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.current.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+
+        // Vérifier si on clique sur un cube
         raycaster.current.setFromCamera(mouse.current, camera);
         const intersects = raycaster.current.intersectObjects(
-          cubesGroup.children
+          cubesGroup.children,
         );
 
-        // Réinitialiser l'ancien cube hover
-        if (
-          hoveredCube.current &&
-          (intersects.length === 0 ||
-            intersects[0].object !== hoveredCube.current)
-        ) {
-          if (!hoveredCube.current.userData.isSelected) {
-            hoveredCube.current.userData.targetScale = 1;
-          }
-          hoveredCube.current.userData.isHovered = false;
-          hoveredCube.current.material.forEach((mat, index) => {
-            if (
-              index !== 0 &&
-              index !== 1 &&
-              hoveredCube.current.userData.originalColors[index]
-            ) {
-              mat.color.setHex(
-                hoveredCube.current.userData.originalColors[index]
-              );
-            }
-            mat.emissive.setHex(0x000000);
-          });
-          hoveredCube.current = null;
-          canvasRef.current.style.cursor = "grab";
-        }
-
-        // Appliquer l'effet hover au nouveau cube
         if (intersects.length > 0) {
-          const cube = intersects[0].object;
-          if (cube !== hoveredCube.current && !cube.userData.isSelected) {
-            hoveredCube.current = cube;
-            cube.userData.targetScale = 1.3;
-            cube.userData.isHovered = true;
+          isDragging.current = false;
+          const clickedCube = intersects[0].object;
 
-            // Éclaircir la couleur et ajouter un effet émissif
-            cube.material.forEach((mat, index) => {
+          // Si on clique sur le cube déjà sélectionné, le désélectionner
+          if (selectedCube.current === clickedCube) {
+            // Retour à la position d'origine
+            clickedCube.userData.targetPosition = {
+              ...clickedCube.userData.originalPosition,
+            };
+            clickedCube.userData.targetRotation = {
+              ...clickedCube.userData.originalRotation,
+            };
+            clickedCube.userData.targetScale = 1;
+            clickedCube.userData.isSelected = false;
+            clickedCube.userData.useWorldCoordinates = false;
+            selectedCube.current = null;
+
+            gsap.to(projetDivRef.current, {
+              y: "100%",
+              opacity: 0,
+              duration: 0.6,
+              ease: "power2.inOut",
+              onComplete: () => setSelectedProject(null), // <-- fermeture finale
+            });
+            return;
+          } else {
+            // Désélectionner l'ancien cube si existant
+            if (selectedCube.current) {
+              selectedCube.current.userData.targetPosition = {
+                ...selectedCube.current.userData.originalPosition,
+              };
+              selectedCube.current.userData.targetRotation = {
+                ...selectedCube.current.userData.originalRotation,
+              };
+              selectedCube.current.userData.targetScale = 1;
+              selectedCube.current.userData.isSelected = false;
+              selectedCube.current.userData.useWorldCoordinates = false;
+            }
+
+            // Sélectionner le nouveau cube
+            selectedCube.current = clickedCube;
+            clickedCube.userData.isSelected = true;
+            isSelecting.current = true;
+
+            const index = clickedCube.userData.projectIndex;
+            setSelectedProject({
+              image: projectImages[index],
+              data: projectsData[index],
+            });
+
+            requestAnimationFrame(() => {
+              if (!projetDivRef.current) return;
+
+              gsap.fromTo(
+                projetDivRef.current,
+                { y: "100%", opacity: 0 },
+                { y: "0%", opacity: 1, duration: 0.8, ease: "power3.out" },
+              );
+            });
+
+            // Calculer la position du cube dans l'espace monde (en tenant compte de la rotation du groupe)
+            const worldPosition = new Vector3();
+            clickedCube.getWorldPosition(worldPosition);
+
+            // Calculer la rotation du cube dans l'espace monde
+            const worldQuaternion = new Quaternion();
+            clickedCube.getWorldQuaternion(worldQuaternion);
+            const worldEuler = new Euler().setFromQuaternion(worldQuaternion);
+
+            // Position à gauche face à nous, en coordonnées monde
+            clickedCube.userData.targetPosition = { x: 0, y: 0, z: 5 };
+            clickedCube.userData.targetRotation = {
+              x: 0,
+              y: Math.PI / 2,
+              z: 0,
+            };
+            clickedCube.userData.targetScale = isMobile ? 1.3 : 1.5;
+            clickedCube.userData.useWorldCoordinates = true;
+          }
+        } else {
+          isDragging.current = true;
+          previousMousePosition.current = { x: clientX, y: clientY };
+          canvasRef.current.style.cursor = "grabbing";
+        }
+      };
+
+      const handleMouseMove = (e) => {
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        // Calculer la position de la souris en coordonnées normalisées
+        const rect = canvasRef.current.getBoundingClientRect();
+        mouse.current.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.current.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+
+        if (isDragging.current && cubesGroupRef.current) {
+          const deltaX = clientX - previousMousePosition.current.x;
+          const deltaY = clientY - previousMousePosition.current.y;
+
+          cubesGroupRef.current.rotation.y += deltaX * 0.01;
+          cubesGroupRef.current.rotation.x += deltaY * 0.01;
+
+          previousMousePosition.current = { x: clientX, y: clientY };
+        } else if (!selectedCube.current) {
+          // Raycasting pour détecter le hover
+          raycaster.current.setFromCamera(mouse.current, camera);
+          const intersects = raycaster.current.intersectObjects(
+            cubesGroup.children,
+          );
+
+          // Réinitialiser l'ancien cube hover
+          if (
+            hoveredCube.current &&
+            (intersects.length === 0 ||
+              intersects[0].object !== hoveredCube.current)
+          ) {
+            if (!hoveredCube.current.userData.isSelected) {
+              hoveredCube.current.userData.targetScale = 1;
+            }
+            hoveredCube.current.userData.isHovered = false;
+            hoveredCube.current.material.forEach((mat, index) => {
               if (
                 index !== 0 &&
                 index !== 1 &&
-                cube.userData.originalColors[index]
+                hoveredCube.current.userData.originalColors[index]
               ) {
-                const originalColor = new Color(
-                  cube.userData.originalColors[index]
+                mat.color.setHex(
+                  hoveredCube.current.userData.originalColors[index],
                 );
-                const lighterColor = originalColor
-                  .clone()
-                  .lerp(new Color(0xffffff), 0.3);
-                mat.color.copy(lighterColor);
-                mat.emissive.setHex(cube.userData.originalColors[index]);
-                mat.emissiveIntensity = 0;
               }
+              mat.emissive.setHex(0x000000);
             });
+            hoveredCube.current = null;
+            canvasRef.current.style.cursor = "grab";
+          }
 
-            canvasRef.current.style.cursor = "pointer";
+          // Appliquer l'effet hover au nouveau cube
+          if (intersects.length > 0) {
+            const cube = intersects[0].object;
+            if (cube !== hoveredCube.current && !cube.userData.isSelected) {
+              hoveredCube.current = cube;
+              cube.userData.targetScale = 1.3;
+              cube.userData.isHovered = true;
+
+              // Éclaircir la couleur et ajouter un effet émissif
+              cube.material.forEach((mat, index) => {
+                if (
+                  index !== 0 &&
+                  index !== 1 &&
+                  cube.userData.originalColors[index]
+                ) {
+                  const originalColor = new Color(
+                    cube.userData.originalColors[index],
+                  );
+                  const lighterColor = originalColor
+                    .clone()
+                    .lerp(new Color(0xffffff), 0.3);
+                  mat.color.copy(lighterColor);
+                  mat.emissive.setHex(cube.userData.originalColors[index]);
+                  mat.emissiveIntensity = 0;
+                }
+              });
+
+              canvasRef.current.style.cursor = "pointer";
+            }
           }
         }
-      }
-    };
+      };
 
-    const handleMouseUp = () => {
-      isDragging.current = false;
-      if (!isMobile) canvasRef.current.style.cursor = "grab";
-    };
+      const handleMouseUp = () => {
+        isDragging.current = false;
+        if (!isMobile) canvasRef.current.style.cursor = "grab";
+      };
 
-    canvasRef.current.addEventListener("mousedown", handleMouseDown);
-    canvasRef.current.addEventListener("touchstart", handleMouseDown, {
-      passive: true,
-    });
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchmove", handleMouseMove, { passive: true });
-    window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("touchend", handleMouseUp);
-
-    // Responsive
-    const handleResize = () => {
-      if (!canvasRef.current) return;
-      const width = canvasRef.current.clientWidth;
-      const height = canvasRef.current.clientHeight;
-
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-    };
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      canvasRef.current?.removeEventListener("mousedown", handleMouseDown);
-      canvasRef.current?.removeEventListener("touchstart", handleMouseDown);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("touchend", handleMouseUp);
-      geometry.dispose();
-      cubesGroup.children.forEach((cube) => {
-        cube.geometry.dispose();
-        cube.material.forEach((m) => m.dispose());
+      canvasRef.current.addEventListener("mousedown", handleMouseDown);
+      canvasRef.current.addEventListener("touchstart", handleMouseDown, {
+        passive: true,
       });
-      ScrollTrigger?.getAll().forEach(st => st.kill());
-      renderer.dispose();
-    };
-  });
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("touchmove", handleMouseMove, { passive: true });
+      window.addEventListener("mouseup", handleMouseUp);
+      window.addEventListener("touchend", handleMouseUp);
+
+      // Responsive
+      const handleResize = () => {
+        if (!canvasRef.current) return;
+        const width = canvasRef.current.clientWidth;
+        const height = canvasRef.current.clientHeight;
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+      };
+      window.addEventListener("resize", handleResize);
+
+      // Cleanup
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        canvasRef.current?.removeEventListener("mousedown", handleMouseDown);
+        canvasRef.current?.removeEventListener("touchstart", handleMouseDown);
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("touchmove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
+        window.removeEventListener("touchend", handleMouseUp);
+        geometry.dispose();
+        cubesGroup.children.forEach((cube) => {
+          cube.geometry.dispose();
+          cube.material.forEach((m) => m.dispose());
+        });
+        ScrollTrigger?.getAll().forEach((st) => st.kill());
+        renderer.dispose();
+      };
+    });
   }, []);
 
   // Fonction pour désélectionner le cube
@@ -793,17 +786,23 @@ export default function Projects() {
       selectedCube.current.userData.isSelected = false;
       selectedCube.current.userData.useWorldCoordinates = false;
       selectedCube.current = null;
+    }
+    // Animation de fermeture
+    if (projetDivRef.current) {
+      // Charger GSAP de manière asynchrone
+      import("gsap").then((gsapModule) => {
+        const gsap = gsapModule.gsap;
 
-      gsap.to(projetDivRef.current, {
-        y: "100%",
-        opacity: 0,
-        duration: 0.6,
-        ease: "power2.inOut",
-        onComplete: () => {
-          projetDivRef.current.style.display = "none";
-          setSelectedProject(null);
-          isSelecting.current = false;
-        },
+        gsap.to(projetDivRef.current, {
+          y: "100%",
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.inOut",
+          onComplete: () => {
+            setSelectedProject(null);
+            isSelecting.current = false;
+          },
+        });
       });
     }
   };
@@ -813,7 +812,7 @@ export default function Projects() {
       className="h-full bg-white p-2 sm:p-4 flex flex-col "
     >
       <h2 className="font-bold text-4xl sm:text-6xl lg:text-8xl text-black mb-4 sm:mb-8 mr-auto">
-        Our projects
+        {t('projects.title')}
       </h2>
       <div
         className="static_div flex-1 relative rounded-lg shadow-2xl"
@@ -850,113 +849,140 @@ export default function Projects() {
       </div>
       {selectedProject && (
         <>
-        <div
-          ref={projetDivRef}
-          className="Projet overflow-y-scroll bg-white sm:w-[98%] w-screen rounded-4xl top-4 sm:left-4 left-0 shadow-2xl fixed sm:h-[96%] h-screen text-white flex items-start pt-4 justify-center"
-          style={{ transform: "translateY(100%)", opacity: 0 }}
-          onScroll={() => {
-    const el = projetDivRef.current
-    if (!el) return
+          <div
+            ref={projetDivRef}
+            className="Projet overflow-y-scroll bg-white sm:w-[98%] w-screen rounded-4xl top-4 sm:left-4 left-0 shadow-2xl fixed sm:h-[96%] h-screen text-white flex items-start pt-4 justify-center"
+            style={{ transform: "translateY(100%)", opacity: 0 }}
+            onScroll={() => {
+              const el = projetDivRef.current;
+              if (!el) return;
 
-    const isBottom =
-      el.scrollTop + el.clientHeight >= el.scrollHeight - 10
+              const isBottom =
+                el.scrollTop + el.clientHeight >= el.scrollHeight - 10;
 
-    setIsAtBottom(isBottom)
-  }}
-        >
-          <button
-            onClick={handleDeselectCube}
-            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors cursor-pointer z-50 p-2 hover:bg-[#b98d6b85] rounded-2xl"
+              setIsAtBottom(isBottom);
+            }}
           >
-            <X size={32} />
-          </button>
-          
-          <div className="project_div h-auto relative flex justify-start items-center flex-col sm:gap-12 gap-5">
-            {/* HERO IMAGE */}
-            <div
-              className="hero_project_div relative sm:h-[90vh] h-full sm:w-[95vw] w-84 rounded-2xl overflow-hidden"
-              style={{
-                boxShadow:
-                  "rgba(185, 141, 107, 0.5) 1px 10px 20px, rgba(185, 141, 107, 0.2) 0px 0px 0px 10px",
-              }}
+            <button
+              onClick={handleDeselectCube}
+              className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors cursor-pointer z-50 p-2 hover:bg-[#b98d6b85] rounded-2xl"
             >
-              <img
-                src={selectedProject.image}
-                className="w-full h-full object-cover"
-                alt={selectedProject.data.title}
-              />
-            </div>
+              <X size={32} />
+            </button>
 
-            {/* DESCRIPTION */}
-            <div
-              ref={bottomRef}
-              className="description relative sm:h-[90vh] h-full w-87 sm:w-[95vw] bg-amber-50 rounded-2xl overflow-hidden text-black sm:p-10 p-3"
-            >
-              <h2 className="sm:text-5xl text-2xl font-bold text-center mb-10">
-                {selectedProject.data.title}
-              </h2>
-
-              <div className="flex flex-wrap sm:gap-6 gap-3 justify-center">
-                {selectedProject.data.title_description.map((item, i) => (
-                  <div
-                    key={i}
-                    className="sm:w-75 w-80 flex flex-col sm:gap-2 gap-0.5"
-                  >
-                    <h2 className="sm:text-xl text-base font-semibold">
-                      {item}
-                    </h2>
-
-                    <p className="sm:text-base text-xs text-black opacity-80 mt-2">
-                      {selectedProject.data.description[i]}
-                    </p>
-                  </div>
-                ))}
+            <div className="project_div h-auto relative flex justify-start items-center flex-col sm:gap-12 gap-5">
+              {/* HERO IMAGE */}
+              <div
+                className="hero_project_div relative sm:h-[90vh] h-full sm:w-[95vw] w-84 rounded-2xl overflow-hidden"
+                style={{
+                  boxShadow:
+                    "rgba(185, 141, 107, 0.5) 1px 10px 20px, rgba(185, 141, 107, 0.2) 0px 0px 0px 10px",
+                }}
+              >
+                <img
+                  src={selectedProject.image}
+                  className="w-full h-full object-cover"
+                  alt={selectedProject.data.title}
+                />
               </div>
 
-              <div className="flex justify-center">
-                <button className="mt-10 px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 transition">
-                  Voir le projet
-                </button>
+              {/* DESCRIPTION */}
+              <div
+                ref={bottomRef}
+                className="description relative sm:h-[90vh] h-full w-87 sm:w-[95vw] bg-amber-50 rounded-2xl overflow-hidden text-black sm:p-10 p-3"
+              >
+                <h2 className="sm:text-5xl text-2xl font-bold text-center mb-10">
+                  {selectedProject.data.title}
+                </h2>
+
+                <div className="flex flex-wrap sm:gap-6 gap-3 justify-center">
+                  {selectedProject.data.title_description.map((item, i) => (
+                    <div
+                      key={i}
+                      className="sm:w-75 w-80 flex flex-col sm:gap-2 gap-0.5"
+                    >
+                      <h2 className="sm:text-xl text-base font-semibold">
+                        {item}
+                      </h2>
+
+                      <p className="sm:text-base text-xs text-black opacity-80 mt-2">
+                        {selectedProject.data.description[i]}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex justify-center">
+                  <button className="mt-10 px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 transition">
+                    {t('projects.cta')}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <button
+          <button
             onClick={() => {
-    if (isAtBottom) {
-      projetDivRef.current?.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      })
-    } else {
-      bottomRef.current?.scrollIntoView({
-        behavior: "smooth",
-      })
-    }
-  }}
-            className="glass_btn hidden sm:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-999 w-14 h-14 rounded-full bg-transparent text-black items-center justify-center shadow-xl hover:scale-105 transition-transform">
-              <span
-  className={`transition-transform duration-300 z-99 ${
-    isAtBottom ? "rotate-180" : ""
-  }`}
->
-  <ArrowDown />
-</span>
+              if (isAtBottom) {
+                projetDivRef.current?.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              } else {
+                bottomRef.current?.scrollIntoView({
+                  behavior: "smooth",
+                });
+              }
+            }}
+            className="glass_btn hidden sm:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-999 w-14 h-14 rounded-full bg-transparent text-black items-center justify-center shadow-xl hover:scale-105 transition-transform"
+          >
+            <span
+              className={`transition-transform duration-300 z-99 ${
+                isAtBottom ? "rotate-180" : ""
+              }`}
+            >
+              <ArrowDown />
+            </span>
           </button>
-<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" className="absolute overflow-hidden">
-        <defs>
-            <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise"></feTurbulence>
-                <feGaussianBlur in="noise" stdDeviation="2" result="blurred"></feGaussianBlur>
-                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="77" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-            </filter>
-        </defs>
-    </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="0"
+            height="0"
+            className="absolute overflow-hidden"
+          >
+            <defs>
+              <filter
+                id="glass-distortion"
+                x="0%"
+                y="0%"
+                width="100%"
+                height="100%"
+              >
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.008 0.008"
+                  numOctaves="2"
+                  seed="92"
+                  result="noise"
+                ></feTurbulence>
+                <feGaussianBlur
+                  in="noise"
+                  stdDeviation="2"
+                  result="blurred"
+                ></feGaussianBlur>
+                <feDisplacementMap
+                  in="SourceGraphic"
+                  in2="blurred"
+                  scale="77"
+                  xChannelSelector="R"
+                  yChannelSelector="G"
+                ></feDisplacementMap>
+              </filter>
+            </defs>
+          </svg>
         </>
       )}
 
       <style jsx>{`
-     
         .Projet::-webkit-scrollbar {
           width: 8px !important;
         }
@@ -987,95 +1013,95 @@ export default function Projects() {
           will-change: transform;
           z-index: 1;
         }
-          .glass_btn {
-              /* Inner shadow */
-            --shadow-offset: 0;
-            --shadow-blur: 20px;
-            --shadow-spread: -5px;
-            --shadow-color: rgba(255, 255, 255, 0.7);
+        .glass_btn {
+          /* Inner shadow */
+          --shadow-offset: 0;
+          --shadow-blur: 20px;
+          --shadow-spread: -5px;
+          --shadow-color: rgba(255, 255, 255, 0.7);
 
-            /* Painted glass */
-            --tint-color: 0, 0, 0;
-            --tint-opacity: 0.4;
+          /* Painted glass */
+          --tint-color: 0, 0, 0;
+          --tint-opacity: 0.4;
 
-            /* Background frost */
-            --frost-blur: 2px;
+          /* Background frost */
+          --frost-blur: 2px;
 
-            /* SVG noise/distortion */
-            --noise-frequency: 0.008;
-            --distortion-strength: 77;
+          /* SVG noise/distortion */
+          --noise-frequency: 0.008;
+          --distortion-strength: 77;
 
-            /* Outer shadow blur */
-            --outer-shadow-blur: 24px;
-            
-            isolation: isolate;
-            touch-action: none;
-            /* enable pointer dragging on touch */
-            box-shadow: 0px 6px var(--outer-shadow-blur) rgba(0, 0, 0, 0.2);
+          /* Outer shadow blur */
+          --outer-shadow-blur: 24px;
+
+          isolation: isolate;
+          touch-action: none;
+          /* enable pointer dragging on touch */
+          box-shadow: 0px 6px var(--outer-shadow-blur) rgba(0, 0, 0, 0.2);
         }
 
         .glass_btn::before {
           /* Inner shadow */
-            --shadow-offset: 0;
-            --shadow-blur: 20px;
-            --shadow-spread: -5px;
-            --shadow-color: rgba(255, 255, 255, 0.7);
+          --shadow-offset: 0;
+          --shadow-blur: 20px;
+          --shadow-spread: -5px;
+          --shadow-color: rgba(255, 255, 255, 0.7);
 
-            /* Painted glass */
-            --tint-color: 255, 255, 255;
-            --tint-opacity: 0.4;
+          /* Painted glass */
+          --tint-color: 255, 255, 255;
+          --tint-opacity: 0.4;
 
-            /* Background frost */
-            --frost-blur: 2px;
+          /* Background frost */
+          --frost-blur: 2px;
 
-            /* SVG noise/distortion */
-            --noise-frequency: 0.008;
-            --distortion-strength: 77;
+          /* SVG noise/distortion */
+          --noise-frequency: 0.008;
+          --distortion-strength: 77;
 
-            /* Outer shadow blur */
-            --outer-shadow-blur: 24px;
-            
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            border-radius: 28px;
-            box-shadow:
-                inset var(--shadow-offset) var(--shadow-offset) var(--shadow-blur) var(--shadow-spread) var(--shadow-color);
-            background-color: rgba(var(--tint-color), var(--tint-opacity));
+          /* Outer shadow blur */
+          --outer-shadow-blur: 24px;
+
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          border-radius: 28px;
+          box-shadow: inset var(--shadow-offset) var(--shadow-offset)
+            var(--shadow-blur) var(--shadow-spread) var(--shadow-color);
+          background-color: rgba(var(--tint-color), var(--tint-opacity));
         }
 
         .glass_btn::after {
           /* Inner shadow */
-            --shadow-offset: 0;
-            --shadow-blur: 20px;
-            --shadow-spread: -5px;
-            --shadow-color: rgba(255, 255, 255, 0.7);
+          --shadow-offset: 0;
+          --shadow-blur: 20px;
+          --shadow-spread: -5px;
+          --shadow-color: rgba(255, 255, 255, 0.7);
 
-            /* Painted glass */
-            --tint-color: 255, 255, 255;
-            --tint-opacity: 0.4;
+          /* Painted glass */
+          --tint-color: 255, 255, 255;
+          --tint-opacity: 0.4;
 
-            /* Background frost */
-            --frost-blur: 2px;
+          /* Background frost */
+          --frost-blur: 2px;
 
-            /* SVG noise/distortion */
-            --noise-frequency: 0.008;
-            --distortion-strength: 77;
+          /* SVG noise/distortion */
+          --noise-frequency: 0.008;
+          --distortion-strength: 77;
 
-            /* Outer shadow blur */
-            --outer-shadow-blur: 24px;
-            
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            border-radius: 28px;
-            backdrop-filter: blur(var(--frost-blur));
-            filter: url(#glass-distortion);
-            isolation: isolate;
-            -webkit-backdrop-filter: blur(var(--frost-blur));
-            -webkit-filter: url("#glass-distortion");
+          /* Outer shadow blur */
+          --outer-shadow-blur: 24px;
+
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          border-radius: 28px;
+          backdrop-filter: blur(var(--frost-blur));
+          filter: url(#glass-distortion);
+          isolation: isolate;
+          -webkit-backdrop-filter: blur(var(--frost-blur));
+          -webkit-filter: url("#glass-distortion");
         }
       `}</style>
     </section>

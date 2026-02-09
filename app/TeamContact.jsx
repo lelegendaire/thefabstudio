@@ -1,22 +1,25 @@
-"use client"
-import { useRef } from "react"
-import dynamic from 'next/dynamic'
+"use client";
+import { useRef } from "react";
+import dynamic from "next/dynamic";
 
-const ContactContent = dynamic(() => import('./sections/contact/ContactContent'))
-const TeamContent = dynamic(() => import('./sections/team/TeamContent'))
+const ContactContent = dynamic(
+  () => import("./sections/contact/ContactContent"),
+);
+const TeamContent = dynamic(() => import("./sections/team/TeamContent"));
+export default function SectionTeamAndContact() {
+  const contactRef = useRef(null);
+  return (
+    <>
+      {/* Team */}
+      <section
+        id="team_section"
+        className="h-[150vh] sm:h-screen bg-black relative"
+      >
+        <TeamContent contactRef={contactRef} />
+      </section>
 
-
-export default function SectionTeamAndContact(){
-     const contactRef = useRef(null)
-    return (
-        <>
-        {/* Team */}
-              <section id="team_section" className="h-[150vh] sm:h-screen bg-black relative">
-                <TeamContent contactRef={contactRef} />
-              </section>
-              
-              {/* Contact */}
-                <ContactContent ref={contactRef} />
-              </>
-    )
+      {/* Contact */}
+      <ContactContent ref={contactRef} />
+    </>
+  );
 }

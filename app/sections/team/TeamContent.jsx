@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../../../context/LanguageContext";
 
-import gsap from "gsap";
-import * as THREE from "three";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useAssets } from "../../../context/AssetContext";
 // Mock slides data - replace with your actual slides
 const slides = [
@@ -16,6 +14,7 @@ const slides = [
     field: "Foundator",
     date: "2 years",
     image: "/medias/Fabien.webp", // Real image URL
+    id: 1,
   },
   {
     title: "Noah CHEVALIER",
@@ -25,6 +24,7 @@ const slides = [
     field: "CO-foundator",
     date: "2 years",
     image: "/medias/Noah.webp", // Real image URL
+    id: 2,
   },
   {
     title: "Rafaël ASTRO",
@@ -34,6 +34,7 @@ const slides = [
     field: "Employe",
     date: "4 years",
     image: "/medias/Rafaël.webp", // Real image URL
+    id: 3,
   },
 ];
 
@@ -123,14 +124,16 @@ const fragmentShader = `
     gl_FragColor = color;
   }
 `;
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Team({ contactRef }) {
+  const { t } = useLanguage();
+
   const canvasRef = useRef(null);
   const slideContentRef = useRef(null);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-
+  const gsapRef = useRef(null);
+  const ScrollTriggerRef = useRef(null);
   const rendererRef = useRef(null);
   const shaderMaterialRef = useRef(null);
   const slideTexturesRef = useRef([]);
@@ -154,7 +157,18 @@ export default function Team({ contactRef }) {
     let observer;
 
     async function init() {
-      // TEXTURES
+      // ✅ Charger THREE et GSAP dynamiquement
+      const THREE = await import("three");
+      const gsapModule = await import("gsap");
+      const scrollTriggerModule = await import("gsap/ScrollTrigger");
+
+      const gsap = gsapModule.gsap;
+      const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+      gsap.registerPlugin(ScrollTrigger);
+      //ASSETS
+      gsapRef.current = gsap;
+      ScrollTriggerRef.current = ScrollTrigger;
+
       let textures = assets.teamTextures;
       if (!textures) {
         const loader = new THREE.TextureLoader();
@@ -293,6 +307,9 @@ export default function Team({ contactRef }) {
   }, []);
 
   const animateTextTransition = (nextIndex) => {
+    const gsap = gsapRef.current;
+    const ScrollTrigger = ScrollTriggerRef.current;
+    if (!gsap || !ScrollTrigger) return;
     if (!slideContentRef.current) return;
 
     const chars = slideContentRef.current.querySelectorAll(".char span");
@@ -423,7 +440,7 @@ export default function Team({ contactRef }) {
   };
 
   const currentSlide = slides[currentSlideIndex];
-
+  const member = t(`team.members.${currentSlide.id}`);
   useEffect(() => {
     if (!contactRef?.current || typeof window === "undefined") return;
 
@@ -474,58 +491,59 @@ export default function Team({ contactRef }) {
     };
 
     window.addEventListener("resize", handleResize);
-
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: teamRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-        onUpdate: (self) => {
-          animationState.scrollprogress = self.progress;
-          animationState.currentTranslateY = gsap.utils.interpolate(
-            animationState.initialTranslateY,
-            0,
-            animationState.scrollprogress,
-          );
-          animationState.scale = gsap.utils.interpolate(
-            0.05,
-            1,
-            animationState.scrollprogress,
-          );
+    import("gsap").then((gsapModule) => {
+      const gsap = gsapModule.gsap;
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: teamRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+          onUpdate: (self) => {
+            animationState.scrollprogress = self.progress;
+            animationState.currentTranslateY = gsap.utils.interpolate(
+              animationState.initialTranslateY,
+              0,
+              animationState.scrollprogress,
+            );
+            animationState.scale = gsap.utils.interpolate(
+              0.05,
+              1,
+              animationState.scrollprogress,
+            );
+          },
         },
-      },
+      });
+
+      const animate_contatc = () => {
+        const {
+          scale,
+          targetMouseX,
+          currentMouseX,
+          currentTranslateY,
+          movementMultiplier,
+        } = animationState;
+
+        const scaleMove = (1 - scale) * movementMultiplier;
+        const maxX = scale < 0.95 ? targetMouseX * scaleMove : 0;
+
+        animationState.currentMouseX = gsap.utils.interpolate(
+          currentMouseX,
+          maxX,
+          0.08,
+        );
+
+        section.style.transform = `translateY(${currentTranslateY}%) translateX(${animationState.currentMouseX}px) scale(${scale})`;
+
+        requestAnimationFrame(animate_contatc);
+      };
+      const handleMouseMove = (e) => {
+        animationState.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      };
+
+      document.addEventListener("mousemove", handleMouseMove);
+      animate_contatc();
     });
-
-    const animate_contatc = () => {
-      const {
-        scale,
-        targetMouseX,
-        currentMouseX,
-        currentTranslateY,
-        movementMultiplier,
-      } = animationState;
-
-      const scaleMove = (1 - scale) * movementMultiplier;
-      const maxX = scale < 0.95 ? targetMouseX * scaleMove : 0;
-
-      animationState.currentMouseX = gsap.utils.interpolate(
-        currentMouseX,
-        maxX,
-        0.08,
-      );
-
-      section.style.transform = `translateY(${currentTranslateY}%) translateX(${animationState.currentMouseX}px) scale(${scale})`;
-
-      requestAnimationFrame(animate_contatc);
-    };
-
-    const handleMouseMove = (e) => {
-      animationState.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-    };
-
-    document.addEventListener("mousemove", handleMouseMove);
-    animate_contatc();
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -546,7 +564,9 @@ export default function Team({ contactRef }) {
           className="absolute top-0 left-0 min-w-full h-full select-none z-10 text-white"
           ref={slideContentRef}
         >
-          <h2 className="font-bold text-8xl text-white m-4">Our team</h2>
+          <h2 className="font-bold text-8xl text-white m-4">
+            {t("team.title")}
+          </h2>
           <div className="relative top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center">
             <h3 className="uppercase text-[12vw] sm:text-[7vw] font-bold leading-none flex justify-center whitespace-pre-line gap-[1em] flex-col sm:flex-row">
               {currentSlide.title.split(" ").map((word, i) => (
@@ -566,24 +586,24 @@ export default function Team({ contactRef }) {
           <div className="relative sm:top-[30%] top-[40%] left-[70%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden ">
             <div className="line overflow-hidden">
               <span className="relative inline-block will-change-transform">
-                {currentSlide.description}
+                {member.description}
               </span>
             </div>
           </div>
           <div className="space-y-1 relative top-[30%] left-[30%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden">
             <div className="line overflow-hidden">
               <span className="relative inline-block will-change-transform">
-                Type. {currentSlide.type}
+                Type. {member.type}
               </span>
             </div>
             <div className="line overflow-hidden">
               <span className="relative inline-block will-change-transform">
-                Field. {currentSlide.field}
+                {member.field}
               </span>
             </div>
             <div className="line overflow-hidden">
               <span className="relative inline-block will-change-transform">
-                Date. {currentSlide.date}
+                Date. {member.date}
               </span>
             </div>
           </div>

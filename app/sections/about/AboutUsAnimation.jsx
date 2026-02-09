@@ -1,48 +1,49 @@
 // app/sections/AboutUsAnimation.jsx
-"use client"
-import { useEffect, useRef } from 'react'
-import '../../style_footer.css'
+"use client";
+import { useEffect, useRef } from "react";
+import "../../style_footer.css";
+import { useLanguage } from "../../../context/LanguageContext";
 
 export default function AboutUsAnimation() {
-  const svgRef = useRef(null)
-  const pathRef = useRef(null)
+  const svgRef = useRef(null);
+  const pathRef = useRef(null);
 
   useEffect(() => {
-    const svg = svgRef.current
-    const path = pathRef.current
+    const svg = svgRef.current;
+    const path = pathRef.current;
 
-    if (!svg || !path) return
+    if (!svg || !path) return;
 
     // Fonction pour recalculer la longueur du tracé
     function updatePathLength() {
-      const newLength = path.getTotalLength()
-      path.style.strokeDasharray = `${newLength}`
-      path.style.strokeDashoffset = `${newLength}`
-      return newLength
+      const newLength = path.getTotalLength();
+      path.style.strokeDasharray = `${newLength}`;
+      path.style.strokeDashoffset = `${newLength}`;
+      return newLength;
     }
 
-    let pathLength = updatePathLength()
+    let pathLength = updatePathLength();
 
     const handleScroll = () => {
-      const distance = window.scrollY - 200
-      const totalDistance = svg.clientHeight - window.innerHeight
-      const percentage = Math.min(distance / totalDistance, 1)
+      const distance = window.scrollY - 200;
+      const totalDistance = svg.clientHeight - window.innerHeight;
+      const percentage = Math.min(distance / totalDistance, 1);
 
-      path.style.strokeDashoffset = `${pathLength * (1 - percentage)}`
-    }
+      path.style.strokeDashoffset = `${pathLength * (1 - percentage)}`;
+    };
 
-    handleScroll()
-    window.addEventListener('scroll', handleScroll)
-    window.addEventListener('resize', () => {
-      pathLength = updatePathLength()
-      handleScroll()
-    })
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", () => {
+      pathLength = updatePathLength();
+      handleScroll();
+    });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('resize', updatePathLength)
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", updatePathLength);
+    };
+  }, []);
 
   return (
     <svg
@@ -62,5 +63,45 @@ export default function AboutUsAnimation() {
         strokeLinecap="round"
       />
     </svg>
-  )
+  );
+}
+export function Title() {
+  const { t } = useLanguage();
+  return (
+    <h1 className="font-bold sm:text-8xl text-5xl bg-black sm:w-2xl w-full z-10 relative">
+      {t("about.title")}
+    </h1>
+  );
+}
+export function Paragraphe1() {
+  const { t } = useLanguage();
+  return (
+    <p className="sm:w-2xl w-xs ml-auto sm:text-2xl text-xs">
+      {t("about.paragraph1")}
+    </p>
+  );
+}
+export function Paragraphe2() {
+  const { t } = useLanguage();
+  return (
+    <p className="sm:w-2xl w-xs mr-auto sm:text-2xl text-xs sm:mt-80 mt-20">
+      {t("about.paragraph2")}
+    </p>
+  );
+}
+export function Paragraphe3() {
+  const { t } = useLanguage();
+  return (
+    <p className="sm:w-2xl w-xs ml-auto sm:text-2xl text-xs sm:mt-80 mt-20">
+      {t("about.paragraph3")}
+    </p>
+  );
+}
+export function Paragraphe4() {
+  const { t } = useLanguage();
+  return (
+    <p className="sm:w-2xl w-xs mr-auto sm:text-2xl text-xs sm:mt-120 mt-40 sm:mb-50 mb-10">
+      {t("about.paragraph4")}
+    </p>
+  );
 }

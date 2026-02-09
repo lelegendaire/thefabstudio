@@ -8,6 +8,16 @@ import {
   AnimatedLink,
   AnimatedStar,
   MailLink,
+  LanguageSwitch,
+  Description,
+  Home,
+  About,
+  Projects,
+  Team,
+  NeedHelp,
+  Rights,
+  Privacy,
+  Social,
 } from "./FooterAnimations";
 
 export default function FooterContent() {
@@ -27,9 +37,7 @@ export default function FooterContent() {
 
         <div className="droite w-1/2 flex flex-col">
           <Copy>
-            <h3 className="sm:text-6xl text-xs mb-8 w-full">
-              We are a french studio who develop a site web for you
-            </h3>
+            <Description />
           </Copy>
           <MailLink />
         </div>
@@ -42,7 +50,7 @@ export default function FooterContent() {
         </div>
         <div className="line h-0.75 w-full bg-black rounded-4xl" />
         <div className="date sm:mr-12.5 mr-10">
-          <p className={`${dirtyline.className} text-[20px]`}>2025</p>
+          <p className={`${dirtyline.className} text-[20px]`}>2026</p>
         </div>
       </div>
 
@@ -52,9 +60,7 @@ export default function FooterContent() {
           <div className="flex justify-between items-start">
             {/* Social */}
             <div className="social w-1/4 list-none">
-              <h3 className={`${dirtyline.className} text-black text-2xl`}>
-                Social
-              </h3>
+              <Social />
               <ul>
                 <li className="mt-3 sm:text-2xl text-xs">
                   <AnimatedLink
@@ -76,24 +82,16 @@ export default function FooterContent() {
               </h3>
               <ul>
                 <li className="mt-3 sm:text-2xl text-xs">
-                  <AnimatedLink color="black" href="#home_section">
-                    Home
-                  </AnimatedLink>{" "}
+                  <Home />{" "}
                 </li>
                 <li className="sm:text-2xl text-xs">
-                  <AnimatedLink color="black" href="#about_section">
-                    About us
-                  </AnimatedLink>{" "}
+                  <About />{" "}
                 </li>
                 <li className="sm:text-2xl text-xs">
-                  <AnimatedLink color="black" href="#projects_section">
-                    Projects
-                  </AnimatedLink>{" "}
+                  <Projects />{" "}
                 </li>
                 <li className="sm:text-2xl text-xs">
-                  <AnimatedLink color="black" href="#team_section">
-                    Team
-                  </AnimatedLink>{" "}
+                  <Team />{" "}
                 </li>
                 <li className="sm:text-2xl text-xs">
                   <AnimatedLink color="black" href="#contact_section">
@@ -107,21 +105,19 @@ export default function FooterContent() {
           {/* Language switcher placeholder */}
           <div className="flex items-end justify-start sm:h-50 h-40">
             <div className="flex items-center justify-center gap-3">
-              <p>EN</p>
-              <Switch aria-label="Changer la langue du site" />
-              <p>FR</p>
+              <LanguageSwitch />
             </div>
           </div>
         </div>
 
         {/* Image et CTA */}
-        <div className="flex items-start justify-start flex-col w-1/2 sm:relative absolute sm:left-0 left-40">
+        <div className="flex items-start justify-start flex-col w-1/2 sm:relative absolute sm:left-0 left-50">
           <div className="relative sm:mt-2 sm:w-110 w-50 sm:h-100 h-50 rounded-2xl overflow-hidden">
             <DepthImage src={"/medias/Dune_footer.webp"} alt="Dune parallax" />
           </div>
 
           <div className="absolute">
-            <h4 className="text-black">Need help ?</h4>
+            <NeedHelp />
             <a
               href="#contact_section"
               className="flex items-center justify-center gap-1 w-31 bg-black text-white rounded-2xl sm:p-3 sm:mt-3 p-1 mt-1 sm:text-base text-xs"
@@ -135,11 +131,9 @@ export default function FooterContent() {
 
       {/* Copyright */}
       <div className="flex items-center relative mt-5 pb-3 justify-between w-full text-black sm:text-base text-xs">
-        <p>&copy; 2025 TheFabStudio. All right reserved</p>
+        <Rights />
         <p>
-          <AnimatedLink color="black" href="/privacy-policy">
-            Terms & Privacy Policy
-          </AnimatedLink>
+          <Privacy />
         </p>
       </div>
     </>
