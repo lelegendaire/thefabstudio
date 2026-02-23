@@ -46,6 +46,7 @@ export default function RootLayout({ children }) {
           name="description"
           content="The Fab Studio is a creative web studio crafting immersive, high-end digital experiences through design, motion and code."
         ></meta>
+        <meta name="p:domain_verify" content="7fcec066234cdf827a7e92cf2b52bfaa"/>
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
         <link rel="canonical" href="https://thefabstudio.vercel.app/"></link>
