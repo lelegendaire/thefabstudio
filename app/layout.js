@@ -2,6 +2,7 @@
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import { satoshi } from "./fonts";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: {
@@ -62,6 +63,7 @@ export default function RootLayout({ children }) {
 
       <body className={satoshi.className}>
         <ClientLayout>{children}</ClientLayout>
+        <Analytics />
       </body>
     </html>
   );
