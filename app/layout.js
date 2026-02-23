@@ -2,7 +2,7 @@
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import { satoshi } from "./fonts";
-
+import { Analytics } from '@vercel/analytics/next';
 export const metadata = {
   title: {
     default: "The Fab Studio — Creative Web Experiences",
@@ -62,6 +62,7 @@ export default function RootLayout({ children }) {
 
       <body className={satoshi.className}>
         <ClientLayout>{children}</ClientLayout>
+        <Analytics />
       </body>
     </html>
   );
