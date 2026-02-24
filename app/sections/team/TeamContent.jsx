@@ -208,7 +208,7 @@ export default function Team({ contactRef }) {
 
       const height = isMobile ? window.innerHeight : window.innerHeight * 1.5;
 
-      renderer.setSize(window.innerWidth, height);
+      renderer.setSize(canvasRef.current.clientWidth, height);
 
       shaderMaterialRef.current = new THREE.ShaderMaterial({
         uniforms: {
@@ -283,12 +283,13 @@ export default function Team({ contactRef }) {
   useEffect(() => {
     const handleResize = () => {
       if (rendererRef.current && shaderMaterialRef.current) {
+        const width = canvasRef.current?.clientWidth ?? window.innerWidth;
         rendererRef.current.setSize(
-          window.innerWidth,
+          width,
           window.innerHeight * 1.5,
         );
         shaderMaterialRef.current.uniforms.uResolution.value.set(
-          window.innerWidth,
+          width,
           window.innerHeight * 1.5,
         );
       }
@@ -559,7 +560,7 @@ const handleMouseMove = (e) => {
       className="h-[150vh] sm:h-screen  bg-black relative"
     >
       <div className="slider" onClick={handleSlideChange}>
-        <canvas ref={canvasRef} className="block w-full h-full" />
+        <canvas ref={canvasRef} className="block w-full h-full" style={{ maxWidth: "100%" }} />
 
         <div
           className="absolute top-0 left-0 min-w-full h-full select-none z-10 text-white"

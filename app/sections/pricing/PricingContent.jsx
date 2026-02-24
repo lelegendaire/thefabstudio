@@ -19,12 +19,21 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../../../context/LanguageContext";
 export default function PricingContent() {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
+  const isFrench = locale === "fr";
 
   return (
     <>
-      <h1 className="font-bold text-9xl sm:left-auto left-0 sm:top-10 absolute sm:rotate-0 rotate-90">
-        {t("pricing.title")}
+     <h1
+      className={`
+        font-bold absolute whitespace-nowrap
+        ${
+          isFrench
+            ? "text-8xl sm:left-auto -left-5 sm:top-10 sm:rotate-0 rotate-90"
+            : "text-9xl sm:left-auto -left-5 sm:top-10 sm:rotate-0 rotate-90"
+        }
+      `}
+    > {t("pricing.title")}
       </h1>
 
       <div className="bloc flex items-center justify-center sm:flex-row flex-col gap-5 sm:top-30 absolute">

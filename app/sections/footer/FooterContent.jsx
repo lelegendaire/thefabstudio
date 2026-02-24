@@ -134,7 +134,7 @@ export default function FooterContent() {
         </div>
 
         {/* Image et CTA */}
-        <div className="flex items-start justify-start flex-col w-1/2 sm:relative absolute sm:left-0 left-50">
+        <div className="flex items-start justify-start flex-col w-1/2 sm:relative absolute sm:left-0 left-45">
           <div className="relative sm:mt-2 sm:w-110 w-50 sm:h-100 h-50 rounded-2xl overflow-hidden sm:right-0 right-5">
             <DepthImage src={"/medias/Dune_footer.webp"} alt="Dune parallax" />
           </div>
