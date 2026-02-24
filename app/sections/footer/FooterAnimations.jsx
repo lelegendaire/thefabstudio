@@ -1,7 +1,8 @@
 // app/sections/footer/FooterAnimations.jsx
 "use client";
 import { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
+import AnimatedLink from "../../components/AnimatedLink"
+import { motion } from "framer-motion"; 
 import { Switch } from "../../components/ui/switch";
 import { useLanguage } from "../../../context/LanguageContext";
 import { dirtyline } from "../../fonts";
@@ -72,31 +73,7 @@ export function DepthImage({ src, alt }) {
   );
 }
 
-export function AnimatedLink({ href, children, color, target_on }) {
-  return (
-    <motion.a
-      href={href}
-      target={target_on}
-      className="relative inline-block text-nowrap"
-      initial="rest"
-      whileHover="hover"
-      animate="rest"
-    >
-      {children}
-      <motion.span
-        className="absolute left-0 bottom-0 h-0.5"
-        style={{ backgroundColor: color }}
-        variants={{
-          rest: { width: 0 },
-          hover: {
-            width: "100%",
-            transition: { duration: 0.3, ease: "easeOut" },
-          },
-        }}
-      />
-    </motion.a>
-  );
-}
+
 
 export function AnimatedStar() {
   return (
@@ -131,7 +108,7 @@ export function MailLink() {
   }, []);
 
   return (
-    <a href={`mailto:${email}`} className="underline sm:text-3xl w-full">
+    <a href={`mailto:${email}`} className="underline sm:text-3xl w-full h-5">
       {email}
     </a>
   );

@@ -68,7 +68,7 @@ export default function AboutUsAnimation() {
 export function Title() {
   const { t } = useLanguage();
   return (
-    <h1 className="font-bold sm:text-8xl text-5xl bg-black sm:w-2xl w-full z-10 relative">
+    <h1 className="font-bold sm:text-8xl text-5xl bg-[#0f0f0f] sm:w-2xl w-full z-10 relative">
       {t("about.title")}
     </h1>
   );

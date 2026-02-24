@@ -15,7 +15,7 @@ export default function CopyBloc({
     blockColor = "#000",
     stagger = 0.15,
     duration = 0.75,
-    scroller = window,
+    scroller = undefined,
 }) {
     const containerRef = useRef(null);
 
@@ -23,7 +23,7 @@ export default function CopyBloc({
         if (!containerRef.current) return;
 
         let elements = [];
-
+const resolvedScroller = scroller ?? (typeof window !== "undefined" ? window : undefined);
         // Récupération du contenu
         if (containerRef.current.hasAttribute("data-copy-wrapper")) {
             elements = Array.from(containerRef.current.children);
@@ -100,7 +100,7 @@ export default function CopyBloc({
 
                 ScrollTrigger.create({
                     trigger: containerRef.current,
-                    scroller: scroller,
+                    scroller: resolvedScroller,
                     start: "top 90%",
                     once: true,
                     onEnter: () => tl.play(),

@@ -247,7 +247,7 @@ export default function Projects() {
     if (!canvasRef.current) return;
     // ✅ AJOUTER CES LIGNES ICI
     let gsap, ScrollTrigger;
-
+const cleanupRef = { fn: null };
     async function loadGSAP() {
       const gsapModule = await import("gsap");
       const scrollTriggerModule = await import("gsap/ScrollTrigger");
@@ -256,9 +256,10 @@ export default function Projects() {
       ScrollTrigger = scrollTriggerModule.ScrollTrigger;
       gsap.registerPlugin(ScrollTrigger);
     }
-
+    
     // Charger GSAP avant d'utiliser ScrollTrigger
     loadGSAP().then(() => {
+      if (!canvasRef.current) return;
       const isMobile = window.innerWidth < 768;
 
       // Scene
@@ -545,6 +546,7 @@ export default function Projects() {
 
       // Mouse events pour drag
       const handleMouseDown = (e) => {
+        if (!canvasRef.current) return; // ✅
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
         const rect = canvasRef.current.getBoundingClientRect();
@@ -645,6 +647,7 @@ export default function Projects() {
       };
 
       const handleMouseMove = (e) => {
+        if (!canvasRef.current) return; // ✅
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
         // Calculer la position de la souris en coordonnées normalisées
@@ -728,6 +731,7 @@ export default function Projects() {
 
       const handleMouseUp = () => {
         isDragging.current = false;
+        if (!canvasRef.current) return; // ✅
         if (!isMobile) canvasRef.current.style.cursor = "grab";
       };
 
@@ -753,23 +757,24 @@ export default function Projects() {
       window.addEventListener("resize", handleResize);
 
       // Cleanup
-      return () => {
-        window.removeEventListener("resize", handleResize);
-        canvasRef.current?.removeEventListener("mousedown", handleMouseDown);
-        canvasRef.current?.removeEventListener("touchstart", handleMouseDown);
-        window.removeEventListener("mousemove", handleMouseMove);
-        window.removeEventListener("touchmove", handleMouseMove);
-        window.removeEventListener("mouseup", handleMouseUp);
-        window.removeEventListener("touchend", handleMouseUp);
-        geometry.dispose();
-        cubesGroup.children.forEach((cube) => {
-          cube.geometry.dispose();
-          cube.material.forEach((m) => m.dispose());
-        });
-        ScrollTrigger?.getAll().forEach((st) => st.kill());
-        renderer.dispose();
-      };
-    });
+      cleanupRef.fn = () => { // ✅ stocker au lieu de return
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchmove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("touchend", handleMouseUp);
+      canvasRef.current?.removeEventListener("mousedown", handleMouseDown);
+      canvasRef.current?.removeEventListener("touchstart", handleMouseDown);
+      geometry.dispose();
+      cubesGroup.children.forEach((cube) => {
+        cube.geometry.dispose();
+        cube.material.forEach((m) => m.dispose());
+      });
+      ScrollTrigger?.getAll().forEach((st) => st.kill());
+      renderer.dispose();
+    };
+  });
+  return () => cleanupRef.fn?.(); // ✅ React reçoit CE return
   }, []);
 
   // Fonction pour désélectionner le cube
@@ -799,6 +804,7 @@ export default function Projects() {
           duration: 0.6,
           ease: "power2.inOut",
           onComplete: () => {
+            if (projetDivRef.current) projetDivRef.current.style.display = "none";
             setSelectedProject(null);
             isSelecting.current = false;
           },
@@ -811,7 +817,7 @@ export default function Projects() {
       id="project_section"
       className="h-full bg-white p-2 sm:p-4 flex flex-col "
     >
-      <h2 className="font-bold text-4xl sm:text-6xl lg:text-8xl text-black mb-4 sm:mb-8 mr-auto">
+      <h2 className="font-bold text-5xl sm:text-8xl lg:text-8xl text-black mb-4 sm:mb-8 mr-auto">
         {t('projects.title')}
       </h2>
       <div
@@ -834,6 +840,7 @@ export default function Projects() {
             <div
               id="project-counter"
               className="text-black text-2xl sm:text-3xl flex flex-col"
+              suppressHydrationWarning
             >
               <span>01</span>
             </div>
@@ -876,7 +883,7 @@ export default function Projects() {
                 className="hero_project_div relative sm:h-[90vh] h-full sm:w-[95vw] w-84 rounded-2xl overflow-hidden"
                 style={{
                   boxShadow:
-                    "rgba(185, 141, 107, 0.5) 1px 10px 20px, rgba(185, 141, 107, 0.2) 0px 0px 0px 10px",
+                    "rgba(185, 141, 107, 1) 1px 10px 20px, rgba(185, 141, 107, 1) 0px 0px 0px 10px",
                 }}
               >
                 <img
@@ -889,7 +896,7 @@ export default function Projects() {
               {/* DESCRIPTION */}
               <div
                 ref={bottomRef}
-                className="description relative sm:h-[90vh] h-full w-87 sm:w-[95vw] bg-amber-50 rounded-2xl overflow-hidden text-black sm:p-10 p-3"
+                className="description relative sm:h-[90vh] h-full w-87 sm:w-[95vw] bg-[#b98d6b] rounded-2xl overflow-hidden text-black sm:p-10 p-3"
               >
                 <h2 className="sm:text-5xl text-2xl font-bold text-center mb-10">
                   {selectedProject.data.title}

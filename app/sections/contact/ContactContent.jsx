@@ -106,7 +106,7 @@ const Contact = forwardRef((props, ref) => {
       content: (
         <div className="w-full h-full flex items-center justify-center flex-col">
           <ChartContainer
-            className="w-3/4 h-full font-bold"
+            className="w-3/4 h-full sm:font-bold font-normal"
             config={chartConfig}
           >
             <BarChart data={chartData}>
@@ -126,7 +126,7 @@ const Contact = forwardRef((props, ref) => {
               <Bar dataKey="client" fill="#b98d6b" radius={20} />
             </BarChart>
           </ChartContainer>
-          <h2 className=" font-bold py-4">{t("contact.clients")} </h2>
+          <h2 className="sm:font-bold font-normal py-4">{t("contact.clients")} </h2>
         </div>
       ),
     },
@@ -142,7 +142,7 @@ const Contact = forwardRef((props, ref) => {
             src="https://api.maptiler.com/maps/019a29ee-fc6c-7214-992b-1d1cfeb51a7d/?key=OVKTtEmd6oXqJWFoFhnn#11.1/48.85582/2.37502"
           ></iframe>
 
-          <h2 className=" font-bold py-4">{t("contact.maps")}</h2>
+          <h2 className="sm:font-bold font-normal py-4">{t("contact.maps")}</h2>
         </div>
       ),
     },
@@ -157,7 +157,7 @@ const Contact = forwardRef((props, ref) => {
             width="500"
             height="300"
           />
-          <h2 className=" font-bold py-4">{t("contact.img")}</h2>
+          <h2 className="sm:font-bold font-normal py-4">{t("contact.img")}</h2>
         </div>
       ),
     },
@@ -169,10 +169,10 @@ const Contact = forwardRef((props, ref) => {
       className="h-[150vh] w-full bg-white p-4 rounded-4xl relative"
       style={{ transform: "translateY(-105%) scale(0.05)" }}
     >
-      <h2 className="font-bold sm:text-8xl text-3xl text-black">
+      <h2 className="font-bold sm:text-8xl text-5xl text-black">
         {t("contact.title")}
       </h2>
-      <h3 className="font-bold sm:text-3xl text-sm">{t("contact.subtitle")}</h3>
+      <h3 className="sm:text-3xl text-sm">{t("contact.subtitle")}</h3>
       <div className="flex items-center justify-between flex-col sm:flex-row">
         <div className="flex sm:w-1/2 w-full sm:h-[80vh] h-[40vh] flex-col items-center justify-center">
           <div className="slider w-full h-full flex items-center justify-center">

@@ -43,7 +43,7 @@ const Interaction = () => {
   const works = [
     {
       title: "Atlantas XI",
-      image: "/medias/Example.webp",
+      image: "/medias/Atlantas.webp",
       url: "/Atlantas",
     },
     {
@@ -58,6 +58,11 @@ const Interaction = () => {
     },
   ];
   const handleNavigation = async (image, url, e) => {
+    if (transitioning) return; // ✅ bloquer les doubles clics
+    const imgEl = e.currentTarget.querySelector("img");
+  if (!imgEl) return;
+  const rect = imgEl.getBoundingClientRect();
+
     // Charger GSAP si pas encore chargé
     if (!window.gsap) {
       const gsapModule = await import("gsap");
@@ -66,7 +71,6 @@ const Interaction = () => {
       window.ScrollTrigger = scrollTriggerModule.ScrollTrigger;
     }
 
-    const rect = e.currentTarget.querySelector("img").getBoundingClientRect();
     setClickPosition({
       x: rect.left + rect.width / 2,
       y: rect.top + rect.height / 2,
@@ -441,7 +445,7 @@ const Interaction = () => {
     <div ref={sectionRef} className="team-section">
       {/* Section Intro */}
       <section className="relative w-screen h-screen p-8 overflow-hidden flex justify-center items-center bg-[#0f0f0f] text-white">
-        <h2 className="text-5xl md:text-8xl font-medium tracking-tight leading-[0.9] w-full md:w-1/2 text-center">
+        <h2 className="text-4xl md:text-6xl font-medium tracking-tight leading-[0.9] w-full md:w-1/2 text-center">
           {t("discover.title")}
         </h2>
       </section>
@@ -485,7 +489,7 @@ const Interaction = () => {
         {/* Headers */}
         <div className="spotlight-intro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-10">
           <h2
-            className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}
+            className={`${dirtyline.className} text-4xl md:text-6xl font-medium tracking-tight leading-[0.9]`}
           >
             {t("discover.tagline1")}
           </h2>
@@ -493,7 +497,7 @@ const Interaction = () => {
 
         <div className="spotlight-outro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-20">
           <h2
-            className={`${dirtyline.className} text-5xl md:text-8xl font-medium tracking-tight leading-[0.9]`}
+            className={`${dirtyline.className} text-4xl md:text-6xl font-medium tracking-tight leading-[0.9]`}
           >
             {t("discover.tagline2")}
           </h2>

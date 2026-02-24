@@ -25,7 +25,7 @@ export default function Home() {
       {/* About Us */}
       <section
         id="about_section"
-        className="text-white h-full p-4 bg-black relative"
+        className="text-white h-full p-4 bg-[#0f0f0f] relative"
       >
         <AboutContent />
         <AboutAnimation />
@@ -49,7 +49,7 @@ export default function Home() {
       {/* Pricing */}
       <section
         id="pricing_section"
-        className="bg-black text-white h-[110vh] flex relative items-center justify-center"
+        className="bg-[#0f0f0f] text-white h-[110vh] flex relative items-center justify-center"
       >
         <PricingContent />
       </section>

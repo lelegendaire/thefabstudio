@@ -445,6 +445,7 @@ export default function Team({ contactRef }) {
     if (!contactRef?.current || typeof window === "undefined") return;
 
     const section = contactRef.current;
+    const teamEl = teamRef.current; // ✅ capturer ici, pas dans le cleanup
 
     const breakpoints = [
       { maxWidth: 640, translateY: -40, movMultiplier: 150 }, // mobile
@@ -537,14 +538,14 @@ export default function Team({ contactRef }) {
 
         requestAnimationFrame(animate_contatc);
       };
-      const handleMouseMove = (e) => {
+      
+      animate_contatc();
+    });
+const handleMouseMove = (e) => {
         animationState.targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
       };
 
       document.addEventListener("mousemove", handleMouseMove);
-      animate_contatc();
-    });
-
     return () => {
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("mousemove", handleMouseMove);
@@ -564,7 +565,7 @@ export default function Team({ contactRef }) {
           className="absolute top-0 left-0 min-w-full h-full select-none z-10 text-white"
           ref={slideContentRef}
         >
-          <h2 className="font-bold text-8xl text-white m-4">
+          <h2 className="font-bold sm:text-8xl text-5xl text-white m-4">
             {t("team.title")}
           </h2>
           <div className="relative top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center">

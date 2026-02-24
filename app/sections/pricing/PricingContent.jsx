@@ -91,7 +91,7 @@ export default function PricingContent() {
         </div>
 
         {/* Signature Experience */}
-        <div className="Signature flex scale-[105%] items-center justify-center flex-col h-60 w-70 sm:h-120 sm:w-90 bg-transparent rounded-3xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] shadow-[0px_10px_18px_-3px_rgba(255,255,255,0.1),inset_0px_-5px_18px_6px_rgba(255,255,255,0.1)]">
+        <div className="Signature flex items-center justify-center flex-col h-60 w-70 sm:h-120 sm:w-90 bg-transparent rounded-3xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] shadow-[0px_10px_18px_-3px_rgba(255,255,255,0.1),inset_0px_-5px_18px_6px_rgba(255,255,255,0.1)]">
           <div className="head z-2 sm:h-20 w-full flex items-center justify-center">
             <h2 className="font-bold text-xl sm:text-2xl">
               {t("pricing.signature.name")}

@@ -36,7 +36,7 @@
   "about": {
     "title": "À propos",
     "paragraph1": "Tout a commencé par une simple pensée, un après-midi d'été 2023 : et si je créais un studio capable de concevoir des sites web vraiment uniques, adaptés à chaque personne ? Ce n'était qu'un rêve, mais déjà une forte conviction.",
-    "paragraph2": "Pendant un an, j'ai travaillé sur mon premier site – un projet qui permettrait aux gens de créer facilement des sites web personnalisables. Une année de tests, de code et d'innombrables nuits à imaginer comment rendre le web plus original.",
+    "paragraph2": "Pendant un an, j'ai travaillé sur mon premier site – un projet qui permettrait aux personnes de créer facilement des sites web personnalisables. Une année de tests, de code et d'innombrables nuits à imaginer comment rendre le web plus original.",
     "paragraph3": "Après des mois de travail, le site a finalement été déployé. The Fab Studio a officiellement vu le jour. J'ai créé un compte Instagram pour partager mes idées et mes premières créations.",
     "paragraph4": "The Fab Studio est né d'un désir de repousser les limites du web. Un laboratoire visuel où innovation, esthétique et interactivité se rencontrent pour inventer des expériences uniques."
   },
@@ -97,10 +97,10 @@
   },
   "discover": {
     "title": "Envie d'en découvrir plus",
-    "tagline1": "Quand l'art et le design se rencontrent, ils créent l'œuvre d'art",
+    "tagline1": "Quand l'art et le design se rencontrent, ils créent une œuvre d'art",
     "tagline2": "Rien ne nous fait peur quand vous nous défiez",
-    "notConvinced": "Toujours pas convaincu",
-    "description": "Ici vous pouvez essayer notre prototype et personnaliser chaque site selon votre vision pour avoir un aperçu",
+    "notConvinced": "Toujours pas convaincu ?",
+    "description": "Ici vous pouvez observer le type de site qu'on façonne pour avoir un aperçu",
     "seeMore": "Voir plus"
   },
   "pricing": {

@@ -3,9 +3,10 @@ import Copy from "../../components/Copy";
 import { dirtyline } from "../../fonts";
 import { Switch } from "../../components/ui/switch";
 import { ArrowRight } from "lucide-react";
+import AnimatedLink from "../../components/AnimatedLink"
+
 import {
   DepthImage,
-  AnimatedLink,
   AnimatedStar,
   MailLink,
   LanguageSwitch,
@@ -24,18 +25,19 @@ export default function FooterContent() {
   return (
     <>
       <div className="flex justify-between items-center">
+        <div className="gauche w-1/2 flex justify-start items-end">
         <h2
-          className={`${dirtyline.className} w-1/2 font-bold sm:text-8xl text-3xl text-black`}
+          className={`${dirtyline.className} font-bold sm:text-8xl text-3xl text-black`}
         >
           The <br />
           Fab <br />
           Studi
         </h2>
-        <h2 className="font-[PlayfairDisplay] font-normal sm:text-8xl text-3xl italic absolute sm:top-50 sm:left-62 top-21.5 left-22.5">
+        <h2 className="font-[PlayfairDisplay] font-normal sm:text-8xl text-3xl italic relative sm:mb-2 mb-1">
           O
         </h2>
-
-        <div className="droite w-1/2 flex flex-col">
+</div>
+        <div className="droite w-1/2 flex flex-col ">
           <Copy>
             <Description />
           </Copy>
@@ -49,7 +51,7 @@ export default function FooterContent() {
           <AnimatedStar />
         </div>
         <div className="line h-0.75 w-full bg-black rounded-4xl" />
-        <div className="date sm:mr-12.5 mr-10">
+        <div className="date sm:mr-12.5 mr-0">
           <p className={`${dirtyline.className} text-[20px]`}>2026</p>
         </div>
       </div>
@@ -72,6 +74,27 @@ export default function FooterContent() {
                     Instagram
                   </AnimatedLink>
                 </li>
+                <li className="mt-3 sm:text-2xl text-xs">
+                  <AnimatedLink
+                    color="black"
+                    target_on="_blank"
+                    rel="noopener noreferrer"
+                    href="https://fr.pinterest.com/thefabstudio2/"
+                  >
+                    Pinterest
+                  </AnimatedLink>
+                </li>
+                <li className="mt-3 sm:text-2xl text-xs">
+                  <AnimatedLink
+                    color="black"
+                    target_on="_blank"
+                    rel="noopener noreferrer"
+                    href="https://x.com/thefabstudio2"
+                  >
+                    Twitter
+                  </AnimatedLink>
+                </li>
+                
               </ul>
             </div>
 
@@ -112,7 +135,7 @@ export default function FooterContent() {
 
         {/* Image et CTA */}
         <div className="flex items-start justify-start flex-col w-1/2 sm:relative absolute sm:left-0 left-50">
-          <div className="relative sm:mt-2 sm:w-110 w-50 sm:h-100 h-50 rounded-2xl overflow-hidden">
+          <div className="relative sm:mt-2 sm:w-110 w-50 sm:h-100 h-50 rounded-2xl overflow-hidden sm:right-0 right-5">
             <DepthImage src={"/medias/Dune_footer.webp"} alt="Dune parallax" />
           </div>
 
@@ -120,7 +143,7 @@ export default function FooterContent() {
             <NeedHelp />
             <a
               href="#contact_section"
-              className="flex items-center justify-center gap-1 w-31 bg-black text-white rounded-2xl sm:p-3 sm:mt-3 p-1 mt-1 sm:text-base text-xs"
+              className="flex items-center justify-center gap-1 sm:w-31 w-21 bg-black text-white rounded-2xl sm:p-3 sm:mt-3 p-1 mt-1 sm:text-base text-xs"
             >
               Contact
               <ArrowRight />
