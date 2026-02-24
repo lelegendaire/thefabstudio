@@ -49,7 +49,7 @@ export default function CustomScrollbar() {
     return () => {
       lenis.off('scroll', updateScrollbar)
       clearTimeout(activityTimeoutRef.current)
-      window.removeEventListener('resize', updateScrollbar)
+      window.removeEventListener('resize', handleResize)
     }
   }, [lenis])
 
@@ -143,7 +143,7 @@ export default function CustomScrollbar() {
   if (!isVisible) return null
 
   return (
-    <div className="fixed right-0 top-0 w-3 h-screen z-9999 group" onClick={handleTrackClick}>
+    <div className="fixed right-0 top-0 w-3 h-screen z-9999 group hidden sm:block" onClick={handleTrackClick}>
       <div className="absolute inset-0 bg-transparent" />
       <div
         ref={thumbRef}
