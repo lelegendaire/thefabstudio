@@ -47,7 +47,7 @@ const Interaction = () => {
       url: "/Atlantas",
     },
     {
-      title: "The Weeknd : An artist like no other",
+      title: "The Weeknd",
       image: "/medias/The_weeknd.webp",
       url: "/The_Weeknd",
     },
@@ -489,7 +489,7 @@ const Interaction = () => {
         {/* Headers */}
         <div className="spotlight-intro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-10">
           <h2
-            className={`${dirtyline.className} text-4xl md:text-6xl font-medium tracking-tight leading-[0.9]`}
+            className={`${dirtyline.className} text-4xl md:text-6xl font-medium tracking-tight leading-[0.9] `}
           >
             {t("discover.tagline1")}
           </h2>
@@ -505,18 +505,18 @@ const Interaction = () => {
       </section>
 
       {/* Section Outro */}
-      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-black sm:h-[120vh] h-full bg-[#F5F3EF] p-4">
+      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-black md:h-full lg:h-[120vh] h-full bg-[#F5F3EF] p-4">
         <Copy>
-          <h2 className="font-bold sm:text-8xl text-4xl sm:p-10 p-3">
+          <h2 className="font-bold lg:text-8xl md:text-6xl text-4xl lg:p-10 p-3 text-nowrap">
             {t("discover.notConvinced")}
           </h2>
         </Copy>
         <Copy>
-          <h3 className=" sm:text-3xl text-2xl sm:p-5 p-1 text-center">
+          <h3 className="lg:text-3xl text-2xl lg:p-5 p-1 text-center">
             {t("discover.description")}
           </h3>
         </Copy>
-        <div className="flex items-center justify-center gap-3 flex-col sm:flex-row">
+        <div className="flex items-center justify-center gap-3 flex-col lg:flex-row">
           {works.map((work, index) => (
             <div
               key={index}

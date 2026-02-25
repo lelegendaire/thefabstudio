@@ -14,7 +14,7 @@ export default function Hero({ isLoaded }) {
         </div>
 
         <div className="footer_hero absolute bottom-px flex items-center justify-between w-screen gap-4 text-white text-[20px] h-5 z-8">
-          <div className="star ml-2.5 sm:ml-12.5 h-5 w-5 relative mt-auto">
+          <div className="star ml-2.5 lg:ml-12.5 h-5 w-5 relative mt-auto">
             <svg
               version="1.1"
               id="sparkle_x5F_stars"
@@ -31,7 +31,7 @@ export default function Hero({ isLoaded }) {
             </svg>
           </div>
           <div className="line h-0.75 w-full bg-white rounded-4xl"></div>
-          <div className={`${dirtyline.className} date mr-2.5 sm:mr-12.5`}>
+          <div className={`${dirtyline.className} date mr-2.5 lg:mr-12.5`}>
             <HyperText className="text-[20px]">2026</HyperText>
           </div>
         </div>

@@ -819,9 +819,9 @@ const cleanupRef = { fn: null };
   return (
     <section
       id="project_section"
-      className="h-full bg-[#F5F3EF] p-2 sm:p-4 flex flex-col "
+      className="h-full bg-[#F5F3EF] p-2 lg:p-4 flex flex-col "
     >
-      <h2 className="font-bold text-5xl sm:text-8xl lg:text-8xl text-black mb-4 sm:mb-8 mr-auto">
+      <h2 className="font-bold text-5xl md:text-6xl lg:text-8xl text-black mb-4 lg:mb-8 mr-auto">
         {t('projects.title')}
       </h2>
       <div
@@ -830,21 +830,21 @@ const cleanupRef = { fn: null };
       >
         <div
           id="project-counter-container"
-          className="absolute top-4 sm:top-6 left-1/2 transform -translate-x-1/2 flex items-center gap-2 sm:gap-4 z-20"
+          className="absolute top-4 lg:top-6 left-1/2 transform -translate-x-1/2 flex items-center gap-2 lg:gap-4 z-20"
         >
-          <span className="w-4 sm:w-8 h-px bg-black"></span>
+          <span className="w-4 lg:w-8 h-px bg-black"></span>
 
-          <div className="overflow-hidden h-7.5 sm:h-10 flex items-center justify-center">
+          <div className="overflow-hidden h-7.5 lg:h-10 flex items-center justify-center">
             <div
               id="project-counter"
-              className="text-black text-2xl sm:text-3xl flex flex-col"
+              className="text-black text-2xl lg:text-3xl flex flex-col"
               suppressHydrationWarning
             >
               <span>01</span>
             </div>
           </div>
 
-          <span className="w-4 sm:w-8 h-px bg-black"></span>
+          <span className="w-4 lg:w-8 h-px bg-black"></span>
         </div>
 
         <canvas
@@ -856,7 +856,7 @@ const cleanupRef = { fn: null };
   <div className="h-px w-12 bg-black/40 rounded-full" />
   <p
     key={currentProjectName} // ✅ force le re-render pour l'animation CSS
-    className="text-black text-sm sm:text-lg font-medium tracking-widest uppercase animate-fadeIn"
+    className="text-black text-sm lg:text-lg font-medium tracking-widest uppercase animate-fadeIn"
   >
     {currentProjectName}
   </p>
@@ -866,7 +866,7 @@ const cleanupRef = { fn: null };
         <>
           <div
             ref={projetDivRef}
-            className="Projet overflow-y-scroll bg-white sm:w-[98%] w-screen rounded-4xl top-4 sm:left-4 left-0 shadow-2xl fixed sm:h-[96%] h-screen text-white flex items-start pt-4 justify-center"
+            className="Projet overflow-y-scroll bg-white lg:w-[98%] w-screen rounded-4xl top-4 lg:left-4 left-0 shadow-2xl fixed lg:h-[96%] h-screen text-white flex items-start pt-4 justify-center"
             style={{ transform: "translateY(100%)", opacity: 0 }}
             onScroll={() => {
               const el = projetDivRef.current;
@@ -885,10 +885,10 @@ const cleanupRef = { fn: null };
               <X size={32} />
             </button>
 
-            <div className="project_div h-auto relative flex justify-start items-center flex-col sm:gap-12 gap-5">
+            <div className="project_div h-auto relative flex justify-start items-center flex-col lg:gap-12 gap-5">
               {/* HERO IMAGE */}
               <div
-                className="hero_project_div relative sm:h-[90vh] h-full sm:w-[95vw] w-84 rounded-2xl overflow-hidden"
+                className="hero_project_div relative lg:h-[90vh] h-full lg:w-[95vw] w-84 rounded-2xl overflow-hidden"
                 style={{
                   boxShadow:
                     "rgba(185, 141, 107, 1) 1px 10px 20px, rgba(185, 141, 107, 1) 0px 0px 0px 10px",
@@ -904,23 +904,23 @@ const cleanupRef = { fn: null };
               {/* DESCRIPTION */}
               <div
                 ref={bottomRef}
-                className="description relative sm:h-[90vh] h-full w-87 sm:w-[95vw] bg-[#b98d6b] rounded-2xl overflow-hidden text-black sm:p-10 p-3"
+                className="description relative lg:h-[90vh] h-full w-87 lg:w-[95vw] bg-[#b98d6b] rounded-2xl overflow-hidden text-black lg:p-10 p-3"
               >
-                <h2 className="sm:text-5xl text-2xl font-bold text-center mb-10">
+                <h2 className="lg:text-5xl text-2xl font-bold text-center mb-10">
                   {selectedProject.data.title}
                 </h2>
 
-                <div className="flex flex-wrap sm:gap-6 gap-3 justify-center">
+                <div className="flex flex-wrap lg:gap-6 gap-3 justify-center">
                   {selectedProject.data.title_description.map((item, i) => (
                     <div
                       key={i}
-                      className="sm:w-75 w-80 flex flex-col sm:gap-2 gap-0.5"
+                      className="lg:w-75 w-80 flex flex-col lg:gap-2 gap-0.5"
                     >
-                      <h2 className="sm:text-xl text-base font-semibold">
+                      <h2 className="lg:text-xl text-base font-semibold">
                         {item}
                       </h2>
 
-                      <p className="sm:text-base text-xs text-black opacity-80 mt-2">
+                      <p className="lg:text-base text-xs text-black opacity-80 mt-2">
                         {selectedProject.data.description[i]}
                       </p>
                     </div>
@@ -948,7 +948,7 @@ const cleanupRef = { fn: null };
                 });
               }
             }}
-            className="glass_btn hidden sm:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-999 w-14 h-14 rounded-full bg-transparent text-black items-center justify-center shadow-xl hover:scale-105 transition-transform"
+            className="glass_btn hidden lg:flex fixed bottom-8 left-1/2 -translate-x-1/2 z-999 w-14 h-14 rounded-full bg-transparent text-black items-center justify-center shadow-xl hover:scale-105 transition-transform"
           >
             <span
               className={`transition-transform duration-300 z-99 ${

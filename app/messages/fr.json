@@ -49,21 +49,21 @@
     "members": {
       "1": {
         "name": "Fabien CHEVALLEREAU",
-        "description": "Un jeune passionné d'informatique capable de créer des choses infinies avec de l'imagination.",
+        "description": "Un créateur infatigable, à la croisée du code et de la vision, qui transforme des idées complexes en expériences numériques fluides.",
         "type": "Développeur web",
         "field": "Poste. Fondateur",
         "date": "2 ans"
       },
       "2": {
         "name": "Noah CHEVALIER",
-        "description": "Personne ne peut mieux expliquer l'informatique brute aux gens que lui.",
+        "description": "Un esprit rare qui comble le fossé entre la profondeur technique et la clarté humaine, rendant le complexe facile à comprendre.",
         "type": "Community manager",
         "field": "Poste. Co-fondateur",
         "date": "2 ans"
       },
       "3": {
         "name": "Rafaël ASTRO",
-        "description": "Le meilleur développeur parmi nous, capable de créer plusieurs projets en même temps",
+        "description": "Un architecte full-stack obsédé par la précision, capable de mener à bien des projets ambitieux sans jamais faire de compromis sur la qualité.",
         "type": "Frontend et backend",
         "field": "Poste. Employé",
         "date": "4 ans"

@@ -293,10 +293,10 @@ const CinemaPage = () => {
         {/* Contenu principal */}
         <section className="relative min-h-screen p-8 flex items-center justify-center w-full">
           <div className="absolute w-full top-0 m-5 flex items-center justify-center list-none  text-xl text-white font-[montserrat] z-50">
-            <div className="font-[melodrama] font-bold text-xl text-nowrap sm:text-3xl mr-auto m-5">
+            <div className="font-[melodrama] font-bold text-xl text-nowrap lg:text-3xl mr-auto m-5">
               <h1>STUDIOFILM &copy;</h1>
             </div>
-            <div className="ml-auto gap-5 flex mr-7.5 text-xs sm:text-xl">
+            <div className="ml-auto gap-5 flex mr-7.5 text-xs lg:text-xl">
               <li className="no-underline hover:text-black transition-all">
                 <a href="#">Home</a>
               </li>
@@ -311,19 +311,19 @@ const CinemaPage = () => {
               </li>
             </div>
           </div>
-          <h1 className="text-5xl text-nowrap sm:text-9xl font-bold z-10 text-white font-[boska]">
+          <h1 className="text-5xl text-nowrap lg:text-9xl font-bold z-10 text-white font-[boska]">
             BEAUTY OF CINEMA
           </h1>
 
           <img
-            className="image_runner absolute z-20 scale-[180%] sm:scale-100"
+            className="image_runner absolute z-20 scale-[180%] lg:scale-100"
             style={{
               transform: transformStyle,
             }}
             src="/medias/Runner.webp"
             alt="Runner"
           />
-          <div className="absolute bottom-0 font-[montserrat] sm:text-xl text-xs flex align-center justify-center w-full text-white font-bold">
+          <div className="absolute bottom-0 font-[montserrat] lg:text-xl text-xs flex align-center justify-center w-full text-white font-bold">
             <h3 className="mr-auto m-5">Composition</h3>
             <h3 className="mr-auto m-5">Storyline</h3>
             <h3 className="ml-auto m-5">Plotwist</h3>

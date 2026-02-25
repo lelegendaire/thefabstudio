@@ -34,7 +34,7 @@ export default function Home() {
       {/* Projects */}
       <section
         id="project_section"
-        className="h-full bg-[#F5F3EF] p-2 sm:p-4 flex flex-col"
+        className="h-full bg-[#F5F3EF] p-2 lg:p-4 flex flex-col"
       >
         <ProjectsContent />
       </section>
@@ -49,7 +49,7 @@ export default function Home() {
       {/* Pricing */}
       <section
         id="pricing_section"
-        className="bg-[#F5F3EF] text-[#0f0f0f] h-[110vh] flex relative items-center justify-center"
+        className="bg-[#F5F3EF] text-[#0f0f0f] lg:h-[110vh] md:h-[110vh] h-full flex relative items-center justify-center"
       >
         <PricingContent />
       </section>
@@ -57,7 +57,7 @@ export default function Home() {
       {/* Footer */}
       <section
         id="footer_section"
-        className="sm:h-full h-full bg-[#F5F3EF] pr-4 pl-4 pt-4 relative w-full"
+        className="lg:h-full h-full bg-[#F5F3EF] pr-4 pl-4 pt-4 relative w-full"
       >
         <FooterContent />
       </section>

@@ -27,13 +27,13 @@ export default function FooterContent() {
       <div className="flex justify-between items-center">
         <div className="gauche w-1/2 flex justify-start items-end">
         <h2
-          className={`${dirtyline.className} font-bold sm:text-8xl text-3xl text-black`}
+          className={`${dirtyline.className} font-bold lg:text-8xl text-3xl text-black`}
         >
           The <br />
           Fab <br />
           Studi
         </h2>
-        <h2 className="font-[PlayfairDisplay] font-normal sm:text-8xl text-3xl italic relative sm:mb-2 mb-1">
+        <h2 className="font-[PlayfairDisplay] font-normal lg:text-8xl text-3xl italic relative lg:mb-2 mb-1">
           O
         </h2>
 </div>
@@ -51,20 +51,20 @@ export default function FooterContent() {
           <AnimatedStar />
         </div>
         <div className="line h-0.75 w-full bg-black rounded-4xl" />
-        <div className="date sm:mr-12.5 mr-0">
+        <div className="date lg:mr-12.5 mr-0">
           <p className={`${dirtyline.className} text-[20px]`}>2026</p>
         </div>
       </div>
 
       {/* Navigation et infos */}
-      <div className="flex justify-between items-start mt-5 h-[40vh] sm:h-[70vh]">
-        <div className="flex flex-col">
-          <div className="flex justify-between items-start">
+      <div className="flex justify-between items-center lg:items-start mt-5 h-full lg:h-[70vh] flex-col lg:flex-row md:flex-row gap-5 lg:gap-3">
+        <div className="flex flex-col w-1/2">
+          <div className="flex justify-between md:justify-start lg:justify-between items-start">
             {/* Social */}
             <div className="social w-1/4 list-none">
               <Social />
               <ul>
-                <li className="mt-3 sm:text-2xl text-xs">
+                <li className="mt-3 lg:text-2xl text-xs">
                   <AnimatedLink
                     color="black"
                     target_on="_blank"
@@ -74,7 +74,7 @@ export default function FooterContent() {
                     Instagram
                   </AnimatedLink>
                 </li>
-                <li className="mt-3 sm:text-2xl text-xs">
+                <li className="mt-3 lg:text-2xl text-xs">
                   <AnimatedLink
                     color="black"
                     target_on="_blank"
@@ -84,7 +84,7 @@ export default function FooterContent() {
                     Pinterest
                   </AnimatedLink>
                 </li>
-                <li className="mt-3 sm:text-2xl text-xs">
+                <li className="mt-3 lg:text-2xl text-xs">
                   <AnimatedLink
                     color="black"
                     target_on="_blank"
@@ -104,19 +104,19 @@ export default function FooterContent() {
                 Page
               </h3>
               <ul>
-                <li className="mt-3 sm:text-2xl text-xs">
+                <li className="mt-3 lg:text-2xl text-xs">
                   <Home />{" "}
                 </li>
-                <li className="sm:text-2xl text-xs">
+                <li className="mg:text-2xl text-xs">
                   <About />{" "}
                 </li>
-                <li className="sm:text-2xl text-xs">
+                <li className="lg:text-2xl text-xs">
                   <Projects />{" "}
                 </li>
-                <li className="sm:text-2xl text-xs">
+                <li className="lg:text-2xl text-xs">
                   <Team />{" "}
                 </li>
-                <li className="sm:text-2xl text-xs">
+                <li className="lg:text-2xl text-xs">
                   <AnimatedLink color="black" href="#contact_section">
                     Contact
                   </AnimatedLink>
@@ -125,25 +125,21 @@ export default function FooterContent() {
             </nav>
           </div>
 
-          {/* Language switcher placeholder */}
-          <div className="flex items-end justify-start sm:h-50 h-40">
-            <div className="flex items-center justify-center gap-3">
-              <LanguageSwitch />
-            </div>
-          </div>
+        
+          
         </div>
 
         {/* Image et CTA */}
-        <div className="flex items-start justify-start flex-col w-1/2 sm:relative absolute sm:left-0 left-45">
-          <div className="relative sm:mt-2 sm:w-110 w-50 sm:h-100 h-50 rounded-2xl overflow-hidden sm:right-0 right-5">
+        <div className="flex items-start justify-start flex-col w-1/2 lg:relative md:items-end lg:items-start">
+          <div className="relative lg:mt-2 lg:w-110 w-50 lg:h-100 h-50 rounded-2xl overflow-hidden ">
             <DepthImage src={"/medias/Dune_footer.webp"} alt="Dune parallax" />
           </div>
 
-          <div className="absolute">
+          <div className="absolute md:right-30">
             <NeedHelp />
             <a
               href="#contact_section"
-              className="flex items-center justify-center gap-1 sm:w-31 w-21 bg-black text-white rounded-2xl sm:p-3 sm:mt-3 p-1 mt-1 sm:text-base text-xs"
+              className="flex items-center justify-center gap-1 lg:w-31 w-21 bg-black text-white rounded-2xl lg:p-3 lg:mt-3 p-1 mt-1 lg:text-base text-xs"
             >
               Contact
               <ArrowRight />
@@ -152,12 +148,18 @@ export default function FooterContent() {
         </div>
       </div>
 
+      <div className="flex flex-col items-start justify-center ">
+          {/* Language switcher placeholder */}
+            <div className="flex items-center justify-center gap-3">
+              <LanguageSwitch />
+          </div>
+       <div className="flex items-center relative mt-5 pb-3 justify-between w-full text-black lg:text-base text-xs">
       {/* Copyright */}
-      <div className="flex items-center relative mt-5 pb-3 justify-between w-full text-black sm:text-base text-xs">
         <Rights />
         <p>
           <Privacy />
         </p>
+        </div>
       </div>
     </>
   );

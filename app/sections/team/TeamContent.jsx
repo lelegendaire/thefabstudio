@@ -506,13 +506,13 @@ export default function Team({ contactRef }) {
             animationState.currentTranslateY = gsap.utils.interpolate(
               animationState.initialTranslateY,
               0,
-              animationState.scrollprogress,
+              self.progress,
             );
-            animationState.scale = gsap.utils.interpolate(
-              0.05,
-              1,
-              animationState.scrollprogress,
-            );
+            
+
+  // ✅ scale ne démarre qu'à partir de 50% du scroll
+  const scaleProgress = Math.max(0, (self.progress - 0.5) / 0.5); // 0→1 entre 50% et 100%
+  animationState.scale = gsap.utils.interpolate(0.05, 1, scaleProgress);
           },
         },
       });
@@ -557,7 +557,7 @@ const handleMouseMove = (e) => {
     <section
       id="team_section"
       ref={teamRef}
-      className="h-[150vh] sm:h-screen bg-[#F5F3EF] relative flex justify-center items-center">
+      className="h-[150vh] lg:h-screen bg-[#F5F3EF] relative flex justify-center items-center">
       <div className="slider h-[90%] w-[90%] mt-40 " onClick={handleSlideChange}>
         <canvas ref={canvasRef} className="block w-full h-full rounded-4xl" style={{ maxWidth: "100%" }} />
 
@@ -565,11 +565,11 @@ const handleMouseMove = (e) => {
           className="absolute top-0 left-0 min-w-full h-full select-none z-10 text-white"
           ref={slideContentRef}
         >
-          <h2 className="font-bold sm:text-8xl text-5xl text-black m-4">
+          <h2 className="font-bold lg:text-8xl text-5xl text-black m-4">
             {t("team.title")}
           </h2>
-          <div className="relative top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center">
-            <h3 className="uppercase text-[12vw] sm:text-[7vw] font-bold leading-none flex justify-center whitespace-pre-line gap-[1em] flex-col sm:flex-row">
+          <div className="relative top-[20%] lg:top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] text-center">
+            <h3 className="uppercase text-[10vw] lg:text-[7vw] font-bold leading-none flex justify-center whitespace-pre-line gap-[1em] flex-col lg:flex-row">
               {currentSlide.title.split(" ").map((word, i) => (
                 <div className="word flex" key={i}>
                   {word.split("").map((char, j) => (
@@ -584,14 +584,14 @@ const handleMouseMove = (e) => {
             </h3>
           </div>
 
-          <div className="relative sm:top-[30%] top-[40%] left-[70%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden ">
+          <div className="relative md:top-[25%] lg:top-[30%] top-[37%] left-[70%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden ">
             <div className="line overflow-hidden">
               <span className="relative inline-block will-change-transform">
                 {member.description}
               </span>
             </div>
           </div>
-          <div className="space-y-1 relative top-[30%] left-[30%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden">
+          <div className="space-y-1 relative top-[5%] md:top-[10%] lg:top-[30%] left-[30%] transform -translate-x-1/2 -translate-y-1/2 w-1/4 flex flex-col gap-8 lg:block overflow-hidden">
             <div className="line overflow-hidden">
               <span className="relative inline-block will-change-transform">
                 Type. {member.type}

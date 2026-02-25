@@ -47,7 +47,7 @@ export function DepthImage({ src, alt }) {
   return (
     <motion.div
       ref={containerRef}
-      className="image_footer absolute top-0 left-0 sm:mt-2 sm:w-110 w-50 sm:h-100 h-50 rounded-2xl overflow-hidden pointer-events-auto"
+      className="image_footer absolute top-0 left-0 lg:mt-2 lg:w-110 w-50 lg:h-100 h-50 rounded-2xl overflow-hidden pointer-events-auto"
       style={{
         transformStyle: "preserve-3d",
         perspective: "1000px",
@@ -108,7 +108,7 @@ export function MailLink() {
   }, []);
 
   return (
-    <a href={`mailto:${email}`} className="underline sm:text-3xl w-full h-5">
+    <a href={`mailto:${email}`} className="underline lg:text-3xl w-full h-5">
       {email}
     </a>
   );
@@ -132,7 +132,7 @@ export function LanguageSwitch() {
 export function Description() {
   const { t } = useLanguage();
   return (
-    <h3 className="sm:text-6xl text-xs mb-8 w-full">
+    <h3 className="lg:text-6xl text-xl mb-8 w-full">
       {t("footer.description")}
     </h3>
   );

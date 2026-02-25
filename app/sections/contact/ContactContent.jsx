@@ -106,7 +106,7 @@ const Contact = forwardRef((props, ref) => {
       content: (
         <div className="w-full h-full flex items-center justify-center flex-col">
           <ChartContainer
-            className="w-3/4 h-full sm:font-bold font-normal"
+            className="w-3/4 h-full lg:font-bold font-normal"
             config={chartConfig}
           >
             <BarChart data={chartData}>
@@ -126,7 +126,7 @@ const Contact = forwardRef((props, ref) => {
               <Bar dataKey="client" fill="#b98d6b" radius={20} />
             </BarChart>
           </ChartContainer>
-          <h2 className="sm:font-bold font-normal py-4">{t("contact.clients")} </h2>
+          <h2 className="lg:font-bold font-normal py-4">{t("contact.clients")} </h2>
         </div>
       ),
     },
@@ -142,22 +142,21 @@ const Contact = forwardRef((props, ref) => {
             src="https://api.maptiler.com/maps/019a29ee-fc6c-7214-992b-1d1cfeb51a7d/?key=OVKTtEmd6oXqJWFoFhnn#11.1/48.85582/2.37502"
           ></iframe>
 
-          <h2 className="sm:font-bold font-normal py-4">{t("contact.maps")}</h2>
+          <h2 className="lg:font-bold font-normal py-4">{t("contact.maps")}</h2>
         </div>
       ),
     },
     {
       id: 2,
       content: (
-        <div className="w-full h-[30vh] flex items-center justify-center flex-col">
+        <div className="w-full h-full flex items-center justify-center flex-col">
           <img
-            className="w-[70%] h-[200%] object-cover rounded-xl"
+            className="w-[70%] h-[30vh] object-cover rounded-xl"
             src="/medias/Contact.webp"
             alt="Dune with beige fog"
-            width="500"
-            height="300"
+            
           />
-          <h2 className="sm:font-bold font-normal py-4">{t("contact.img")}</h2>
+          <h2 className="lg:font-bold font-normal py-4">{t("contact.img")}</h2>
         </div>
       ),
     },
@@ -166,15 +165,15 @@ const Contact = forwardRef((props, ref) => {
     <section
       id="contact_section"
       ref={ref}
-      className="h-[150vh] w-full bg-[#F5F3EF] p-4 rounded-4xl relative"
+      className="min-h-[150vh] md:h-full lg:h-[150vh] w-full bg-[#F5F3EF] p-4 rounded-4xl relative"
       style={{ transform: "translateY(-105%) scale(0.05)" }}
     >
-      <h2 className="font-bold sm:text-8xl text-5xl text-black">
+      <h2 className="font-bold lg:text-8xl md:text-6xl text-5xl text-black">
         {t("contact.title")}
       </h2>
-      <h3 className="sm:text-3xl text-sm">{t("contact.subtitle")}</h3>
-      <div className="flex items-center justify-between flex-col sm:flex-row">
-        <div className="flex sm:w-1/2 w-full sm:h-[80vh] h-[40vh] flex-col items-center justify-center">
+      <h3 className="lg:text-3xl text-sm">{t("contact.subtitle")}</h3>
+      <div className="flex items-center justify-between flex-col md:flex-row lg:flex-row md:h-full">
+        <div className="flex lg:w-1/2 w-full lg:h-[80vh] min-h-[40vh]  flex-col items-center justify-center">
           <div className="slider w-full h-full flex items-center justify-center">
             {slides[activeIndex].content}
           </div>
@@ -199,15 +198,15 @@ const Contact = forwardRef((props, ref) => {
             ))}
           </div>
         </div>
-        <div className="pt-20 flex w-full sm:w-1/2 h-screen items-center justify-center flex-col">
+        <div className="pt-20 flex w-full lg:w-1/2 lg:h-screen min-h-screen items-center justify-center flex-col">
           <h2 className="text-3xl">{t("contact.form.title")}</h2>
 
-          <div className="flex gap-1 items-start sm:w-100 w-full pl-5 pt-5">
+          <div className="flex gap-1 items-start lg:w-100 w-full pl-5 pt-5">
             <p>{t("contact.form.to")}</p> <Mail />
           </div>
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-start justify-center sm:w-100 w-full"
+            className="flex flex-col items-start justify-center lg:w-100 w-full"
           >
             <div className="p-5 w-full">
               <h3>Email*</h3>
@@ -220,7 +219,7 @@ const Contact = forwardRef((props, ref) => {
                 required
               ></input>
             </div>
-            <div className="h-0.5 sm:w-100 w-full bg-gray-200 rounded-2xl "></div>
+            <div className="h-0.5 lg:w-100 w-full bg-gray-200 rounded-2xl "></div>
             <div className="pl-5 pt-5 w-full">
               <h3 className="pt-3 ">{t("contact.form.object")}</h3>
               <input
@@ -231,7 +230,7 @@ const Contact = forwardRef((props, ref) => {
                 onChange={(e) => handleChange("object", e.target.value)}
                 required
               ></input>
-              <div className="flex gap-2 sm:gap-3 mt-4">
+              <div className="flex gap-2 lg:gap-3 mt-4">
                 {tabs.map((tab) => (
                   <button
                     key={tab.key}

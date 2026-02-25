@@ -51,7 +51,7 @@ export default function AboutUsAnimation() {
       viewBox="0 0 868 1448"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="squiggle absolute sm:-top-62.5 top-0 left-0 w-full sm:h-[400vh] h-225 pointer-events-none"
+      className="squiggle absolute lg:-top-62.5 top-0 left-0 w-full lg:h-[400vh] h-225 pointer-events-none"
     >
       <path
         className="line_glow"
@@ -68,7 +68,7 @@ export default function AboutUsAnimation() {
 export function Title() {
   const { t } = useLanguage();
   return (
-    <h1 className="font-bold sm:text-8xl text-5xl bg-[#F5F3EF] sm:w-2xl w-full z-10 relative">
+    <h1 className="font-bold lg:text-8xl text-5xl bg-[#F5F3EF] lg:w-2xl w-full z-10 relative">
       {t("about.title")}
     </h1>
   );
@@ -76,7 +76,7 @@ export function Title() {
 export function Paragraphe1() {
   const { t } = useLanguage();
   return (
-    <p className="sm:w-2xl w-xs ml-auto sm:text-2xl text-xs">
+    <p className="lg:w-2xl w-xs ml-auto lg:text-2xl text-xs">
       {t("about.paragraph1")}
     </p>
   );
@@ -84,7 +84,7 @@ export function Paragraphe1() {
 export function Paragraphe2() {
   const { t } = useLanguage();
   return (
-    <p className="sm:w-2xl w-xs mr-auto sm:text-2xl text-xs sm:mt-80 mt-20">
+    <p className="lg:w-2xl w-xs mr-auto lg:text-2xl text-xs lg:mt-80 mt-20">
       {t("about.paragraph2")}
     </p>
   );
@@ -92,7 +92,7 @@ export function Paragraphe2() {
 export function Paragraphe3() {
   const { t } = useLanguage();
   return (
-    <p className="sm:w-2xl w-xs ml-auto sm:text-2xl text-xs sm:mt-80 mt-20">
+    <p className="lg:w-2xl w-xs ml-auto lg:text-2xl text-xs lg:mt-80 mt-20">
       {t("about.paragraph3")}
     </p>
   );
@@ -100,7 +100,7 @@ export function Paragraphe3() {
 export function Paragraphe4() {
   const { t } = useLanguage();
   return (
-    <p className="sm:w-2xl w-xs mr-auto sm:text-2xl text-xs sm:mt-120 mt-40 sm:mb-50 mb-10">
+    <p className="lg:w-2xl w-xs mr-auto lg:text-2xl text-xs lg:mt-120 mt-40 lg:mb-50 mb-10">
       {t("about.paragraph4")}
     </p>
   );
