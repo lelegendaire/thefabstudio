@@ -13,7 +13,7 @@ export default function SectionTeamAndContact() {
       {/* Team */}
       <section
         id="team_section"
-        className="h-[150vh] sm:h-screen bg-black relative"
+        className="h-[150vh] sm:h-screen bg-[#F5F3EF] relative"
       >
         <TeamContent contactRef={contactRef} />
       </section>

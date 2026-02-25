@@ -557,16 +557,15 @@ const handleMouseMove = (e) => {
     <section
       id="team_section"
       ref={teamRef}
-      className="h-[150vh] sm:h-screen  bg-black relative"
-    >
-      <div className="slider" onClick={handleSlideChange}>
-        <canvas ref={canvasRef} className="block w-full h-full" style={{ maxWidth: "100%" }} />
+      className="h-[150vh] sm:h-screen bg-[#F5F3EF] relative flex justify-center items-center">
+      <div className="slider h-[90%] w-[90%] mt-40 " onClick={handleSlideChange}>
+        <canvas ref={canvasRef} className="block w-full h-full rounded-4xl" style={{ maxWidth: "100%" }} />
 
         <div
           className="absolute top-0 left-0 min-w-full h-full select-none z-10 text-white"
           ref={slideContentRef}
         >
-          <h2 className="font-bold sm:text-8xl text-5xl text-white m-4">
+          <h2 className="font-bold sm:text-8xl text-5xl text-black m-4">
             {t("team.title")}
           </h2>
           <div className="relative top-[30%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full text-center">

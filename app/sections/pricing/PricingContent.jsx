@@ -30,22 +30,23 @@ export default function PricingContent() {
         ${
           isFrench
             ? "text-8xl sm:left-auto -left-5 sm:top-10 sm:rotate-0 rotate-90"
-            : "text-9xl sm:left-auto -left-5 sm:top-10 sm:rotate-0 rotate-90"
+            : "text-8xl sm:left-auto -left-5 sm:top-10 sm:rotate-0 rotate-90"
         }
       `}
     > {t("pricing.title")}
       </h1>
 
-      <div className="bloc flex items-center justify-center sm:flex-row flex-col gap-5 sm:top-30 absolute">
+      <div className="bloc flex items-center justify-center sm:flex-row flex-col gap-5 sm:top-30 absolute text-black">
         {/* Starter Experience */}
-        <div className="Starter flex items-center justify-center flex-col h-60 w-70 sm:h-120 sm:w-90 bg-transparent rounded-3xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] shadow-[0px_10px_18px_-3px_rgba(255,255,255,0.1),inset_0px_-5px_18px_6px_rgba(255,255,255,0.1)]">
+        <div className="flex flex-col justify-center items-center gap-5">
+        <div className="Starter flex items-center justify-between flex-col h-60 w-70 sm:h-100 sm:w-90 bg-transparent rounded-2xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] ">
           <div className="head z-2 sm:h-20 w-full flex items-center justify-center">
             <h2 className="font-bold text-xl sm:text-2xl">
               {t("pricing.starter.name")}{" "}
             </h2>
           </div>
 
-          <div className="list z-2 sm:h-80 w-full flex items-center justify-start pt-5 flex-col gap-1 sm:gap-5 text-white rounded-b-2xl">
+          <div className="list z-2 sm:h-60 w-full flex items-center justify-start pt-5 mb-auto flex-col gap-1 sm:gap-5 rounded-b-2xl">
             <div className="bg-[#ffffff2c] w-90/100 h-1 rounded-3xl absolute top-14 sm:top-20" />
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
@@ -94,20 +95,22 @@ export default function PricingContent() {
             </div>
           </div>
 
-          <button className="btn hover:scale-[110%] ease-in-out rounded-3xl w-40 sm:w-60 h-7 sm:h-10 bg-[#0d0d0d] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 sm:mt-0 mb-0 sm:mb-5 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] hover:shadow-[inset_0px_1px_1px_1px_rgba(0,0,0,0.5)]">
+        </div>
+          <button className="btn hover:text-black text-white ease-in-out rounded-3xl w-40 sm:w-60 h-7 sm:h-11 bg-[#0f0f0f] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 sm:mt-0 mb-0 sm:mb-5 ">
             {t("pricing.cta")}
           </button>
-        </div>
+          </div>
 
         {/* Signature Experience */}
-        <div className="Signature flex items-center justify-center flex-col h-60 w-70 sm:h-120 sm:w-90 bg-transparent rounded-3xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] shadow-[0px_10px_18px_-3px_rgba(255,255,255,0.1),inset_0px_-5px_18px_6px_rgba(255,255,255,0.1)]">
+        <div className="flex flex-col justify-center items-center gap-5">
+        <div className="Signature flex items-center justify-between flex-col h-60 w-70 sm:h-100 sm:w-90 bg-transparent rounded-2xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] ">
           <div className="head z-2 sm:h-20 w-full flex items-center justify-center">
             <h2 className="font-bold text-xl sm:text-2xl">
               {t("pricing.signature.name")}
             </h2>
           </div>
 
-          <div className="list z-2 sm:h-80 w-full flex items-center justify-start pt-5 flex-col gap-1 sm:gap-5 text-white rounded-b-2xl">
+          <div className="list z-2 mb-auto sm:h-60 w-full flex items-center justify-start pt-5 flex-col gap-1 sm:gap-5  rounded-b-2xl">
             <div className="bg-[#ffffff2c] w-90/100 h-1 rounded-3xl absolute top-14 sm:top-20" />
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
@@ -156,20 +159,22 @@ export default function PricingContent() {
             </div>
           </div>
 
-          <button className="btn hover:scale-[110%] ease-in-out rounded-3xl w-40 sm:w-60 h-7 sm:h-10 bg-[#0d0d0d] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 sm:mt-0 mb-0 sm:mb-5 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] hover:shadow-[inset_0px_1px_1px_1px_rgba(0,0,0,0.5)]">
+        </div>
+          <button className="btn hover:text-black text-white ease-in-out rounded-3xl w-40 sm:w-60 h-7 sm:h-11 bg-[#0f0f0f] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 sm:mt-0 mb-0 sm:mb-5 ">
             {t("pricing.cta")}
           </button>
         </div>
 
         {/* Immersive Experience */}
-        <div className="Immersive flex items-center justify-center flex-col h-60 w-70 sm:h-120 sm:w-90 bg-transparent rounded-3xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] shadow-[0px_10px_18px_-3px_rgba(255,255,255,0.1),inset_0px_-5px_18px_6px_rgba(255,255,255,0.1)]">
+        <div className="flex flex-col justify-center items-center gap-5">
+        <div className="Immersive flex items-center justify-between flex-col h-60 w-70 sm:h-100 sm:w-90 bg-transparent rounded-2xl backdrop-blur-sm backdrop-filter bg-opacity-10 border border-[#ffffff2c] ">
           <div className="head z-2 sm:h-20 w-full flex items-center justify-center">
             <h2 className="font-bold text-xl sm:text-2xl text-nowrap">
               {t("pricing.immersive.name")}
             </h2>
           </div>
 
-          <div className="list z-2 sm:h-80 w-full flex items-center justify-start pt-5 flex-col gap-1 sm:gap-5 text-white rounded-b-2xl">
+          <div className="list z-2 mb-auto sm:h-60 w-full flex items-center justify-start pt-5 flex-col gap-1 sm:gap-5 rounded-b-2xl">
             <div className="bg-[#ffffff2c] w-90/100 h-1 rounded-3xl absolute top-14 sm:top-20" />
 
             <div className="element_list flex justify-start items-center gap-3 w-40 sm:w-60">
@@ -218,7 +223,8 @@ export default function PricingContent() {
             </div>
           </div>
 
-          <button className="btn hover:scale-[110%] ease-in-out rounded-3xl w-40 sm:w-60 h-7 sm:h-10 bg-[#0d0d0d] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 sm:mt-0 mb-0 sm:mb-5 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] hover:shadow-[inset_0px_1px_1px_1px_rgba(0,0,0,0.5)]">
+        </div>
+          <button className="btn hover:text-black text-white ease-in-out rounded-3xl w-40 sm:w-60 h-7 sm:h-11 bg-[#0f0f0f] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 sm:mt-0 mb-0 sm:mb-5 ">
             {t("pricing.cta")}
           </button>
         </div>

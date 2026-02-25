@@ -463,7 +463,7 @@ const Interaction = () => {
           {imageUrls.map((imageUrl, index) => (
             <div
               key={index}
-              className="img-element absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-125 h-87.5 bg-cover bg-center will-change-transform"
+              className="img-element absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-125 h-87.5 bg-cover bg-center will-change-transform rounded-2xl"
               style={{
                 backgroundImage: `url('${imageUrl}')`,
               }}
@@ -505,9 +505,9 @@ const Interaction = () => {
       </section>
 
       {/* Section Outro */}
-      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-black sm:h-[120vh] h-full bg-white p-4">
+      <section className="relative w-screen overflow-hidden flex justify-start flex-col  items-center text-black sm:h-[120vh] h-full bg-[#F5F3EF] p-4">
         <Copy>
-          <h2 className="font-bold sm:text-6xl text-4xl sm:p-10 p-3">
+          <h2 className="font-bold sm:text-8xl text-4xl sm:p-10 p-3">
             {t("discover.notConvinced")}
           </h2>
         </Copy>
@@ -531,7 +531,7 @@ const Interaction = () => {
                 />
               </div>
               <h2 className="text-xl ">{work.title}</h2>
-              <button className="bg-black w-60 rounded-full py-3 px-6 text-white font-medium active:scale-95 transition-transform duration-300 hover:bg-[#b98d6b] hover:text-black">
+              <button className="bg-black w-60 rounded-full h-11 text-white font-medium active:scale-95 transition-transform duration-300 hover:bg-[#b98d6b] hover:text-black">
                 {t("discover.seeMore")}
               </button>
             </div>
@@ -546,7 +546,7 @@ const Interaction = () => {
             }}
           >
             <div
-              className="absolute bg-black rounded-2xl overflow-hidden animate-expand"
+              className="absolute bg-[#0f0f0f] rounded-2xl overflow-hidden animate-expand"
               style={{
                 left: clickPosition.x,
                 top: clickPosition.y,

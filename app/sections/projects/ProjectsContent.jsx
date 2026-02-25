@@ -225,6 +225,8 @@ export default function Projects() {
       link: "#",
     },
   ];
+  const [currentProjectName, setCurrentProjectName] = useState(projectsData[3].title);
+
   const projectImages = [
     "/medias/StudioLens.webp",
     "/medias/StudioSongFab.webp",
@@ -496,11 +498,12 @@ const cleanupRef = { fn: null };
 
             const totalRotation = Math.PI * 2;
             const step = totalRotation / numCubes;
-
             let currentIndex = Math.floor((rotation % totalRotation) / step);
             if (currentIndex < 0) currentIndex = 0;
 
-            let counterValue = (currentIndex % numCubes) + 1;
+            const counterValue = currentIndex + 1; // ✅ 01→12 basé sur le scroll, sans offset
+            const nameIndex = (currentIndex + 3) % numCubes; // ✅ offset uniquement pour le nom
+
 
             if (counterValue !== previousIndex) {
               const counterContainer =
@@ -533,6 +536,7 @@ const cleanupRef = { fn: null };
               }
 
               previousIndex = counterValue;
+              setCurrentProjectName(projectsData[nameIndex]?.title ?? "");
             }
           }
           if (self.progress === 1) {
@@ -815,20 +819,14 @@ const cleanupRef = { fn: null };
   return (
     <section
       id="project_section"
-      className="h-full bg-white p-2 sm:p-4 flex flex-col "
+      className="h-full bg-[#F5F3EF] p-2 sm:p-4 flex flex-col "
     >
       <h2 className="font-bold text-5xl sm:text-8xl lg:text-8xl text-black mb-4 sm:mb-8 mr-auto">
         {t('projects.title')}
       </h2>
       <div
-        className="static_div flex-1 relative rounded-lg shadow-2xl"
-        style={{
-          backgroundColor: "#f0f0f0",
-          backgroundImage:
-            "radial-gradient(rgba(0, 0, 0, 0.05) 2px, transparent 0)",
-          backgroundSize: "30px 30px",
-          backgroundPosition: "-5px -5px",
-        }}
+        className="static_div flex-1 relative "
+        
       >
         <div
           id="project-counter-container"
@@ -853,6 +851,16 @@ const cleanupRef = { fn: null };
           ref={canvasRef}
           className="w-full h-full cursor-grab active:cursor-grabbing overflow-hidden"
         />
+        {/* ✅ Nom du projet courant */}
+<div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 z-20 pointer-events-none">
+  <div className="h-px w-12 bg-black/40 rounded-full" />
+  <p
+    key={currentProjectName} // ✅ force le re-render pour l'animation CSS
+    className="text-black text-sm sm:text-lg font-medium tracking-widest uppercase animate-fadeIn"
+  >
+    {currentProjectName}
+  </p>
+</div>
       </div>
       {selectedProject && (
         <>
@@ -1110,6 +1118,13 @@ const cleanupRef = { fn: null };
           -webkit-backdrop-filter: blur(var(--frost-blur));
           -webkit-filter: url("#glass-distortion");
         }
+          @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
       `}</style>
     </section>
   );

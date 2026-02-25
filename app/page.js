@@ -20,12 +20,12 @@ const InteractionContent = dynamic(
 
 export default function Home() {
   return (
-    <main id="main-content">
+    <main id="main-content" className="bg-[#F5F3EF]">
       <HeroSection />
       {/* About Us */}
       <section
         id="about_section"
-        className="text-white h-full p-4 bg-[#0f0f0f] relative"
+        className="text-[#0f0f0f] h-full p-4 bg-[#F5F3EF] relative"
       >
         <AboutContent />
         <AboutAnimation />
@@ -34,7 +34,7 @@ export default function Home() {
       {/* Projects */}
       <section
         id="project_section"
-        className="h-full bg-white p-2 sm:p-4 flex flex-col"
+        className="h-full bg-[#F5F3EF] p-2 sm:p-4 flex flex-col"
       >
         <ProjectsContent />
       </section>
@@ -49,7 +49,7 @@ export default function Home() {
       {/* Pricing */}
       <section
         id="pricing_section"
-        className="bg-[#0f0f0f] text-white h-[110vh] flex relative items-center justify-center"
+        className="bg-[#F5F3EF] text-[#0f0f0f] h-[110vh] flex relative items-center justify-center"
       >
         <PricingContent />
       </section>
@@ -57,7 +57,7 @@ export default function Home() {
       {/* Footer */}
       <section
         id="footer_section"
-        className="sm:h-[115vh] h-full bg-white pr-4 pl-4 pt-4 relative w-full"
+        className="sm:h-full h-full bg-[#F5F3EF] pr-4 pl-4 pt-4 relative w-full"
       >
         <FooterContent />
       </section>

@@ -110,7 +110,7 @@ const Contact = forwardRef((props, ref) => {
             config={chartConfig}
           >
             <BarChart data={chartData}>
-              <CartesianGrid vertical={false} />
+              <CartesianGrid vertical={false} horizontal={false}/>
               <XAxis
                 dataKey="month"
                 tickLine={false}
@@ -120,9 +120,9 @@ const Contact = forwardRef((props, ref) => {
               />
               <ChartTooltip
                 cursor={false}
-                content={<ChartTooltipContent indicator="dashed" />}
+                content={<ChartTooltipContent indicator="line" />}
               />
-              <Bar dataKey="visiteur" fill="#000" radius={20} />
+              <Bar dataKey="visiteur" fill="#0f0f0f" radius={20} />
               <Bar dataKey="client" fill="#b98d6b" radius={20} />
             </BarChart>
           </ChartContainer>
@@ -166,7 +166,7 @@ const Contact = forwardRef((props, ref) => {
     <section
       id="contact_section"
       ref={ref}
-      className="h-[150vh] w-full bg-white p-4 rounded-4xl relative"
+      className="h-[150vh] w-full bg-[#F5F3EF] p-4 rounded-4xl relative"
       style={{ transform: "translateY(-105%) scale(0.05)" }}
     >
       <h2 className="font-bold sm:text-8xl text-5xl text-black">
