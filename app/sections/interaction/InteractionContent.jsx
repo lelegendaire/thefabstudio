@@ -270,7 +270,7 @@ const Interaction = () => {
         const text = element.textContent;
         const words = text.split(" ");
         element.innerHTML = words
-          .map((word) => `<span class="word inline-block">${word}</span>`)
+          .map((word) => `<span className="word inline-block">${word}</span>`)
           .join(" ");
         return element.querySelectorAll(".word");
       };

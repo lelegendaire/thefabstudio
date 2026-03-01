@@ -1,11 +1,14 @@
-"use client"
-import Image from "next/image";
+import MainTheWeeknd from "./mainTheWeeknd"
 
-export default function TheWeeknd(){
-    return (
-        <>
-    <Image src={"/medias/weekndposter.webp"}  fill={true} alt="Parfum" className="object-cover "></Image>
-        </>
+export const metadata = {
+  title: "The Weeknd — Immersive Experience",
+  description: "Immersive page dedicated to The Weeknd",
+};
 
-    )
+// ─── COMPONENT ─────────────────────────────────────────────────────────────────
+export default function TheWeeknd() {
+ return (
+ <MainTheWeeknd/>
+ 
+)
 }

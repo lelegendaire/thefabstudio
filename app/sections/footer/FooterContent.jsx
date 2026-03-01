@@ -25,7 +25,7 @@ export default function FooterContent() {
   return (
     <>
       <div className="flex justify-between items-center">
-        <div className="gauche w-1/2 flex justify-start items-end">
+        <div className="gauche w-1/2 flex justify-start items-end lg:pl-5">
         <h2
           className={`${dirtyline.className} font-bold lg:text-8xl text-3xl text-black`}
         >
@@ -59,7 +59,7 @@ export default function FooterContent() {
       {/* Navigation et infos */}
       <div className="flex justify-between items-center lg:items-start mt-5 h-full lg:h-[70vh] flex-col lg:flex-row md:flex-row gap-5 lg:gap-3">
         <div className="flex flex-col w-1/2">
-          <div className="flex justify-between md:justify-start lg:justify-between items-start">
+          <div className="flex justify-between md:justify-start lg:justify-start items-start lg:pl-5">
             {/* Social */}
             <div className="social w-1/4 list-none">
               <Social />
@@ -107,7 +107,7 @@ export default function FooterContent() {
                 <li className="mt-3 lg:text-2xl text-xs">
                   <Home />{" "}
                 </li>
-                <li className="mg:text-2xl text-xs">
+                <li className="lg:text-2xl text-xs">
                   <About />{" "}
                 </li>
                 <li className="lg:text-2xl text-xs">
@@ -135,7 +135,7 @@ export default function FooterContent() {
             <DepthImage src={"/medias/Dune_footer.webp"} alt="Dune parallax" />
           </div>
 
-          <div className="absolute md:right-30">
+          <div className="absolute md:right-30 lg:right-auto">
             <NeedHelp />
             <a
               href="#contact_section"

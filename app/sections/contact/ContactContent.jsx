@@ -165,7 +165,7 @@ const Contact = forwardRef((props, ref) => {
     <section
       id="contact_section"
       ref={ref}
-      className="min-h-[150vh] md:h-full lg:h-[150vh] w-full bg-[#F5F3EF] p-4 rounded-4xl relative"
+      className="min-h-[150vh] md:h-full lg:h-full w-full bg-[#F5F3EF] p-4 rounded-4xl relative"
       style={{ transform: "translateY(-105%) scale(0.05)" }}
     >
       <h2 className="font-bold lg:text-8xl md:text-6xl text-5xl text-black">

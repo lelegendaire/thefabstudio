@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-  <loc>https://thefabstudio.vercel.app/</loc>
-  <lastmod>2026-01-05T15:58:16+00:00</lastmod>
-</url>
 
+  <url>
+    <loc>https://thefabstudio.vercel.app/</loc>
+    <lastmod>2026-01-05T15:58:16+00:00</lastmod>
+  </url>
+
+  <url>
+    <loc>https://thefabstudio.vercel.app/privacy-policy</loc>
+    <lastmod>2026-02-28T10:00:00+00:00</lastmod>
+  </url>
+
+  <url>
+    <loc>https://thefabstudio.vercel.app/Atlantas</loc>
+    <lastmod>2026-02-28T10:00:00+00:00</lastmod>
+  </url>
+
+  <url>
+    <loc>https://thefabstudio.vercel.app/The_Weeknd</loc>
+    <lastmod>2026-02-28T10:00:00+00:00</lastmod>
+  </url>
+
+  <url>
+    <loc>https://thefabstudio.vercel.app/Cinema</loc>
+    <lastmod>2026-02-28T10:00:00+00:00</lastmod>
+  </url>
 
 </urlset>

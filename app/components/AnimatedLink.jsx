@@ -1,11 +1,12 @@
 "use client"
 import { motion } from "framer-motion";
 
-export default function AnimatedLink({ href, children, color, target_on }) {
+export default function AnimatedLink({ href, children, color, target_on,onClick }) {
   return (
     <motion.a
       href={href}
       target={target_on}
+      {...(onClick && { onClick })}
       className="relative inline-block text-nowrap"
       initial="rest"
       whileHover="hover"

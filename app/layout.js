@@ -6,7 +6,6 @@ import { Analytics } from '@vercel/analytics/next';
 export const metadata = {
   title: {
     default: "The Fab Studio — Creative Web Experiences",
-    template: "%s | The Fab Studio",
   },
   description:
     "The Fab Studio is a creative web studio crafting immersive, high-end digital experiences through design, motion and code.",

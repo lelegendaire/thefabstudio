@@ -57,7 +57,7 @@ export default function Projects() {
         "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
-      link: "#",
+      link: "https://studiolens.onrender.com/",
     },
     {
       id: 2,
@@ -87,7 +87,7 @@ export default function Projects() {
         "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
-      link: "#",
+      link: "https://history-of-f1.onrender.com",
     },
     {
       id: 4,
@@ -928,8 +928,8 @@ const cleanupRef = { fn: null };
                 </div>
 
                 <div className="flex justify-center">
-                  <button className="mt-10 px-6 py-3 bg-black text-white rounded-md hover:bg-gray-800 transition">
-                    {t('projects.cta')}
+                  <button  className="mt-10 h-11 w-60  bg-black text-white rounded-4xl hover:bg-gray-800 transition">
+                    <a rel="noopener noreferrer" target="_blank" href={selectedProject.data.link}>{t('projects.cta')}</a>
                   </button>
                 </div>
               </div>

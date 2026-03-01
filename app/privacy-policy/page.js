@@ -108,7 +108,7 @@ export default function PrivacyPolicy() {
   };
 
   return (
-    <section className="relative text-black">
+    <section className="relative text-black bg-[#F5F3EF]">
       <header className="flex items-center justify-center gap-4 p-5">
         <CornerDownLeft 
           onClick={() => router.push('/')} 

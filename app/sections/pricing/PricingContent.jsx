@@ -47,7 +47,7 @@ export default function PricingContent() {
           </div>
 
           <div className="list z-2 lg:h-60 w-full flex items-center justify-start pt-5 mb-auto flex-col gap-1 lg:gap-5 rounded-b-2xl">
-            <div className="bg-[#ffffff2c] w-90/100 h-1 rounded-3xl absolute top-14 lg:top-20" />
+            <div className="bg-[#0f0f0f] w-60/100 h-1 rounded-3xl absolute top-9 lg:top-20" />
 
             <div className="element_list flex justify-start items-center gap-3 w-40 lg:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 lg:w-7 lg:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
@@ -96,7 +96,7 @@ export default function PricingContent() {
           </div>
 
         </div>
-          <button className="btn hover:text-black text-white ease-in-out rounded-3xl w-40 lg:w-60 h-11 bg-[#0f0f0f] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 lg:mt-0 mb-0 lg:mb-5 ">
+          <button className="btn hover:text-black text-white ease-in-out rounded-3xl w-40 lg:w-60 h-11 bg-[#0f0f0f] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 lg:mt-0 mb-0 lg:mb-5 transition-[background-color]">
             {t("pricing.cta")}
           </button>
           </div>
@@ -111,7 +111,7 @@ export default function PricingContent() {
           </div>
 
           <div className="list z-2 mb-auto lg:h-60 w-full flex items-center justify-start pt-5 flex-col gap-1 lg:gap-5  rounded-b-2xl">
-            <div className="bg-[#ffffff2c] w-90/100 h-1 rounded-3xl absolute top-14 lg:top-20" />
+            <div className="bg-[#0f0f0f] w-68/100 h-1 rounded-3xl absolute top-9 md:-top-20 lg:top-20" />
 
             <div className="element_list flex justify-start items-center gap-3 w-40 lg:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 lg:w-7 lg:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
@@ -160,7 +160,7 @@ export default function PricingContent() {
           </div>
 
         </div>
-          <button className="btn hover:text-black text-white ease-in-out rounded-3xl w-40 lg:w-60 h-11 bg-[#0f0f0f] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 lg:mt-0 mb-0 lg:mb-5 ">
+          <button className="btn hover:text-black text-white ease-in-out rounded-3xl w-40 lg:w-60 h-11 bg-[#0f0f0f] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 lg:mt-0 mb-0 lg:mb-5 transition-[background-color]">
             {t("pricing.cta")}
           </button>
         </div>
@@ -175,7 +175,7 @@ export default function PricingContent() {
           </div>
 
           <div className="list z-2 mb-auto lg:h-60 w-full flex items-center justify-start pt-5 flex-col gap-1 lg:gap-5 rounded-b-2xl">
-            <div className="bg-[#ffffff2c] w-90/100 h-1 rounded-3xl absolute top-14 lg:top-20" />
+            <div className="bg-[#0f0f0f] w-70/100 h-1 rounded-3xl absolute top-9 lg:top-20" />
 
             <div className="element_list flex justify-start items-center gap-3 w-40 lg:w-60">
               <div className="btn hover:scale-[110%] ease-out rounded-full flex justify-center items-center w-5 h-5 lg:w-7 lg:h-7 bg-[#0f0f0f] border-gray-600 shadow-[inset_0px_1px_1px_1px_rgba(255,255,255,0.1)] text-[#b98d6b]">
@@ -224,7 +224,7 @@ export default function PricingContent() {
           </div>
 
         </div>
-          <button className="btn hover:text-black text-white ease-in-out rounded-3xl w-40 lg:w-60 h-11 bg-[#0f0f0f] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 lg:mt-0 mb-0 lg:mb-5 ">
+          <button className="btn hover:text-black text-white ease-in-out rounded-3xl w-40 lg:w-60 h-11 bg-[#0f0f0f] hover:bg-[#b98d6b] flex justify-center items-center text-center mt-2 lg:mt-0 mb-0 lg:mb-5 transition-[background-color]">
             {t("pricing.cta")}
           </button>
         </div>
