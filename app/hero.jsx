@@ -1,5 +1,5 @@
 "use client";
-import { HyperText } from "../components/magicui/hyper-text";
+import { HyperText } from "./components/ui/hyper-text";
 import CubeOverlay from "./cube";
 import Header from "./header";
 import { dirtyline } from "./fonts";

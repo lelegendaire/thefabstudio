@@ -6,7 +6,7 @@ import Copy_bloc from "../components/Copy_bloc"
 import AnimatedLink from "../components/AnimatedLink"
 import AnimatedCopy from "../components/AnimatedCopy"
 import { useRouter } from "next/navigation";
-
+import { useEffect, useRef } from "react";
 // Données produits centralisées — plus facile à maintenir
 const products = [
   {
@@ -69,7 +69,128 @@ const bannerText = "Atlantas XI — L'élégance comme signature "
 
 export default function MainAtlantas(){
          const router = useRouter();
+const stickyRef      = useRef(null);
+const cardContainerRef = useRef(null);
+const stickyHeaderRef  = useRef(null);
+useEffect(() => {
+  if (typeof window === "undefined") return;
+  let killed = false;
 
+  async function init() {
+    const gsapMod = await import("gsap");
+    const stMod   = await import("gsap/ScrollTrigger");
+    const gsap          = gsapMod.default || gsapMod.gsap;
+    const ScrollTrigger = stMod.default   || stMod.ScrollTrigger;
+    gsap.registerPlugin(ScrollTrigger);
+    if (killed) return;
+
+    let isGapAnimationCompleted  = false;
+    let isFlipAnimationCompleted = false;
+
+    function initAnimation() {
+    ScrollTrigger.getById("cards-flip")?.kill();
+      isGapAnimationCompleted  = false;
+      isFlipAnimationCompleted = false;
+
+      const mm = gsap.matchMedia();
+
+      // Mobile — reset tout
+      mm.add("(max-width: 999px)", () => {
+        [
+          cardContainerRef.current,
+          stickyHeaderRef.current,
+          ...document.querySelectorAll(".card"),
+        ].forEach(el => el && (el.style.cssText = ""));
+        return () => {};
+      });
+
+      // Desktop
+      mm.add("(min-width: 1000px)", () => {
+        ScrollTrigger.create({
+        id: "cards-flip",
+          trigger: stickyRef.current,
+          start: "top top",
+          end: `+=${window.innerHeight * 4}px`,
+          scrub: 1,
+          pin: true,
+          pinSpacing: true,
+          onUpdate: (self) => {
+            const progress = self.progress;
+
+            // ── Header fade-in ───────────────────────────────────────────────
+            if (progress >= 0.1 && progress <= 0.25) {
+              const p  = gsap.utils.mapRange(0.1, 0.25, 0, 1, progress);
+              gsap.set(stickyHeaderRef.current, {
+                y:       gsap.utils.mapRange(0, 1, 40, 0, p),
+                opacity: gsap.utils.mapRange(0, 1, 0,  1, p),
+              });
+            } else if (progress < 0.1) {
+              gsap.set(stickyHeaderRef.current, { y: 40, opacity: 0 });
+            } else if (progress > 0.25) {
+              gsap.set(stickyHeaderRef.current, { y: 0,  opacity: 1 });
+            }
+
+            // ── Card container width ─────────────────────────────────────────
+            if (progress <= 0.25) {
+              gsap.set(cardContainerRef.current, {
+                width: `${gsap.utils.mapRange(0, 0.25, 75, 60, progress)}%`,
+              });
+            } else {
+              gsap.set(cardContainerRef.current, { width: "60%" });
+            }
+
+            // ── Gap + border-radius ──────────────────────────────────────────
+            if (progress >= 0.35 && !isGapAnimationCompleted) {
+              gsap.to(cardContainerRef.current, { gap: "20px",   duration: 0.5, ease: "power3.out" });
+              gsap.to(".card",                  { borderRadius: "20px", duration: 0.5, ease: "power3.out" });
+              isGapAnimationCompleted = true;
+            } else if (progress < 0.35 && isGapAnimationCompleted) {
+              gsap.to(cardContainerRef.current, { gap: "0px",    duration: 0.5, ease: "power3.out" });
+              gsap.to("#card-1", { borderRadius: "20px 0 0 20px",   duration: 0.5, ease: "power3.out" });
+              gsap.to("#card-2", { borderRadius: "0",               duration: 0.5, ease: "power3.out" });
+              gsap.to("#card-3", { borderRadius: "0 20px 20px 0",   duration: 0.5, ease: "power3.out" });
+              isGapAnimationCompleted = false;
+            }
+
+            // ── Flip cards ───────────────────────────────────────────────────
+            if (progress >= 0.7 && !isFlipAnimationCompleted) {
+              gsap.to(".card",           { rotationY: 180, duration: 0.5,  ease: "power3.inOut", stagger: 0.1 });
+              gsap.to(["#card-1","#card-3"], {
+                y: 30,
+                rotationZ: (i) => [-15, 15][i],
+                duration: 0.75, ease: "power3.inOut",
+              });
+              isFlipAnimationCompleted = true;
+            } else if (progress < 0.7 && isFlipAnimationCompleted) {
+              gsap.to(".card",           { rotationY: 0, duration: 0.75, ease: "power3.inOut", stagger: -0.1 });
+              gsap.to(["#card-1","#card-3"], { y: 0, rotationZ: 0, duration: 0.75, ease: "power3.inOut" });
+              isFlipAnimationCompleted = false;
+            }
+          },
+        });
+      });
+    }
+
+    initAnimation();
+
+    // Resize debounce
+    let resizeTimer;
+    const onResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(initAnimation, 250);
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+       ScrollTrigger.getById("cards-flip")?.kill();
+    };
+  }
+
+  let cleanupFn;
+  init().then(fn => { cleanupFn = fn; });
+  return () => { killed = true; cleanupFn?.(); };
+}, []);
     return (
         <main className="w-full h-full">
         {/* ─── HERO ─── */}
@@ -213,7 +334,47 @@ export default function MainAtlantas(){
                 </AnimatedCopy>
             </div>
         </section>
+<section>
+    <section className="intro relative w-full h-screen p-8 bg-[#EFE9E1] text-[#322D29] content-center text-center"><h1 className="w-30/100 mx-auto my-0">Everey idea </h1></section>
+    <section ref={stickyRef} className="sticky2 flex justify-center items-center relative w-full h-screen p-8 bg-[#EFE9E1] text-[#322D29]">
+        <div className="sticky-header absolute top-20/100 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <h2 ref={stickyHeaderRef} className="relative text-center will-change-[transform,opacity] translate-y-10 opacity-0 ">ueyuvbhebsjbv</h2>
+        </div>
+        <div ref={cardContainerRef} className="card-container" style={{ display: "flex", width: "75%" }}>
+            <div className="card relative flex-1 aspect-5/7 transform-3d origin-top rounded-[20px_0px_0px_20px]" id="card-1">
+               <div className="card-front absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden" >
+                <img src={"/medias/Atlantas/Parfum.webp"} className="w-full h-full object-cover"></img>
+            </div>
+            <div className="card-back bg-[#b2b2b2] flex justify-center items-center text-center rotate-y-180 p-8 absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
+                <span className="absolute top-8 left-8 opacity-40">(01)</span>
+                <p className="text-[2rem] font-medium leading-none">Interactive</p>
 
+            </div>
+            </div>
+            <div className="card relative flex-1 aspect-5/7 transform-3d origin-top " id="card-2">
+               <div className="card-front absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden" >
+                <img src={"/medias/Atlantas/Parfum.webp"} className="w-full h-full object-cover"></img>
+            </div>
+            <div className="card-back bg-[#ce2017] flex justify-center items-center text-center rotate-y-180 p-8 absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
+                <span>(01)</span>
+                <p className="text-[2rem] font-medium leading-none">Interactive</p>
+
+            </div>
+            </div>
+            <div className="card relative flex-1 aspect-5/7 transform-3d origin-top rounded-[0px_20px_20px_0px]" id="card-3">
+               <div className="card-front absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden" >
+                <img src={"/medias/Atlantas/Parfum.webp"} className="w-full h-full object-cover"></img>
+            </div>
+            <div className="card-back bg-[#2f2f2f]  flex justify-center items-center text-center rotate-y-180 p-8 absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
+                <span>(01)</span>
+                <p className="text-[2rem] font-medium leading-none">Interactive</p>
+
+            </div>
+            </div>
+        </div>
+    </section>
+    <section className="outro relative w-full h-screen p-8 bg-[#EFE9E1] text-[#322D29] content-center text-center"><h1 className="w-30/100 mx-auto my-0">uhduebdvuiou</h1></section>
+</section>
         {/* ─── FOOTER ─── */}
         <section className="footer overflow-hidden h-screen bg-[#EFE9E1] flex relative justify-center items-center">
             <div className="flex justify-between items-center w-full">

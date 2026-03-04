@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { LampContainer } from "../../components/ui/lamp";
+import { LampContainer } from "../components/ui/lamp";
 import { motion } from "motion/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
