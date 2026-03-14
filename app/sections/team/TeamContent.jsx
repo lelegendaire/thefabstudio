@@ -13,7 +13,7 @@ const slides = [
     type: "Web developper",
     field: "Foundator",
     date: "2 years",
-    image: "/medias/Fabien.webp", // Real image URL
+    image: "/medias/Noah.webp", // Real image URL
     id: 1,
   },
  

@@ -47,8 +47,8 @@ export const LenisProvider = ({ children }) => {
         ])
         
         const teamTextures = await Promise.all([
-          preloadTexture('/medias/Fabien.webp'),
           preloadTexture('/medias/Noah.webp'),
+          preloadTexture('/medias/Fabien.webp'),
           preloadTexture('/medias/Rafaël.webp'),
         ])
         
