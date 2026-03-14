@@ -9,13 +9,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "../../components/ui/chart";
-const chartData = [
-  { month: "January", visiteur: 186, client: 80 },
-  { month: "February", visiteur: 305, client: 200 },
-  { month: "March", visiteur: 237, client: 120 },
-  { month: "April", visiteur: 73, client: 190 },
-  { month: "May", visiteur: 209, client: 130 },
-  { month: "June", visiteur: 214, client: 140 },
+// Données statiques affichées le temps du chargement / en cas d'erreur
+const FALLBACK_DATA = [
+  { month: "January",  visiteur: 0, client: 0 },
+  { month: "February", visiteur: 0, client: 0 },
+  { month: "March",    visiteur: 0, client: 0 },
+  { month: "April",    visiteur: 0, client: 0 },
+  { month: "May",      visiteur: 0, client: 0 },
+  { month: "June",     visiteur: 0, client: 0 },
 ];
 const chartConfig = {
   visiteur: {
@@ -41,6 +42,82 @@ export function Mail() {
     <p className="w-auto bg-[#b98d6b8c] pt-0.5 pb-0.5 pr-1.5 pl-1.5 rounded-md">
       {email}
     </p>
+  );
+}
+// ----- Composant graphique avec données réelles -----
+function AnalyticsChart() {
+  const [chartData, setChartData] = useState(FALLBACK_DATA);
+  const [loading, setLoading]     = useState(true);
+  const [error, setError]         = useState(null);
+ 
+  useEffect(() => {
+    let cancelled = false;
+ 
+    async function load() {
+      try {
+        const res = await fetch("/api/analytics");
+        const json = await res.json();
+ 
+        if (!res.ok) throw new Error(json.error ?? "Erreur inconnue");
+        if (!cancelled && json.data?.length > 0) {
+          setChartData(json.data);
+        }
+      } catch (err) {
+        if (!cancelled) setError(err.message);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+ 
+    load();
+    return () => { cancelled = true; };
+  }, []);
+ 
+  return (
+    <div className="w-full h-full flex flex-col items-center justify-center gap-2">
+      {/* Légende */}
+      <div className="flex items-center gap-4 text-xs text-gray-500">
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded-full bg-black" />
+          Vues
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="inline-block w-3 h-3 rounded-full bg-[#b98d6b]" />
+          Clics
+        </span>
+        {loading && (
+          <span className="animate-pulse text-gray-400">Chargement…</span>
+        )}
+        {error && (
+          <span className="text-red-400 text-[10px]" title={error}>
+            ⚠ données indisponibles
+          </span>
+        )}
+      </div>
+ 
+      {/* Graphique */}
+      <ChartContainer
+        className="w-3/4 h-full lg:font-bold font-normal"
+        config={chartConfig}
+      >
+        <BarChart data={chartData}>
+          <CartesianGrid vertical={false} horizontal={false} />
+          <XAxis
+            dataKey="month"
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+            tickFormatter={(value) => value.slice(0, 3)}
+          />
+          <ChartTooltip
+            cursor={false}
+            content={<ChartTooltipContent indicator="line" />}
+          />
+          <Bar dataKey="visiteur" fill="#0f0f0f" radius={20} />
+          <Bar dataKey="client"   fill="#b98d6b" radius={20} />
+        </BarChart>
+      </ChartContainer>
+    </div>
   );
 }
 const Contact = forwardRef((props, ref) => {
@@ -105,27 +182,7 @@ const Contact = forwardRef((props, ref) => {
       id: 0,
       content: (
         <div className="w-full h-full flex items-center justify-center flex-col">
-          <ChartContainer
-            className="w-3/4 h-full lg:font-bold font-normal"
-            config={chartConfig}
-          >
-            <BarChart data={chartData}>
-              <CartesianGrid vertical={false} horizontal={false}/>
-              <XAxis
-                dataKey="month"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                tickFormatter={(value) => value.slice(0, 3)}
-              />
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent indicator="line" />}
-              />
-              <Bar dataKey="visiteur" fill="#0f0f0f" radius={20} />
-              <Bar dataKey="client" fill="#b98d6b" radius={20} />
-            </BarChart>
-          </ChartContainer>
+          <AnalyticsChart />
           <h2 className="lg:font-bold font-normal py-4">{t("contact.clients")} </h2>
         </div>
       ),

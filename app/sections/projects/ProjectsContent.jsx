@@ -122,7 +122,7 @@ description: [
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
-      overview: "/medias/StudioLens_view.webp"
+      overview: "/medias/Nature.webp"
     },
     {
       id: 6,
@@ -138,7 +138,7 @@ description: [
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
-      overview: "/medias/StudioLens_view.webp"
+      overview: "/medias/Widget_weather.webp"
     },
     {
       id: 7,
@@ -206,7 +206,7 @@ description: [
     },
     {
       id: 11,
-      title: "Site shopping",
+      title: "Evolution Lab",
       title_description: [
         "Application web moderne avec React et Three.js",
         "Esse consequat",
@@ -218,11 +218,11 @@ description: [
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
-      overview: "/medias/StudioLens_view.webp"
+      overview: "/medias/EvolutionLab.webp"
     },
     {
       id: 12,
-      title: "Mail - Studio",
+      title: "Internet Capsule",
       title_description: [
         "Application web moderne avec React et Three.js",
         "Esse consequat",
@@ -234,7 +234,7 @@ description: [
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
-      overview: "/medias/StudioLens_view.webp"
+      overview: "/medias/CapsuleStudio.webp"
     },
   ];
   const [currentProjectName, setCurrentProjectName] = useState(projectsData[3].title);
@@ -249,9 +249,9 @@ description: [
     "/medias/TextEditor.webp",
     "/medias/MathStudio.webp",
     "/medias/FoodStudio.webp",
-    "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&q=60&fm=webp",
-    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&q=60&fm=webp",
-    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&q=60&fm=webp",
+    "/medias/AAC.webp",
+    "/medias/EvolutionLab.webp",
+    "/medias/CapsuleStudio.webp",
   ];
 
   // Détection mobile
@@ -330,9 +330,9 @@ const cleanupRef = { fn: null };
         0x000000,//texteditor
         0x000000, //Math
         0xD37B7B,//Food
-        0xf97316,
-        0xf59e0b,
-        0x10b981,
+        0x714EFF,
+        0x4EFF68,
+        0x4EFCFF,
       ];
 
       for (let i = 0; i < numCubes; i++) {

@@ -2,7 +2,6 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { CornerDownLeft } from 'lucide-react';
-import Lenis from "@studio-freight/lenis";
 import Copy from "../components/Copy";
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -10,7 +9,6 @@ export default function PrivacyPolicy() {
   const router = useRouter();
   const { t } = useLanguage();
   const [activeId, setActiveId] = useState(null);
-  const [lenis, setLenis] = useState(null);
 
   const sections = [
     { id: "data", title: t('privacyPolicy.sections.data.title') },
@@ -22,18 +20,7 @@ export default function PrivacyPolicy() {
     { id: "contact", title: t('privacyPolicy.sections.contact.title') },
   ];
 
-  useEffect(() => {
-    const l = new Lenis({ smooth: true });
-    setLenis(l);
-
-    function raf(time) {
-      l.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => l.destroy();
-  }, []);
+ 
 
   useEffect(() => {
     const observer = new IntersectionObserver(

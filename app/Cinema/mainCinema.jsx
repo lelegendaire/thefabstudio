@@ -382,11 +382,11 @@ export default function MainCinema(){
   if (!isMounted) {
     return (
       <div className="relative min-h-screen overflow-hidden">
-        <div className="absolute inset-0" style={{ backgroundImage: "url('/medias/blade_runner.webp')", backgroundSize: "cover", backgroundPosition: "center" }} />
+        <div className="absolute inset-0" style={{ backgroundImage: "url('/medias/Cinema/blade_runner.webp')", backgroundSize: "cover", backgroundPosition: "center" }} />
         <div className="absolute inset-0 bg-black/30" />
         <section className="relative z-10 min-h-screen p-8 flex items-center justify-center">
           <h1 className="text-9xl font-bold text-white font-[boska]">BEAUTY OF CINEMA</h1>
-          <img className="absolute" src="/medias/Runner.webp" alt="Runner" />
+          <img className="absolute" src="/medias/Cinema/Runner.webp" alt="Runner" />
         </section>
       </div>
     );
@@ -402,7 +402,7 @@ export default function MainCinema(){
 
       {/* ── Hero ──────────────────────────────────────────────────────────── */}
       <div className="relative min-h-screen overflow-hidden cursor-none">
-        <div className="absolute inset-0" style={{ transform: transformStyle, backgroundImage: "url('/medias/Blade_runner.webp')", backgroundSize: "cover", backgroundPosition: "center" }} />
+        <div className="absolute inset-0" style={{ transform: transformStyle, backgroundImage: "url('/medias/Cinema/Blade_runner.webp')", backgroundSize: "cover", backgroundPosition: "center" }} />
         <div className="absolute inset-0 bg-black/30" />
 
         <section className="relative min-h-screen p-8 flex items-center justify-center w-full">
@@ -419,7 +419,7 @@ export default function MainCinema(){
           </div>
 
           <h1 className="text-5xl text-nowrap lg:text-9xl font-bold z-10 text-white font-[boska]">BEAUTY OF CINEMA</h1>
-          <img className="image_runner absolute z-20 scale-[180%] lg:scale-100" style={{ transform: transformStyle }} src="/medias/Runner.webp" alt="Runner" />
+          <img className="image_runner absolute z-20 scale-[180%] lg:scale-100" style={{ transform: transformStyle }} src="/medias/Cinema/Runner.webp" alt="Runner" />
 
           <div className="absolute bottom-0 font-[montserrat] lg:text-xl text-xs flex justify-center w-full text-white font-bold">
             <h3 className="mr-auto m-5">Composition</h3>
@@ -465,7 +465,7 @@ export default function MainCinema(){
                 </div>
               </div>
               <div className="card-img absolute w-full h-full rounded-[150px] overflow-hidden">
-                <img className="image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]" src="/medias/space_odyssey.webp" alt="2001 A Space Odyssey" />
+                <img className="image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]" src="/medias/Cinema/space_odyssey.webp" alt="2001 A Space Odyssey" />
               </div>
             </div>
           </div>
@@ -535,7 +535,7 @@ export default function MainCinema(){
               ))}
               {/* Image "pin" : celle qui sera clonée et agrandie en Flip */}
               <div className="flex-1 h-full aspect-video min-w-0">
-                <img ref={marqueeImgPinRef} src="/medias/space_odyssey.webp" alt="pin" className="h-full w-full object-cover" />
+                <img ref={marqueeImgPinRef} src="/medias/Cinema/space_odyssey.webp" alt="pin" className="h-full w-full object-cover" />
               </div>
             </div>
           </div>
@@ -554,7 +554,7 @@ export default function MainCinema(){
                 <h3 className="w-3/4 text-white font-[boska] text-4xl lg:text-6xl">Creative Vision</h3>
               </div>
               <div className="w-1/2 flex items-center justify-center">
-                <img className="w-3/4 h-3/4 object-cover rounded-2xl" src="/medias/space_odyssey.webp" alt="" />
+                <img className="w-3/4 h-3/4 object-cover rounded-2xl" src="/medias/Cinema/space_odyssey.webp" alt="" />
               </div>
             </div>
 
