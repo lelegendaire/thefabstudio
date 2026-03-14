@@ -16,26 +16,7 @@ const slides = [
     image: "/medias/Fabien.webp", // Real image URL
     id: 1,
   },
-  {
-    title: "Noah CHEVALIER",
-    description:
-      "Nobody can be better than him to explain the raw informatique to people.",
-    type: "Community manager",
-    field: "CO-foundator",
-    date: "2 years",
-    image: "/medias/Noah.webp", // Real image URL
-    id: 2,
-  },
-  {
-    title: "Rafaël ASTRO",
-    description:
-      "The best developper among us enable to create few project in the same time",
-    type: "Fronted and backend",
-    field: "Employe",
-    date: "4 years",
-    image: "/medias/Rafaël.webp", // Real image URL
-    id: 3,
-  },
+ 
 ];
 
 const vertexShader = `

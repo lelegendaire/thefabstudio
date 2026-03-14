@@ -48,61 +48,65 @@ export default function Projects() {
       id: 1,
       title: "Studio Lens",
       title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
-      ],
-      description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
+  "Studio de retouche photo avancé",
+  "Filtres et corrections intelligentes",
+  "Optimisation d’image professionnelle"
+],
+description: [
+  "Éditez vos photos avec précision grâce à des outils puissants et intuitifs.",
+  "Appliquez des filtres, ajustez les couleurs et améliorez vos images en un clic.",
+  "Une interface fluide pensée pour accélérer votre flux de travail créatif."
+],
       link: "https://studiolens.onrender.com/",
+      overview: "/medias/StudioLens_view.webp"
     },
     {
       id: 2,
       title: "StudioSongFab",
       title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
-      ],
-      description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
+  "Studio de musique ",
+  "Choix des musiques favoris",
+  "Modèle sur Pinterest"
+],
+description: [
+  "Éditez vos photos avec précision grâce à des outils puissants et intuitifs.",
+  "Appliquez des filtres, ajustez les couleurs et améliorez vos images en un clic.",
+  "Une interface fluide pensée pour accélérer votre flux de travail créatif."
+],
       link: "#",
+      overview: "/medias/StudioSongFab.webp"
     },
     {
       id: 3,
       title: "The History of F1",
       title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
+        "L'histoire de la F1 sous un autre angle",
+        "La découverte d'un circuit les plus mythiques",
+        "Les différentes voitures et champions de la F1",
       ],
       description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
+        "Découvrez l'histoire de la f1 comme vous ne l'avez jamais vu.",
+        "Parcourez les moments forts de chaque évènement gravé à jamais!.",
+        "N'oubliez pas de découvrir notre site!.",
       ],
       link: "https://history-of-f1.onrender.com",
+      overview: "/medias/F1.webp"
     },
     {
       id: 4,
       title: "The New Clock",
       title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
+        "Une horloge constitué d'horloge",
+        "Reproduction pour un projet",
+        "La futur horloge",
       ],
       description: [
-        "Occaecat amet in ut dolore minim consectetur.",
+        "Une réalisation vu ",
         "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
+      overview: "/medias/Clock.webp"
     },
     {
       id: 5,
@@ -118,6 +122,7 @@ export default function Projects() {
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
+      overview: "/medias/StudioLens_view.webp"
     },
     {
       id: 6,
@@ -133,14 +138,15 @@ export default function Projects() {
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
+      overview: "/medias/StudioLens_view.webp"
     },
     {
       id: 7,
-      title: "Portfolio interactif",
+      title: "Text editor Online",
       title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
+        "Editeur de texte en ligne ",
+        "construit vos romans en partageant avec d'autres",
+        "Tous vos textes rassemblés au même endroits",
       ],
       description: [
         "Occaecat amet in ut dolore minim consectetur.",
@@ -148,14 +154,15 @@ export default function Projects() {
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
+      overview: "/medias/StudioLens_view.webp"
     },
     {
       id: 8,
-      title: "CRM sur mesure",
+      title: "MathStudio",
       title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
+        "Découvrez les maths",
+        "Construisez vos fonctions",
+        "Apprenez des nouvelles notions",
       ],
       description: [
         "Occaecat amet in ut dolore minim consectetur.",
@@ -163,14 +170,15 @@ export default function Projects() {
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
+      overview: "/medias/StudioLens_view.webp"
     },
     {
       id: 9,
-      title: "Application IA",
+      title: "Application Food",
       title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
+        "Scrollez pour voir toutes les recettes",
+        "Créer votre propre recette",
+        "Acheter les aliments qui vous manque",
       ],
       description: [
         "Occaecat amet in ut dolore minim consectetur.",
@@ -178,14 +186,15 @@ export default function Projects() {
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
+      overview: "/medias/StudioLens_view.webp"
     },
     {
       id: 10,
-      title: "Site vitrine",
+      title: "AAC - Studio",
       title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
+        "Parfait pour la conuduite accompagné",
+        "Fixer vos objectifs avec AAC",
+        "Comptez le nombre de kilométrage pour chaque trajet",
       ],
       description: [
         "Occaecat amet in ut dolore minim consectetur.",
@@ -193,10 +202,11 @@ export default function Projects() {
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
+      overview: "/medias/StudioLens_view.webp"
     },
     {
       id: 11,
-      title: "Marketplace",
+      title: "Site shopping",
       title_description: [
         "Application web moderne avec React et Three.js",
         "Esse consequat",
@@ -208,10 +218,11 @@ export default function Projects() {
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
+      overview: "/medias/StudioLens_view.webp"
     },
     {
       id: 12,
-      title: "App de streaming",
+      title: "Mail - Studio",
       title_description: [
         "Application web moderne avec React et Three.js",
         "Esse consequat",
@@ -223,6 +234,7 @@ export default function Projects() {
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
       link: "#",
+      overview: "/medias/StudioLens_view.webp"
     },
   ];
   const [currentProjectName, setCurrentProjectName] = useState(projectsData[3].title);
@@ -234,9 +246,9 @@ export default function Projects() {
     "/medias/Clock.webp",
     "/medias/Nature.webp",
     "/medias/Widget_weather.webp",
-    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=60&fm=webp",
-    "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&q=60&fm=webp",
-    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=60&fm=webp",
+    "/medias/TextEditor.webp",
+    "/medias/MathStudio.webp",
+    "/medias/FoodStudio.webp",
     "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&q=60&fm=webp",
     "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&q=60&fm=webp",
     "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&q=60&fm=webp",
@@ -315,9 +327,9 @@ const cleanupRef = { fn: null };
         0x222222,
         0x7d4924,
         0xacacac, //widget
-        0xec4899,
-        0xf43f5e,
-        0xef4444,
+        0x000000,//texteditor
+        0x000000, //Math
+        0xD37B7B,//Food
         0xf97316,
         0xf59e0b,
         0x10b981,
@@ -880,7 +892,7 @@ const cleanupRef = { fn: null };
           >
             <button
               onClick={handleDeselectCube}
-              className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors cursor-pointer z-50 p-2 hover:bg-[#b98d6b85] rounded-2xl"
+              className="absolute top-4 right-4 text-[#b98d6b] hover:text-white transition-colors cursor-pointer z-50 p-2 hover:bg-[#b98d6b85] rounded-2xl"
             >
               <X size={32} />
             </button>
@@ -895,7 +907,7 @@ const cleanupRef = { fn: null };
                 }}
               >
                 <img
-                  src={selectedProject.image}
+                  src={selectedProject.data.overview}
                   className="w-full h-full object-cover"
                   alt={selectedProject.data.title}
                 />

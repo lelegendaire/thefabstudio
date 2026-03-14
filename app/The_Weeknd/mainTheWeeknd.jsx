@@ -92,7 +92,11 @@ async function buildAlbumAtlas(THREE) {
   tex.needsUpdate = true;
   return { texture: tex, imageInfos, N_ALBUMS: N, albums };
 }
-
+async function GetCover(){
+  const albums = await fetch("/api/deezer-starboy").then((r) => r.json());
+  console.log(albums)
+  return albums
+}
 function easeInOut(t) {
   return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 }
@@ -122,11 +126,67 @@ export default function MainTheWeeknd() {
   const sectionRef = useRef(null);
   const containerRef = useRef(null);
   const stRef = useRef(null);
+  const [volume, setVolume] = useState(80);
   const [ready, setReady] = useState(false);
   const [timelineVisible, setTimelineVisible] = useState(false);
   const [hoveredAlbum, setHoveredAlbum] = useState(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [track, setTrack] = useState(null);
+ const audioRef = useRef(null);
+const [currentTime, setCurrentTime] = useState(0);
+const [audioDuration, setAudioDuration] = useState(30); // preview = 30s
+const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 const isDraggingRef = useRef(false);
+ useEffect(() => {
+  async function get(){
+    const track5 = await GetCover()
+    console.log(track5)
+    setTrack(track5)
+
+  }
+
+  get()
+  }, []);
+  // Init audio quand le track est dispo
+useEffect(() => {
+  if (!track?.preview) return;
+  
+  audioRef.current = new Audio(track.preview);
+  audioRef.current.volume = volume / 100;
+
+  audioRef.current.addEventListener("loadedmetadata", () => {
+    setAudioDuration(audioRef.current.duration);
+  });
+  audioRef.current.addEventListener("timeupdate", () => {
+    setCurrentTime(audioRef.current.currentTime);
+  });
+  audioRef.current.addEventListener("ended", () => {
+    setIsAudioPlaying(false);
+    setCurrentTime(0);
+  });
+
+  return () => {
+    audioRef.current.pause();
+    audioRef.current = null;
+  };
+}, [track]);
+
+const toggleAudio = () => {
+  if (!audioRef.current) return;
+  if (isAudioPlaying) {
+    audioRef.current.pause();
+  } else {
+    audioRef.current.play();
+  }
+  setIsAudioPlaying(!isAudioPlaying);
+};
+
+const handleSeek = (val) => {
+  setCurrentTime(val);
+  if (audioRef.current) audioRef.current.currentTime = val;
+};
+
+
   // ── GSAP scroll animations ────────────────────────────────────────────────────
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -552,8 +612,18 @@ const isDraggingRef = useRef(false);
     markerRef.current.style.left = `${percent * 100}%`;
   }
 };
+const seek = (delta) => {
+  if (!playerRef.current) return;
+  const current = playerRef.current.getCurrentTime();
+  playerRef.current.seekTo(current + delta, true);
+};
+// Handler
+const handleVolume = (val) => {
+  setVolume(val);
+  if (audioRef.current) audioRef.current.volume = val / 100;
+};
   useEffect(() => {
-    let animationFrame;
+    
 
     const updateTimeline = () => {
   // Ne pas écraser la position pendant qu'on drag
@@ -562,33 +632,35 @@ const isDraggingRef = useRef(false);
     const progress    = (currentTime / duration) * 100;
     if (markerRef.current) {
       markerRef.current.style.left = `${progress}%`;
+      setValue(currentTime); // ← sync la ScrubBar
     }
   }
-  animationFrame = requestAnimationFrame(updateTimeline);
+   requestAnimationFrame(updateTimeline);
 };
 
-    updateTimeline();
+    requestAnimationFrame(updateTimeline)
 
-    return () => cancelAnimationFrame(animationFrame);
+    
+  
   }, [duration]);
   
   return (
     <>
       {/* Hero */}
-      <section className="bg-[url(/medias/The_Weeknd/weekndposter.webp)] h-screen bg-cover w-screen flex items-center justify-center flex-col">
+      <section className="bg-[url(/medias/The_Weeknd/weekndposter.webp)] h-screen bg-cover bg-center lg:bg-top w-screen flex items-center justify-center flex-col">
         <div className="noise bg-[url(/medias/noise.webp)] h-screen bg-center bg-repeat absolute w-full opacity-5" />
         <div className="text-white flex justify-end items-start w-full px-5 pt-5 mb-auto z-5">
           <OsmoMenu />
         </div>
         <div className="mb-auto">
-          <h2 className={`${druck.className} text-9xl text-white`}>
+          <h2 className={`${druck.className} lg:text-9xl text-6xl text-center text-white`}>
             The Weeknd
           </h2>
-          <h2 className="text-2xl text-white">
+          <h2 className="lg:text-2xl text-white text-center text-xl">
             One artist. One universe. One experience.
           </h2>
         </div>
-        <div className="flex justify-between items-center text-white w-full p-5 z-2 relative">
+        <div className="flex justify-between items-center text-white w-full lg:p-5 p-1 z-2 relative text-xs lg:text-base">
           <p>Introducing the idol</p>
           <AnimatedLink color={"white"} onClick={() => router.push("/")}>
             Created by TheFabStudio
@@ -597,12 +669,12 @@ const isDraggingRef = useRef(false);
       </section>
 
       {/* Bio */}
-      <section className="h-screen bg-black text-white flex items-center justify-center flex-col relative z-20">
+      <section className="lg:h-screen h-full bg-black text-white flex items-center justify-center flex-col relative z-20">
         <Copy_bloc blockColor="#e10430">
-          <h1 className="text-4xl font-bold">Who is he ?</h1>
+          <h1 className="lg:text-4xl text-3xl font-bold mt-5 lg:mt-0 ">Who is he ?</h1>
         </Copy_bloc>
-        <div className="flex justify-evenly items-center">
-          <div className="w-60/100">
+        <div className="flex justify-evenly items-center lg:flex-row flex-col mt-5 lg:mt-0 gap-5 lg:gap-0 ">
+          <div className="lg:w-60/100 w-full lg:text-left text-center">
             <Copy_bloc blockColor="#e10430">
               <p>
                 The Weeknd, nom de scène d&apos;Abel Makkonen Tesfaye est un
@@ -649,8 +721,8 @@ const isDraggingRef = useRef(false);
             </div>
           </div>
         ))}
-        <section className="h-screen flex items-center justify-center">
-          <h2 className="text-white text-4xl">A extraordinary artist</h2>
+        <section className="lg:h-screen h-[50vh] flex items-center justify-center w-full text-center">
+          <h2 className="text-white text-4xl">An extraordinary artist</h2>
         </section>
       </section>
 
@@ -731,7 +803,7 @@ const isDraggingRef = useRef(false);
           Scroll to browse
         </p>
       </section>
-     <section className="h-screen relative w-full bg-black text-white flex justify-center items-center">
+     <section className="lg:h-screen h-[50vh]  relative w-full bg-black text-white flex justify-center items-center">
   <div
     className="rounded-2xl w-90/100 h-90/100 relative overflow-hidden group shadow-xs shadow-red-500"
     onMouseEnter={() => setTimelineVisible(true)}
@@ -819,26 +891,53 @@ const isDraggingRef = useRef(false);
 
   {/* Background */}
   <img
-    src="/medias/The_Weeknd/weekndposter.webp"
+    src="/medias/The_Weeknd/weeknd_starboy.webp"
     className="absolute inset-0 h-full w-full object-cover"
   />
 
   {/* Glass Card */}
   <div className="relative h-120 w-75 rounded-4xl overflow-hidden flex justify-center ">
     <div className="z-999 text-white flex items-center justify-around flex-col">
-    <div className="h-60 w-60 rounded-2xl overflow-hidden"><img src={"/medias/The_Weeknd/eras.webp"} className="object-cover h-full w-full"></img></div>
-<div><div><h1>After Hours</h1></div>
-<div><h2>The Weeknd</h2></div></div>
-<div className="flex items-center justify-center relative w-full"><ScrubBarContainer duration={duration2} value={value} onScrub={setValue}>
-      <ScrubBarTimeLabel time={value} />
+    
+{track && (
+  <>
+    <div className="h-70 w-70 rounded-3xl overflow-hidden">
+      <img src={track.cover} alt={track.title} className="object-cover h-full w-full" />
+    </div>
+    <div>
+      <h1>{track.title}</h1>
+      <h2>{track.artist}</h2>
+    </div>
+  </>
+)}
+
+<div className="flex items-center justify-center relative w-full"><ScrubBarContainer duration={audioDuration} value={currentTime} onScrub={handleSeek}>
+      <ScrubBarTimeLabel time={currentTime} />
       <ScrubBarTrack className="mx-2">
         <ScrubBarProgress />
         
       </ScrubBarTrack>
-      <ScrubBarTimeLabel time={duration} />
+      <ScrubBarTimeLabel time={audioDuration} />
     </ScrubBarContainer></div>
-<div className="flex justify-around w-full"><Rewind/><Play/><FastForward/></div>
-<div className="flex items-center justify-center w-full "><Volume/><div className="relative w-full"><Slider></Slider></div><Volume2/></div>
+<div className="flex justify-around w-full">
+      <Rewind onClick={() => handleSeek(0)} className="cursor-pointer" />
+  
+      {isAudioPlaying 
+        ? <Pause onClick={toggleAudio} className="cursor-pointer" />
+        : <Play  onClick={toggleAudio} className="cursor-pointer" />
+      }
+      
+      <FastForward onClick={() => handleSeek(audioDuration)} className="cursor-pointer" />
+    </div>
+<div className="flex items-center justify-center w-90/100 "><Volume />
+<div className="relative w-full">
+ <Slider 
+          value={[volume]} 
+          onValueChange={([val]) => handleVolume(val)} 
+          max={100} 
+        />
+</div>
+<Volume2 className="ml-2"/></div>
 </div>
     {/* Blur Layer */}
     <div className="absolute inset-0 backdrop-blur-xs bg-white/10" />
@@ -849,10 +948,13 @@ const isDraggingRef = useRef(false);
     <div className="absolute inset-0 rounded-4xl border border-white/20 shadow-2xl" />
   </div>
 </section>
-      <section className="gallery h-screen bg-black flex items-center justify-center"></section>
+      <section className="gallery h-screen bg-black flex items-center justify-center">
+
+      </section>
       <section className="footer overflow-hidden relative h-screen bg-black items-center justify-center text-white flex flex-col">
         <h1>The story isn't over.</h1>
-        <h2 className={`${druck.className} text-[10rem] text-white absolute -bottom-20`}>
+        <button className="rounded-4xl border border-red-500 p-3 w-40 mt-5">Continue</button>
+        <h2 className={`${druck.className} lg:text-[10rem] text-8xl -bottom-7 text-white absolute lg:-bottom-15`}>
             The Weeknd
           </h2>
       </section>

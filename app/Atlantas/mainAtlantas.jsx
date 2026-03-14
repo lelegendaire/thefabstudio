@@ -197,14 +197,14 @@ useEffect(() => {
         <section className="intro bg-[#EFE9E1] h-screen flex flex-col justify-between items-center">
             <div className="flex items-start justify-between w-full">
                 <Copy_bloc blockColor="#72383D">
-                    <p className="text-[#72383D] ml-5 mt-5">Nouvelle collection</p>
+                    <p className="text-[#72383D] lg:ml-5 lg:mt-5 ml-1 mt-1 md:mt-3 md:ml-3 lg:z-0 relative z-10">Nouvelle collection</p>
                 </Copy_bloc>
-                <h1 className={`${venom.className} text-[#322D29] text-9xl text-center z-5`}>ATLANTAS</h1>
-                <Menu className="text-[#72383D] mr-5 mt-5"/>
+                <h1 className={`${venom.className} text-[#322D29] text-4xl md:text-7xl lg:text-9xl text-center z-5`}>ATLANTAS</h1>
+                <Menu className="text-[#72383D] lg:mr-5 lg:mt-5 mr-1 mt-1 md:mt-3 md:mr-3"/>
             </div>
 
             <div className="flex justify-center items-center relative w-full h-full">
-                <Image src={"/medias/Atlantas/Parfum.webp"} width={700} height={1000} alt="Atlantas XI – Flacon signature" className="rounded-lg absolute -top-10 z-3"/>
+                <Image src={"/medias/Atlantas/Parfum.webp"} width={700} height={1000} alt="Atlantas XI – Flacon signature" className="rounded-lg absolute -top-10 z-3 w-50 md:w-100 lg:w-175 h-100 lg:h-auto object-cover"/>
                 <div className="absolute w-full overflow-hidden">
                     <div className="flex whitespace-nowrap animate-[scrollRight_10s_linear_infinite]">
                         {[...Array(3)].map((_, i) => (
@@ -218,10 +218,10 @@ useEffect(() => {
 
             <div className="flex items-end justify-between w-full">
                 <Copy_bloc blockColor="#72383D">
-                    <p className="text-[#72383D] ml-5 mb-2">2026</p>
+                    <p className="text-[#72383D] lg:ml-5 lg:mb-2 ml-1 mb-1 md:mb-3 md:ml-3">2026</p>
                 </Copy_bloc>
                 <Copy_bloc blockColor="#72383D">
-                    <p className="text-[#72383D] mr-5 mb-2">
+                    <p className="text-[#72383D] lg:mr-5 lg:mb-2 mr-1 mb-1 md:mb-3 md:mr-3">
                         Une fragrance pensée pour ceux qui laissent une trace — sans mot.
                     </p>
                 </Copy_bloc>
@@ -229,10 +229,10 @@ useEffect(() => {
         </section>
 
         {/* ─── PRODUITS ─── */}
-        <section className="h-screen bg-[#EFE9E1]">
-            <div className="flex items-baseline justify-between px-5 pt-6 pb-0">
+        <section className="h-full lg:h-screen bg-[#EFE9E1]">
+            <div className="flex items-baseline justify-between px-5 pt-6 pb-0 lg:flex-row flex-col">
                 <h1 className="text-5xl text-[#322D29]">Nos fragrances</h1>
-                <span className="text-[#72383D] text-sm tracking-widest uppercase">
+                <span className="text-[#72383D] text-sm tracking-widest uppercase mt-4 lg:mt-0">
                     Collection 2026 — {products.length} créations
                 </span>
             </div>
@@ -266,7 +266,7 @@ useEffect(() => {
             </div>
 
             <div className="flex justify-center items-center w-full mt-4">
-                <p className="text-[#72383D] text-base italic">
+                <p className="text-[#72383D] text-base italic text-center">
                     Chaque flacon, un univers. Chaque note, une intention.
                 </p>
             </div>
@@ -302,7 +302,7 @@ useEffect(() => {
                 <AnimatedCopy >
                     <div className="p-6 max-w-3xl">
                         {/* Notes olfactives — ajout éditorial */}
-                        <div className="flex gap-6 mb-6 text-sm tracking-widest uppercase">
+                        <div className="flex gap-6 mb-6 text-sm tracking-widest uppercase lg:text-wrap text-nowrap lg:flex-row flex-col md:flex-row">
                             <span className="text-[#72383D]">Tête — Bergamote, Poivre</span>
                             <span className="text-[#72383D]">Cœur — Oud, Iris</span>
                             <span className="text-[#72383D]">Fond — Cèdre, Ambre</span>
@@ -334,51 +334,71 @@ useEffect(() => {
                 </AnimatedCopy>
             </div>
         </section>
-<section>
-    <section className="intro relative w-full h-screen p-8 bg-[#EFE9E1] text-[#322D29] content-center text-center"><h1 className="w-30/100 mx-auto my-0">Everey idea </h1></section>
-    <section ref={stickyRef} className="sticky2 flex justify-center items-center relative w-full h-screen p-8 bg-[#EFE9E1] text-[#322D29]">
-        <div className="sticky-header absolute top-20/100 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <h2 ref={stickyHeaderRef} className="relative text-center will-change-[transform,opacity] translate-y-10 opacity-0 ">ueyuvbhebsjbv</h2>
-        </div>
-        <div ref={cardContainerRef} className="card-container" style={{ display: "flex", width: "75%" }}>
-            <div className="card relative flex-1 aspect-5/7 transform-3d origin-top rounded-[20px_0px_0px_20px]" id="card-1">
-               <div className="card-front absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden" >
-                <img src={"/medias/Atlantas/Parfum.webp"} className="w-full h-full object-cover"></img>
-            </div>
-            <div className="card-back bg-[#b2b2b2] flex justify-center items-center text-center rotate-y-180 p-8 absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
-                <span className="absolute top-8 left-8 opacity-40">(01)</span>
-                <p className="text-[2rem] font-medium leading-none">Interactive</p>
 
-            </div>
-            </div>
-            <div className="card relative flex-1 aspect-5/7 transform-3d origin-top " id="card-2">
-               <div className="card-front absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden" >
-                <img src={"/medias/Atlantas/Parfum.webp"} className="w-full h-full object-cover"></img>
-            </div>
-            <div className="card-back bg-[#ce2017] flex justify-center items-center text-center rotate-y-180 p-8 absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
-                <span>(01)</span>
-                <p className="text-[2rem] font-medium leading-none">Interactive</p>
+        <section>
+            {/* ─── INTRO CARDS ─── */}
+            <section className="intro relative w-full h-[50vh] p-8 bg-[#EFE9E1] text-[#322D29] content-center text-center">
+                <h1 className="w-30/100 mx-auto my-0">L'art du parfum révélé en trois actes</h1>
+            </section>
 
-            </div>
-            </div>
-            <div className="card relative flex-1 aspect-5/7 transform-3d origin-top rounded-[0px_20px_20px_0px]" id="card-3">
-               <div className="card-front absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden" >
-                <img src={"/medias/Atlantas/Parfum.webp"} className="w-full h-full object-cover"></img>
-            </div>
-            <div className="card-back bg-[#2f2f2f]  flex justify-center items-center text-center rotate-y-180 p-8 absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
-                <span>(01)</span>
-                <p className="text-[2rem] font-medium leading-none">Interactive</p>
+            {/* ─── STICKY CARDS ─── */}
+            <section ref={stickyRef} className="sticky2 flex justify-center items-center relative w-full h-screen p-8 bg-[#EFE9E1] text-[#322D29]">
+                <div className="sticky-header absolute top-20/100 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <h2 ref={stickyHeaderRef} className="relative text-center will-change-[transform,opacity] translate-y-10 opacity-0 ">Chaque parfum est unique</h2>
+                </div>
+                <div ref={cardContainerRef} className="card-container" style={{ display: "flex", width: "75%" }}>
+                    <div className="card relative flex-1 aspect-5/7 transform-3d origin-top rounded-[20px_0px_0px_20px]" id="card-1">
+                        <div className="card-front absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
+                            <div style={{ position: 'absolute', width: '300%', height: '100%', left: '0%' }}>
+                                <img src={"/medias/Atlantas/parfum_card.webp"} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            </div>
+                        </div>
+                        <div className="card-back bg-[#b2b2b2] flex flex-col justify-center items-center text-center rotate-y-180 p-8 absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
+                            <span className="absolute top-8 left-8 opacity-40 text-sm tracking-widest">(01)</span>
+                            <p className="text-[1.4rem] font-medium leading-snug text-[#322D29]">Tête</p>
+                            <p className="text-sm mt-3 opacity-60 tracking-wide">Bergamote · Poivre rose · Citron vert</p>
+                            <p className="text-xs mt-4 opacity-40 uppercase tracking-widest">La première impression</p>
+                        </div>
+                    </div>
+                    <div className="card relative flex-1 aspect-5/7 transform-3d origin-top" id="card-2">
+                        <div className="card-front absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
+                            <div style={{ position: 'absolute', width: '300%', height: '100%', left: '-100%' }}>
+                                <img src={"/medias/Atlantas/parfum_card.webp"} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            </div>
+                        </div>
+                        <div className="card-back bg-[#7a5545] flex flex-col justify-center items-center text-center rotate-y-180 p-8 absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
+                            <span className="absolute top-8 left-8 opacity-40 text-sm tracking-widest text-[#EFE9E1]">(02)</span>
+                            <p className="text-[1.4rem] font-medium leading-snug text-[#EFE9E1]">Cœur</p>
+                            <p className="text-sm mt-3 text-[#EFE9E1] opacity-70 tracking-wide">Oud · Iris · Rose de Damas</p>
+                            <p className="text-xs mt-4 text-[#EFE9E1] opacity-50 uppercase tracking-widest">L'âme de la fragrance</p>
+                        </div>
+                    </div>
+                    <div className="card relative flex-1 aspect-5/7 transform-3d origin-top rounded-[0px_20px_20px_0px]" id="card-3">
+                        <div className="card-front absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
+                            <div style={{ position: 'absolute', width: '300%', height: '100%', left: '-200%' }}>
+                                <img src={"/medias/Atlantas/parfum_card.webp"} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            </div>
+                        </div>
+                        <div className="card-back bg-[#221f1c] flex flex-col justify-center items-center text-center rotate-y-180 p-8 absolute w-full h-full backface-hidden rounded-[inherit] overflow-hidden">
+                            <span className="absolute top-8 left-8 opacity-40 text-sm tracking-widest text-[#EFE9E1]">(03)</span>
+                            <p className="text-[1.4rem] font-medium leading-snug text-[#EFE9E1]">Fond</p>
+                            <p className="text-sm mt-3 text-[#EFE9E1] opacity-70 tracking-wide">Cèdre · Ambre · Musc blanc</p>
+                            <p className="text-xs mt-4 text-[#EFE9E1] opacity-50 uppercase tracking-widest">La trace qui demeure</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-            </div>
-            </div>
-        </div>
-    </section>
-    <section className="outro relative w-full h-screen p-8 bg-[#EFE9E1] text-[#322D29] content-center text-center"><h1 className="w-30/100 mx-auto my-0">uhduebdvuiou</h1></section>
-</section>
+            {/* ─── OUTRO CARDS ─── */}
+            <section className="outro relative w-full h-[50vh] p-8 bg-[#EFE9E1] text-[#322D29] content-center text-center">
+                <h1 className="w-30/100 mx-auto my-0">Une signature que le temps ne peut effacer</h1>
+            </section>
+        </section>
+
         {/* ─── FOOTER ─── */}
         <section className="footer overflow-hidden h-screen bg-[#EFE9E1] flex relative justify-center items-center">
-            <div className="flex justify-between items-center w-full">
-                <div className="w-full ml-5">
+            <div className="flex justify-center items-center w-full lg:flex-row flex-col md:flex-row">
+                <div className="w-full ml-5 flex justify-center items-center flex-col">
                     <h2 className="font-bold text-[#322D29] mb-2">Navigation</h2>
                     <ul className="space-y-1 text-[#72383D]">
                         <li>Accueil</li>
@@ -387,7 +407,7 @@ useEffect(() => {
                         <li>Notre histoire</li>
                     </ul>
                 </div>
-                <div className="w-full ml-5">
+                <div className="w-full ml-5 flex justify-center items-center flex-col">
                     <h2 className="font-bold text-[#322D29] mb-2">Nous suivre</h2>
                     <ul className="space-y-1">
                         <li><AnimatedLink color="black" href="#">Instagram</AnimatedLink></li>
@@ -396,7 +416,7 @@ useEffect(() => {
                         <li><AnimatedLink color="black" href="#">Facebook</AnimatedLink></li>
                     </ul>
                 </div>
-                <div className="mr-5 w-full">
+                <div className="lg:mr-5 ml-5 w-full flex justify-center items-center flex-col">
                     <h2 className="font-bold text-[#322D29] mb-2">Mentions légales</h2>
                     <ul className="space-y-1 text-[#72383D]">
                         <li><p className="text-nowrap">© 2026 Atlantas XI. Tous droits réservés.</p></li>
@@ -406,7 +426,7 @@ useEffect(() => {
                     </ul>
                 </div>
             </div>
-            <h1 className={`${venom.className} text-[#322D29] text-9xl text-center z-5 absolute -bottom-10`}>ATLANTAS</h1>
+            <h1 className={`${venom.className} text-[#322D29] text-5xl md:text-7xl  lg:text-9xl text-center z-5 absolute -bottom-5 md:-bottom-8 lg:-bottom-10`}>ATLANTAS</h1>
         </section>
 
         <style jsx>{`

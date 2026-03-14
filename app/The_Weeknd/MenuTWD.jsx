@@ -150,7 +150,7 @@ export default function OsmoMenu() {
         <nav
           ref={menuRef}
           className="relative ml-auto h-full flex flex-col justify-between overflow-auto"
-          style={{ width: "min(35em, 100%)", paddingTop: "calc(3 * 2em)", paddingBottom: "2em" }}
+          style={{ width: "min(35em, 70%)", paddingTop: "calc(3 * 2em)", paddingBottom: "2em" }}
         >
           {/* Stacked bg panels (wipe effect) */}
           <div className="absolute inset-0">
@@ -176,14 +176,14 @@ export default function OsmoMenu() {
                 <li key={i} className="relative overflow-hidden">
                   <a
                     href="#"
-                    className="menu-link flex items-center gap-3 w-full no-underline text-white"
-                    style={{ padding: "0.75em 2em" }}
+                    className="menu-link flex items-center gap-3 w-full no-underline text-white p-[0.5em_2em] lg:p-[0.75em_2em]"
+                    
                     ref={(el) => (menuLinksRef.current[i] = el)}
                   >
                     {/* Hover background fill */}
                     <div className="menu-link-bg absolute inset-0 bg-[#e10430]" />
 
-                    <span className="menu-heading relative z-10">{label}</span>
+                    <span className="menu-heading text-nowrap relative z-10">{label}</span>
                     <span
                       className="relative z-10 font-mono text-sm font-normal uppercase text-white"
                     >
