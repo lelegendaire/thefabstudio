@@ -1,96 +1,187 @@
 /**
- * API Route : /api/analytics
- * Récupère les données Web Analytics de Vercel (vues + clics) par mois
+ * app/api/analytics/route.js
  *
- * Variables d'environnement requises :
- *   VERCEL_TOKEN       → votre token d'API Vercel (Settings > Tokens)
- *   VERCEL_TEAM_ID     → team_wQ1e3aCAaMnzDrxEaDw0eUKI
- *   VERCEL_PROJECT_ID  → prj_Q0hyEAngkifBAb77TKyQ8IOYA0vk
+ * Récupère les données Google Search Console (impressions + clics)
+ * agrégées par mois sur les 6 derniers mois.
+ *
+ * ── Variables d'environnement requises ──────────────────────────────────────
+ *   GSC_CLIENT_EMAIL   → email du compte de service Google
+ *   GSC_PRIVATE_KEY    → clé privée du compte de service (avec \n)
+ *   GSC_SITE_URL       → URL exacte de ta propriété ex: "sc-domain:thefabstudio.fr"
+ *                         ou "https://www.thefabstudio.fr/"
+ * ────────────────────────────────────────────────────────────────────────────
  */
 
 export const dynamic = "force-dynamic";
 
-const VERCEL_API = "https://vercel.com/api";
-const TEAM_ID = process.env.VERCEL_TEAM_ID || "team_wQ1e3aCAaMnzDrxEaDw0eUKI";
-const PROJECT_ID =
-  process.env.VERCEL_PROJECT_ID || "prj_Q0hyEAngkifBAb77TKyQ8IOYA0vk";
-
 const MONTH_NAMES = [
-  "January", "February", "March", "April",
-  "May", "June", "July", "August",
-  "September", "October", "November", "December",
+  "January","February","March","April",
+  "May","June","July","August",
+  "September","October","November","December",
 ];
 
-/** Retourne {from, to} en ms pour les N derniers mois complets */
-function getRange(months = 6) {
-  const now = new Date();
-  const to = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-  const from = new Date(now.getFullYear(), now.getMonth() - months + 1, 1);
-  return { from: from.getTime(), to: to.getTime() };
+// ── Helpers date ─────────────────────────────────────────────────────────────
+function toYMD(date) {
+  return date.toISOString().slice(0, 10); // "YYYY-MM-DD"
 }
 
-/** Appel générique à l'API Vercel Analytics */
-async function fetchInsights(path, params = {}) {
-  const token = process.env.VERCEL_TOKEN;
-  if (!token) throw new Error("VERCEL_TOKEN manquant dans les variables d'environnement");
+function lastSixMonthsRange() {
+  const now   = new Date();
+  // Début : 1er jour il y a 5 mois
+  const start = new Date(now.getFullYear(), now.getMonth() - 5, 1);
+  // Fin   : dernier jour du mois courant
+  const end   = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  return { startDate: toYMD(start), endDate: toYMD(end) };
+}
 
-  const url = new URL(`${VERCEL_API}/web/insights/${path}`);
-  url.searchParams.set("teamId", TEAM_ID);
-  url.searchParams.set("projectId", PROJECT_ID);
-  url.searchParams.set("environment", "production");
-  url.searchParams.set("filter", "{}");
-  for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
+// ── Authentification OAuth2 via Service Account (JWT) ────────────────────────
+async function getAccessToken(clientEmail, privateKey) {
+  const now = Math.floor(Date.now() / 1000);
+  const header  = { alg: "RS256", typ: "JWT" };
+  const payload = {
+    iss: clientEmail,
+    scope: "https://www.googleapis.com/auth/webmasters.readonly",
+    aud: "https://oauth2.googleapis.com/token",
+    exp: now + 3600,
+    iat: now,
+  };
 
-  const res = await fetch(url.toString(), {
+  const encode = (obj) =>
+    btoa(JSON.stringify(obj))
+      .replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+
+  const signingInput = `${encode(header)}.${encode(payload)}`;
+
+  // Importe la clé privée RSA
+  const pemKey = privateKey.replace(/\\n/g, "\n");
+  const binaryKey = pemToBinary(pemKey);
+  const cryptoKey = await crypto.subtle.importKey(
+    "pkcs8",
+    binaryKey,
+    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+
+  const signature = await crypto.subtle.sign(
+    "RSASSA-PKCS1-v1_5",
+    cryptoKey,
+    new TextEncoder().encode(signingInput)
+  );
+
+  const jwt = `${signingInput}.${arrayBufferToBase64Url(signature)}`;
+
+  const tokenRes = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+      assertion: jwt,
+    }),
+  });
+
+  if (!tokenRes.ok) {
+    const txt = await tokenRes.text();
+    throw new Error(`OAuth token error: ${txt}`);
+  }
+  const { access_token } = await tokenRes.json();
+  return access_token;
+}
+
+function pemToBinary(pem) {
+  const b64 = pem
+    .replace(/-----BEGIN PRIVATE KEY-----/, "")
+    .replace(/-----END PRIVATE KEY-----/, "")
+    .replace(/\s/g, "");
+  const binary = atob(b64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes.buffer;
+}
+
+function arrayBufferToBase64Url(buffer) {
+  const bytes = new Uint8Array(buffer);
+  let str = "";
+  for (const b of bytes) str += String.fromCharCode(b);
+  return btoa(str).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+}
+
+// ── Appel Search Console API ─────────────────────────────────────────────────
+async function fetchSearchConsole(accessToken, siteUrl, startDate, endDate) {
+  const apiUrl = `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(siteUrl)}/searchAnalytics/query`;
+
+  const res = await fetch(apiUrl, {
+    method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",
     },
-    next: { revalidate: 3600 }, // cache 1 heure
+    body: JSON.stringify({
+      startDate,
+      endDate,
+      dimensions: ["date"],       // granularité quotidienne → on agrège par mois côté serveur
+      rowLimit: 500,
+      dataState: "final",
+    }),
   });
 
   if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Vercel API ${res.status}: ${text}`);
+    const txt = await res.text();
+    throw new Error(`Search Console API ${res.status}: ${txt}`);
   }
   return res.json();
 }
 
-export async function GET() {
-  try {
-    const { from, to } = getRange(6);
+// ── Agrégation par mois ───────────────────────────────────────────────────────
+function aggregateByMonth(rows = []) {
+  const map = {}; // "YYYY-MM" → { clicks, impressions }
 
-    // Récupère le timeseries des pages vues (granularité mensuelle)
-    const [viewsData, clicksData] = await Promise.all([
-      fetchInsights("timeseries", { from, to, granularity: "month", event: "pageview" }),
-      fetchInsights("timeseries", { from, to, granularity: "month", event: "click" }),
-    ]);
+  for (const row of rows) {
+    const monthKey = row.keys[0].slice(0, 7); // "2025-03"
+    if (!map[monthKey]) map[monthKey] = { clicks: 0, impressions: 0 };
+    map[monthKey].clicks      += row.clicks ?? 0;
+    map[monthKey].impressions += row.impressions ?? 0;
+  }
 
-    // Indexe les clics par timestamp pour le merge
-    const clicksMap = {};
-    for (const point of clicksData?.data ?? []) {
-      clicksMap[point.key] = point.total;
-    }
-
-    // Construit le tableau chartData compatible avec Recharts
-    const chartData = (viewsData?.data ?? []).map((point) => {
-      const date = new Date(point.key);
-      return {
-        month: MONTH_NAMES[date.getMonth()],
-        visiteur: point.total ?? 0,
-        client: clicksMap[point.key] ?? 0,
-      };
+  // Génère les 6 derniers mois dans l'ordre chronologique
+  const result = [];
+  const now = new Date();
+  for (let i = 5; i >= 0; i--) {
+    const d   = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const key = toYMD(d).slice(0, 7);
+    result.push({
+      month:    MONTH_NAMES[d.getMonth()],
+      visiteur: map[key]?.impressions ?? 0,   // Impressions = "Vues"
+      client:   map[key]?.clicks      ?? 0,   // Clicks      = "Clics"
     });
+  }
+  return result;
+}
 
-    // Fallback si aucune donnée (Analytics pas encore activé, etc.)
-    if (chartData.length === 0) {
-      return Response.json(
-        { data: [], message: "Aucune donnée Analytics disponible pour cette période." },
-        { status: 200 }
-      );
-    }
+// ── GET ───────────────────────────────────────────────────────────────────────
+export async function GET() {
+  const clientEmail = process.env.GSC_CLIENT_EMAIL;
+  const privateKey  = process.env.GSC_PRIVATE_KEY;
+  const siteUrl     = process.env.GSC_SITE_URL;
 
-    return Response.json({ data: chartData });
+  if (!clientEmail || !privateKey || !siteUrl) {
+    return Response.json(
+      {
+        error:
+          "Variables manquantes : GSC_CLIENT_EMAIL, GSC_PRIVATE_KEY et GSC_SITE_URL " +
+          "doivent être définies dans les env vars Vercel.",
+      },
+      { status: 500 }
+    );
+  }
+
+  try {
+    const accessToken = await getAccessToken(clientEmail, privateKey);
+    const { startDate, endDate } = lastSixMonthsRange();
+    const gscData = await fetchSearchConsole(accessToken, siteUrl, startDate, endDate);
+    const data    = aggregateByMonth(gscData.rows);
+
+    return Response.json({ data });
   } catch (err) {
     console.error("[/api/analytics]", err.message);
     return Response.json({ error: err.message }, { status: 500 });
