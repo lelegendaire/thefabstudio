@@ -169,8 +169,8 @@ description: [
         "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
-      link: "#",
-      overview: "/medias/StudioLens_view.webp"
+      link: "https://mathstudio.onrender.com/",
+      overview: "/medias/MathStudio_view.webp"
     },
     {
       id: 9,
@@ -233,8 +233,8 @@ description: [
         "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
         "Ipsum proident consectetur dolor proident pariatur.",
       ],
-      link: "#",
-      overview: "/medias/CapsuleStudio.webp"
+      link: "https://capsulestudio.netlify.app/",
+      overview: "/medias/CapsuleStudio_view.webp"
     },
   ];
   const [currentProjectName, setCurrentProjectName] = useState(projectsData[3].title);
