@@ -596,7 +596,22 @@ const handleSeek = (val) => {
     document.addEventListener("mousemove", moveCursor);
     return () => document.removeEventListener("mousemove", moveCursor);
   }, []);
-
+const redGlowRef = useRef(null);
+ 
+  useEffect(() => {
+    const el = redGlowRef.current;
+    if (!el) return;
+    let frame;
+    let t = 0;
+    const animate = () => {
+      t += 0.008;
+      const opacity = 0.12 + Math.sin(t) * 0.06;
+      el.style.opacity = opacity;
+      frame = requestAnimationFrame(animate);
+    };
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, []);
   const handleTimelineClick = (e) => {
   if (!timelineRef.current || !playerRef.current || !duration) return;
 
@@ -948,16 +963,134 @@ const handleVolume = (val) => {
     <div className="absolute inset-0 rounded-4xl border border-white/20 shadow-2xl" />
   </div>
 </section>
-      <section className="gallery h-screen bg-black flex items-center justify-center">
-
-      </section>
-      <section className="footer overflow-hidden relative h-screen bg-black items-center justify-center text-white flex flex-col">
-        <h1>The story isn't over.</h1>
-        <button className="rounded-4xl border border-red-500 p-3 w-40 mt-5">Continue</button>
-        <h2 className={`${druck.className} lg:text-[10rem] text-8xl -bottom-7 text-white absolute lg:-bottom-15`}>
-            The Weeknd
-          </h2>
-      </section>
+     <section className="footer overflow-hidden relative h-screen bg-black flex flex-col">
+ 
+      {/* ── Grain overlay ── */}
+      <div
+        className="pointer-events-none absolute inset-0 z-10"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+          opacity: 0.04,
+          mixBlendMode: "overlay",
+        }}
+      />
+ 
+      {/* ── Red atmospheric glow ── */}
+      <div
+        ref={redGlowRef}
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 40% at 50% 80%, rgba(220,38,38,0.18) 0%, transparent 70%)",
+          opacity: 0.15,
+          transition: "opacity 0.1s ease",
+        }}
+      />
+ 
+      {/* ── Thin red horizontal line ── */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-red-600 opacity-40" />
+ 
+      {/* ── Main content ── */}
+      <div className="relative z-20 flex flex-col items-center justify-center flex-1 px-6">
+ 
+        {/* Era tag */}
+        <p
+          className="text-xs tracking-[0.35em] text-red-600 uppercase mb-8"
+          style={{ fontFamily: "sans-serif", letterSpacing: "0.3em" }}
+        >
+          After Hours · Dawn FM · Hurry Up Tomorrow
+        </p>
+ 
+        {/* Main heading */}
+        <h1
+          className="text-white text-center font-light mb-3"
+          style={{
+            fontSize: "clamp(1.6rem, 5vw, 3.5rem)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.1,
+          }}
+        >
+          The story isn&apos;t over.
+        </h1>
+ 
+        {/* Sub-line */}
+        <p
+          className="text-neutral-500 text-center mb-10"
+          style={{ fontSize: "clamp(0.8rem, 1.5vw, 1rem)", letterSpacing: "0.05em" }}
+        >
+          It never really ends.
+        </p>
+ 
+        {/* CTA buttons */}
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <button
+            className="group relative rounded-full border border-red-600 text-white px-8 py-3 text-sm tracking-widest uppercase overflow-hidden transition-all duration-500 hover:border-red-500"
+            style={{ letterSpacing: "0.15em" }}
+          >
+            <span
+              className="absolute inset-0 bg-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"
+              aria-hidden="true"
+            />
+            <span className="relative z-10">Continue</span>
+          </button>
+ 
+          <button
+            className="text-neutral-500 text-sm tracking-widest uppercase hover:text-white transition-colors duration-300"
+            style={{ letterSpacing: "0.15em" }}
+          >
+            Listen Now
+          </button>
+        </div>
+ 
+        {/* Social row */}
+        <div className="flex items-center gap-6 mt-12">
+          {["Spotify", "Apple Music", "Instagram", "YouTube"].map((s) => (
+            <a
+              key={s}
+              href="#"
+              className="text-neutral-600 hover:text-red-500 text-xs tracking-widest uppercase transition-colors duration-300"
+              style={{ letterSpacing: "0.12em" }}
+            >
+              {s}
+            </a>
+          ))}
+        </div>
+      </div>
+ 
+      {/* ── Bottom bar ── */}
+      <div className="relative z-20 flex items-end justify-between px-8 pb-4 text-neutral-700 text-xs tracking-widest">
+        <span>© {new Date().getFullYear()} XO / Republic Records</span>
+        <span style={{ letterSpacing: "0.1em" }}>HURRY UP TOMORROW</span>
+      </div>
+ 
+      {/* ── Giant name ── */}
+      <h2
+        className={`${druck?.className ?? ""} absolute -bottom-4 lg:-bottom-8 left-0 right-0 text-center text-white pointer-events-none select-none z-10`}
+        style={{
+          fontSize: "clamp(5rem, 18vw, 14rem)",
+          lineHeight: 0.85,
+          opacity: 0.08,
+          letterSpacing: "-0.03em",
+        }}
+        aria-hidden="true"
+      >
+        The Weeknd
+      </h2>
+ 
+      {/* ── Giant name (visible layer) ── */}
+      <h2
+        className={`${druck?.className ?? ""} absolute -bottom-4 lg:-bottom-8 left-0 right-0 text-center text-white pointer-events-none select-none z-30`}
+        style={{
+          fontSize: "clamp(5rem, 18vw, 14rem)",
+          lineHeight: 0.85,
+          WebkitTextStroke: "1px rgba(255,255,255,0.15)",
+          color: "transparent",
+          letterSpacing: "-0.03em",
+        }}
+      >
+        The Weeknd
+      </h2>
+    </section>
 
       <style>{`
         .noise { animation: noiseAnim 0.2s infinite; }
