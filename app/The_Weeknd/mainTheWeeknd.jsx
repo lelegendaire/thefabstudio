@@ -892,7 +892,7 @@ const handleVolume = (val) => {
       <div className="video-frames h-full w-full flex justify-between gap-4 border-t border-dashed border-white/30 border-b border-b-white/30 px-0 py-3">
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className='frame relative after:content-[""] after:absolute after:inset-0 after:bg-black/50 hover:after:bg-black duration-300 transition'>
-            <img src="/medias/Blade_runner.webp" className="h-full w-full object-cover" />
+            <img src={`/medias/The_Weeknd/Image${i+1}.webp`} className="h-full w-full object-cover" />
           </div>
         ))}
       </div>
