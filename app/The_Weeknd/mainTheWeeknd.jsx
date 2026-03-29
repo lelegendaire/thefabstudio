@@ -692,11 +692,11 @@ const handleVolume = (val) => {
           <div className="lg:w-60/100 w-full lg:text-left text-center">
             <Copy_bloc blockColor="#e10430">
               <p>
-                The Weeknd, nom de scène d&apos;Abel Makkonen Tesfaye est un
-                chanteur, acteur, auteur-compositeur-interprète et producteur
-                canadien, né le 16 février 1990 à Toronto. Le 1er janvier 2023,
-                son single Blinding Lights devient le plus écouté de tous les
-                temps sur Spotify, dépassant Shape of You d&apos;Ed Sheeran.
+                The Weeknd, the stage name of Abel Makkonen Tesfaye, is a
+                Canadian singer, actor, singer-songwriter, and producer,
+                born on February 16, 1990, in Toronto. On January 1, 2023,
+                his single “Blinding Lights” became the most-streamed song of all
+                time on Spotify, surpassing Ed Sheeran's “Shape of You.”
               </p>
             </Copy_bloc>
           </div>
