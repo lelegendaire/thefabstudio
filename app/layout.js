@@ -30,23 +30,7 @@ export const metadata = {
     locale: "en_US",
     type: "website",
   },
-  openGraph: {
-    title: "The Weeknd — Immersive Experience",
-    description:
-      "Immersive page dedicated to The Weeknd",
-    url: "https://thefabstudio.vercel.app/The_Weeknd",
-    siteName: "The Weeknd — Immersive Experience",
-    images: [
-      {
-        url: "https://thefabstudio.vercel.app/og-image_theweeknd.png",
-        width: 1200,
-        height: 630,
-        alt: "The Fab Studio",
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
+  
 };
 
 export default function RootLayout({ children }) {
