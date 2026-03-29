@@ -424,7 +424,7 @@ export default function MainCinema(){
           <div className="absolute bottom-0 font-[montserrat] lg:text-xl text-xs flex justify-center w-full text-white font-bold">
             <h3 className="mr-auto m-5">Composition</h3>
             <h3 className="mr-auto m-5">Storyline</h3>
-            <h3 className="ml-auto m-5">Plotwist</h3>
+            <h3 className="ml-auto m-5">Color</h3>
             <h3 className="ml-auto m-5">Lighting</h3>
           </div>
         </section>
@@ -483,7 +483,7 @@ export default function MainCinema(){
                 </div>
               </div>
               <div className="card-img absolute w-full h-full rounded-[150px] overflow-hidden">
-                <img className="image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]" src="/medias/bg_final.webp" alt="Interstellar" />
+                <img className="image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]" src="/medias/Cinema/Interstellar_ligne.webp" alt="Interstellar" />
               </div>
             </div>
           </div>
@@ -501,7 +501,7 @@ export default function MainCinema(){
                 </div>
               </div>
               <div className="card-img absolute w-full h-full rounded-[150px] overflow-hidden">
-                <img className="image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]" src="/medias/bg_final.webp" alt="Blade Runner" />
+                <img className="image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]" src="/medias/Cinema/Blade_runner_ligne.webp" alt="Blade Runner" />
               </div>
             </div>
           </div>
@@ -513,7 +513,7 @@ export default function MainCinema(){
       <div className="w-full h-full relative bg-black text-white">
 
         <section className="h-screen w-full p-8 relative content-center text-center">
-           <CopyBlur><h1 className="w-3/4 m-0 text-white font-[boska] text-6xl lg:text-9xl">Scroll Down</h1></CopyBlur>
+           <CopyBlur><h1 className="w-3/4 m-0 text-white font-[boska] text-6xl lg:text-9xl">How to create a good plot</h1></CopyBlur>
           <CopyBlur><p>Voluptate laboris deserunt minim elit tempor fugiat velit nulla aliquip nulla.</p></CopyBlur>
         </section>
 
@@ -528,14 +528,14 @@ export default function MainCinema(){
               className="absolute top-1/2 w-[200%] h-full flex items-center justify-between gap-4 will-change-transform"
               style={{ transform: "translate(-75%, -50%)" }}
             >
-              {[...Array(5)].map((_, n) => (
+              {[...Array(4)].map((_, n) => (
                 <div key={n} className="flex-1 h-full aspect-video min-w-0">
-                  <img src="/medias/bg_final.webp" alt="" className="h-full w-full object-cover" />
+                  <img src={`/medias/Cinema/img${n}.webp`} alt="" className="h-full w-full object-cover" />
                 </div>
               ))}
               {/* Image "pin" : celle qui sera clonée et agrandie en Flip */}
               <div className="flex-1 h-full aspect-video min-w-0">
-                <img ref={marqueeImgPinRef} src="/medias/Cinema/space_odyssey.webp" alt="pin" className="h-full w-full object-cover" />
+                <img ref={marqueeImgPinRef} src="/medias/Cinema/shuter_island.webp" alt="pin" className="h-full w-full object-cover" />
               </div>
             </div>
           </div>
@@ -576,24 +576,7 @@ export default function MainCinema(){
         </section>
       </div>
 
-      {/* ── Storyline ────────────────────────────────────────────────────── */}
-      <section className="bg-black h-screen w-screen text-white">
-        <h2 className="text-3xl font-[montserrat] p-8">Storyline</h2>
-        <div className="w-full h-[70vh] grid md:grid-cols-6 md:grid-rows-3 gap-2 md:gap-5 m-4">
-          {[
-            "md:col-start-1 md:row-start-1 md:col-span-1 md:row-span-3",
-            "md:col-start-2 md:row-start-1 md:col-span-1 md:row-span-3",
-            "md:col-start-3 md:row-start-1 md:col-span-1 md:row-span-3",
-            "md:col-start-4 md:row-start-1 md:col-span-1 md:row-span-2",
-            "md:col-start-4 md:row-start-3 md:col-span-1 md:row-span-1",
-            "md:col-start-5 md:row-start-1 md:col-span-2 md:row-span-1",
-            "md:col-start-5 md:row-start-2 md:col-span-1 md:row-span-2",
-            "md:col-start-6 md:row-start-2 md:col-span-1 md:row-span-2",
-          ].map((pos, i) => (
-            <div key={i} className={`hidden bg-[url('https://images.unsplash.com/photo-1763152496539-302ef51ef66f?q=80&w=687&auto=format&fit=crop')] bg-cover bg-center md:block ${pos} rounded-md`} />
-          ))}
-        </div>
-      </section>
+    
 
       {/* ── Color ────────────────────────────────────────────────────────── */}
       <section className="bg-black h-screen w-screen text-white">
@@ -613,6 +596,9 @@ export default function MainCinema(){
             Lighting <br /> Is Everythings
           </motion.h1>
         </LampContainer>
+      </section>
+      <section className="h-screen w-full bg-[url(/medias/Cinema/seven.webp)]">
+
       </section>
 
       <style jsx>{`

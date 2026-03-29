@@ -908,7 +908,7 @@ const cleanupRef = { fn: null };
               >
                 <img
                   src={selectedProject.data.overview}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center"
                   alt={selectedProject.data.title}
                 />
               </div>
