@@ -11,7 +11,7 @@ export const metadata = {
     siteName: "The Weeknd — Immersive Experience",
     images: [
       {
-        url: "https://thefabstudio.vercel.app/og-image-theweeknd.png",
+        url: "https://thefabstudio.vercel.app/og-image-theweeknd.webp",
         width: 1200,
         height: 630,
         alt: "The Weeknd",
