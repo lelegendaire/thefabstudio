@@ -7,7 +7,7 @@ export const metadata = {
     title: "The Weeknd — Immersive Experience",
     description:
       "Immersive page dedicated to The Weeknd",
-    url: "https://thefabstudio.vercel.app/The_Weeknd",
+    url: "https://thefabstudio.vercel.app/the_weeknd",
     siteName: "The Weeknd — Immersive Experience",
     images: [
       {
@@ -19,6 +19,9 @@ export const metadata = {
     ],
     locale: "en_US",
     type: "website",
+  },
+  alternates: {
+    canonical: "https://thefabstudio.vercel.app/the_weeknd",
   },
 };
 

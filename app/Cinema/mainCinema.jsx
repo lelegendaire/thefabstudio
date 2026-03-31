@@ -584,7 +584,7 @@ export default function MainCinema(){
       </section>
 
       {/* ── Lighting ─────────────────────────────────────────────────────── */}
-      <section className="bg-black h-screen w-screen text-white">
+      <section className="bg-black h-full w-screen text-white">
         <h2 className="text-3xl font-[montserrat] p-8">Lighting</h2>
         <LampContainer>
           <motion.h1
@@ -597,8 +597,17 @@ export default function MainCinema(){
           </motion.h1>
         </LampContainer>
       </section>
-      <section className="h-screen w-full bg-[url(/medias/Cinema/seven.webp)]">
-
+      <section className="h-screen text-white flex-col w-full flex justify-center items-center bg-[url(/medias/Cinema/seven.webp)]  bg-center bg-cover">
+<div className="flex justify-between w-full mb-auto">
+<p className="ml-6">HUIIII</p>
+<ul className="flex gap-4 mr-6">
+  <li>Work</li>
+  <li>About</li>
+</ul>
+</div>
+<h1 className="footer_text mb-auto text-5xl text-nowrap lg:text-9xl scale-150 font-[1000] font-[boska] bg-[url(/medias/Cinema/Blade_runner.webp)] bg-center bg-cover" >Will Never Die</h1>
+       
+      <p>Insta/Yes</p>
       </section>
 
       <style jsx>{`
@@ -610,6 +619,10 @@ export default function MainCinema(){
         .char span {
           transform: translateX(100%);
           display: inline-block;
+        }
+        .footer_text {
+        -webkit-background-clip: text; 
+   -webkit-text-fill-color: transparent;
         }
       `}</style>
     </section>

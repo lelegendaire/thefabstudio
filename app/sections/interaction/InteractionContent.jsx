@@ -44,17 +44,17 @@ const Interaction = () => {
     {
       title: "Atlantas XI",
       image: "/medias/Atlantas.webp",
-      url: "/Atlantas",
+      url: "/atlantas",
     },
     {
       title: "The Weeknd",
       image: "/medias/The_weeknd.webp",
-      url: "/The_Weeknd",
+      url: "/the_weeknd",
     },
     {
       title: "The new vision of cinema",
       image: "/medias/Cinema.webp",
-      url: "/Cinema",
+      url: "/cinema",
     },
   ];
   const handleNavigation = async (image, url, e) => {

@@ -9,7 +9,7 @@ export const metadata = {
     title: "Atlantas — The product of your dreams",
     description:
       "Incredible page dedicated to our product Atlantas",
-    url: "https://thefabstudio.vercel.app/Atlantas",
+    url: "https://thefabstudio.vercel.app/atlantas",
     siteName: "Atlantas — The product of your dreams",
     images: [
       {
@@ -21,6 +21,9 @@ export const metadata = {
     ],
     locale: "en_US",
     type: "website",
+  },
+  alternates: {
+    canonical: "https://thefabstudio.vercel.app/atlantas",
   },
 };
 
