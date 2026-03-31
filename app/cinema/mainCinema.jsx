@@ -6,7 +6,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { Flip } from "gsap/Flip";
-import { useLenis } from ".././context/LenisContext";
+import { useLenis } from "../context/LenisContext";
 import { dirtyline } from "../fonts";
 import CopyBlur from "../components/CopyBlur"
 import setupMarqueeAnimation from "./marquee.js";
