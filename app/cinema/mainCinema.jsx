@@ -17,6 +17,8 @@ export default function MainCinema(){
   const [displacement, setDisplacement] = useState({ x: 0, y: 0 });
   const [windowSize, setWindowSize]     = useState({ width: 0, height: 0 });
   const [isMounted, setIsMounted]       = useState(false);
+  const [spotlightPos, setSpotlightPos] = useState({ x: 50, y: 50 });
+  const spotlightRef                    = useRef(null);
 
   const cursorRef    = useRef(null);
   const rafRef       = useRef(null);
@@ -378,6 +380,14 @@ export default function MainCinema(){
     };
   }, [mousePos, windowSize.width, windowSize.height]);
 
+  // ─── Film marquee data ────────────────────────────────────────────────────
+  const marqueeFilms = [
+    { src: "/medias/Cinema/img0.webp", title: "Stalker",          year: "1979", director: "A. Tarkovsky" },
+    { src: "/medias/Cinema/img1.webp", title: "La Dolce Vita",    year: "1960", director: "F. Fellini"   },
+    { src: "/medias/Cinema/img2.webp", title: "Apocalypse Now",   year: "1979", director: "F.F. Coppola" },
+    { src: "/medias/Cinema/img3.webp", title: "Eyes Wide Shut",   year: "1999", director: "S. Kubrick"   },
+  ];
+
   // ─── SSR fallback ─────────────────────────────────────────────────────────
   if (!isMounted) {
     return (
@@ -445,7 +455,7 @@ export default function MainCinema(){
         <div ref={cardsRef} className="cards relative w-screen bg-[#0f0f0f] text-white flex flex-col gap-[25svh]">
 
           {/* Intro card */}
-          <div ref={introCardRef} className="card relative w-full h-svh p-[1.5em]">
+          <div ref={introCardRef} className="card group relative w-full h-svh p-[1.5em]">
             <div className="card-marquee w-full absolute top-1/2 left-0 transform-[translateY(-50%)] overflow-hidden">
               {/* .marquee scoped via introCard.querySelector — aucun conflit avec filmMarqueeRef */}
               <div className="marquee flex">
@@ -465,13 +475,27 @@ export default function MainCinema(){
                 </div>
               </div>
               <div className="card-img absolute w-full h-full rounded-[150px] overflow-hidden">
-                <img className="image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]" src="/medias/Cinema/space_odyssey.webp" alt="2001 A Space Odyssey" />
+                <img className="image_film relative w-full h-full object-cover group-hover:brightness-50 transition-[brightness] delay-200 ease-in-out will-change-transform transform-[scale(2)]" src="/medias/Cinema/space_odyssey.webp" alt="2001 A Space Odyssey" />
+                {/* Composition overlay — Center Frame */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10">
+                  <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="50%" y1="0%" x2="50%" y2="100%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                    <line x1="0%" y1="50%" x2="100%" y2="50%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                    <line x1="0%" y1="0%" x2="100%" y2="100%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                    <line x1="0%" y1="100%" x2="100%" y2="0%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                    <rect x="35%" y="35%" width="30%" height="30%" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="6 4"/>
+                    <rect x="15%" y="15%" width="70%" height="70%" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="6 4"/>
+                    <circle cx="50%" cy="50%" r="7" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="1.5"/>
+                    <circle cx="50%" cy="50%" r="2.5" fill="rgba(255,255,255,0.75)"/>
+                  </svg>
+                  <span className="absolute top-5 left-5 text-white text-[0.6rem] font-[montserrat] tracking-[0.35em] uppercase opacity-60">Center Frame</span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Card 2 */}
-          <div className="card mt-[50vh] relative w-full h-svh p-[1.5em]">
+          <div className="card group mt-[50vh] relative w-full h-svh p-[1.5em]">
             <div className="card-marquee w-full absolute top-1/2 left-0 transform-[translateY(-50%)] overflow-hidden" />
             <div className="card-wrapper relative w-full h-full will-change-transform">
               <div className="card-content absolute w-full h-full flex items-end justify-center z-1">
@@ -483,13 +507,26 @@ export default function MainCinema(){
                 </div>
               </div>
               <div className="card-img absolute w-full h-full rounded-[150px] overflow-hidden">
-                <img className="image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]" src="/medias/Cinema/Interstellar_ligne.webp" alt="Interstellar" />
+                <img className="image_film relative w-full h-full object-cover group-hover:brightness-50 transition-[brightness] delay-200 ease-in-out  will-change-transform transform-[scale(2)]" src="/medias/Cinema/Interstellar_ligne.webp" alt="Interstellar" />
+               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10">
+                  <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="33%" y1="0%" x2="33%" y2="100%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                    <line x1="66%" y1="0%" x2="66%" y2="100%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                    <line x1="0%" y1="33%" x2="100%" y2="33%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                    <line x1="0%" y1="66%" x2="100%" y2="66%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                   
+                   
+                    <circle cx="50%" cy="50%" r="7" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="1.5"/>
+                    <circle cx="50%" cy="50%" r="2.5" fill="rgba(255,255,255,0.75)"/>
+                  </svg>
+                  <span className="absolute top-5 left-5 text-white text-[0.6rem] font-[montserrat] tracking-[0.35em] uppercase opacity-60">Center Frame</span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Card 3 */}
-          <div className="card relative w-full h-svh p-[1.5em]">
+          <div className="card group relative w-full h-svh p-[1.5em]">
             <div className="card-marquee w-full absolute top-1/2 left-0 transform-[translateY(-50%)] overflow-hidden" />
             <div className="card-wrapper relative w-full h-full will-change-transform">
               <div className="card-content absolute w-full h-full flex items-end justify-center z-1">
@@ -501,7 +538,18 @@ export default function MainCinema(){
                 </div>
               </div>
               <div className="card-img absolute w-full h-full rounded-[150px] overflow-hidden">
-                <img className="image_film relative w-full h-full object-cover will-change-transform transform-[scale(2)]" src="/medias/Cinema/Blade_runner_ligne.webp" alt="Blade Runner" />
+                <img className="image_film relative w-full h-full object-cover group-hover:brightness-50 transition-[brightness] delay-200 ease-in-out  will-change-transform transform-[scale(2)]" src="/medias/Cinema/Blade_runner_ligne.webp" alt="Blade Runner" />
+               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10">
+                  <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="50%" y1="0%" x2="50%" y2="50%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                    <line x1="100%" y1="100%" x2="50%" y2="50%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                    <line x1="0%" y1="100%" x2="50%" y2="50%" stroke="rgba(255,255,255,0.45)" strokeWidth="1"/>
+                    
+                    <circle cx="50%" cy="50%" r="7" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="1.5"/>
+                    <circle cx="50%" cy="50%" r="2.5" fill="rgba(255,255,255,0.75)"/>
+                  </svg>
+                  <span className="absolute top-5 left-5 text-white text-[0.6rem] font-[montserrat] tracking-[0.35em] uppercase opacity-60">Center Frame</span>
+                </div>
               </div>
             </div>
           </div>
@@ -513,9 +561,18 @@ export default function MainCinema(){
       <div className="w-full h-full relative bg-black text-white">
 
         <section className="h-screen w-full p-8 relative content-center text-center">
-           <CopyBlur><h1 className="w-3/4 m-0 text-white font-[boska] text-6xl lg:text-9xl">How to create a good plot</h1></CopyBlur>
-          <CopyBlur><p>Voluptate laboris deserunt minim elit tempor fugiat velit nulla aliquip nulla.</p></CopyBlur>
-        </section>
+          <CopyBlur>
+  <h1 className="w-3/4 m-0 text-white font-[boska] text-6xl lg:text-9xl">
+    How to Create a Powerful Plot
+  </h1>
+</CopyBlur>
+
+<CopyBlur>
+  <p className="max-w-xl mx-auto text-gray-400 mt-6">
+    A great film is not just about visuals — it’s about storytelling. 
+    Every unforgettable movie is built on conflict, emotion, and transformation.
+  </p>
+</CopyBlur></section>
 
         {/*
           ref={filmMarqueeRef} — PAS de classe .marquee sur cette section
@@ -551,7 +608,13 @@ export default function MainCinema(){
             {/* Slide 1 */}
             <div className="w-screen h-screen flex p-16">
               <div className="w-1/2 flex items-center justify-center">
-                <h3 className="w-3/4 text-white font-[boska] text-4xl lg:text-6xl">Creative Vision</h3>
+               <h3 className="w-3/4 text-white font-[boska] text-4xl lg:text-6xl">
+  Creative Vision
+</h3>
+<p className="w-3/4 text-gray-400 mt-4">
+  Every story begins with a vision. A strong plot starts with a clear idea: 
+  a world, a character, and a question that needs to be answered.
+</p>
               </div>
               <div className="w-1/2 flex items-center justify-center">
                 <img className="w-3/4 h-3/4 object-cover rounded-2xl" src="/medias/Cinema/space_odyssey.webp" alt="" />
@@ -561,7 +624,13 @@ export default function MainCinema(){
             {/* Slide 2 */}
             <div className="w-screen h-screen flex p-16">
               <div className="w-1/2 flex items-center justify-center">
-                <h3 className="w-3/4 text-white font-[boska] text-4xl lg:text-6xl">Motion Design</h3>
+                <h3 className="w-3/4 text-white font-[boska] text-4xl lg:text-6xl">
+  Rising Tension
+</h3>
+<p className="w-3/4 text-gray-400 mt-4">
+  A story moves forward through conflict. Obstacles, choices, and consequences 
+  shape the journey and keep the audience engaged.
+</p>
               </div>
               <div className="w-1/2 flex items-center justify-center">
                 <img className="w-3/4 h-3/4 object-cover rounded-2xl" src="/medias/bg_final.webp" alt="" />
@@ -572,7 +641,14 @@ export default function MainCinema(){
         </section>
 
         <section className="h-screen w-full p-8 relative content-center text-center">
-          <h1 className="w-3/4 m-0 text-white font-[boska] text-6xl lg:text-9xl">The End</h1>
+          <h1 className="w-3/4 m-0 text-white font-[boska] text-6xl lg:text-9xl">
+  Every Story Leaves a Mark
+</h1>
+
+<p className="max-w-xl mx-auto text-gray-400 mt-6">
+  In the end, a great plot is not just remembered for what happened — 
+  but for how it made us feel.
+</p>
         </section>
       </div>
 
@@ -591,23 +667,89 @@ export default function MainCinema(){
             initial={{ opacity: 0.5, y: 100 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: "easeInOut" }}
-            className="mt-8 bg-linear-to-br from-slate-300 to-slate-500 py-4 bg-clip-text text-center text-4xl tracking-tight text-transparent md:text-7xl font-[montserrat] font-bold"
+            className="mt-8 bg-linear-to-br from-white to-white py-4 bg-clip-text text-center text-4xl tracking-tight text-transparent md:text-7xl font-[montserrat] font-bold"
           >
             Lighting <br /> Is Everythings
           </motion.h1>
         </LampContainer>
+
+        {/* ── Mouse spotlight ──────────────────────────────────────────── */}
+        <div
+          ref={spotlightRef}
+          className="relative w-full overflow-hidden cursor-none"
+          style={{ height: "100svh" }}
+          onMouseMove={(e) => {
+            const rect = spotlightRef.current?.getBoundingClientRect();
+            if (!rect) return;
+            const x = ((e.clientX - rect.left) / rect.width)  * 100;
+            const y = ((e.clientY - rect.top)  / rect.height) * 100;
+            setSpotlightPos({ x, y });
+          }}
+        >
+          {/* Fond texturé sombre */}
+          <div className="absolute inset-0 bg-[#080808]" />
+
+          {/* Masque lumière souris */}
+          <div
+            className="absolute inset-0 transition-none pointer-events-none z-10"
+            style={{
+              background: `radial-gradient(circle 320px at ${spotlightPos.x}% ${spotlightPos.y}%, transparent 0%, rgba(0,0,0,0.97) 100%)`,
+            }}
+          />
+
+          {/* Grain film */}
+          <div className="absolute inset-0 opacity-[0.04] z-20 pointer-events-none bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
+
+          {/* Contenu texte — éclairé par la "torche" */}
+          <div className="relative z-5 h-full flex flex-col items-center justify-center gap-16 px-8 select-none">
+
+            {/* Citation principale */}
+            <blockquote className="text-center max-w-4xl">
+              <p className="font-[boska] text-5xl lg:text-8xl text-white leading-tight tracking-tight">
+                "Light is the first element of design."
+              </p>
+              <cite className="block mt-6 font-[montserrat] text-sm tracking-[0.4em] uppercase text-white/40">
+                — Gordon Parks, 1952
+              </cite>
+            </blockquote>
+
+            {/* Grille de faits */}
+            <div className="grid grid-cols-3 gap-px w-full max-w-3xl border border-white/10">
+              {[
+                { label: "Hard Light",  desc: "Définit. Tranche. Accuse." },
+                { label: "Soft Light",  desc: "Enveloppe. Flatte. Console." },
+                { label: "Backlight",   desc: "Silhouette. Mystère. Peur." },
+                { label: "Practical",   desc: "Lampe dans le cadre. Réalisme brut." },
+                { label: "Motivated",   desc: "La source est crédible. L'œil y croit." },
+                { label: "Chiaroscuro", desc: "Caravage → Kubrick. Même combat." },
+              ].map(({ label, desc }) => (
+                <div key={label} className="p-6 border border-white/10 group/cell">
+                  <h4 className="font-[montserrat] text-xs tracking-[0.3em] uppercase text-white/50 mb-2 group-hover/cell:text-white transition-colors duration-300">{label}</h4>
+                  <p className="font-[boska] text-lg text-white/80 leading-snug">{desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Instruction discrète */}
+            <p className="absolute bottom-8 font-[montserrat] text-[0.6rem] tracking-[0.5em] uppercase text-white/20">
+              Move your light
+            </p>
+          </div>
+        </div>
       </section>
       <section className="h-screen text-white flex-col w-full flex justify-center items-center bg-[url(/medias/Cinema/seven.webp)]  bg-center bg-cover">
 <div className="flex justify-between w-full mb-auto">
-<p className="ml-6">HUIIII</p>
+<p className="ml-6">STUDIOFILM &copy;</p>
 <ul className="flex gap-4 mr-6">
-  <li>Work</li>
-  <li>About</li>
+  <li><a href="#">Home</a></li>
+              <li><a href="#">Works</a></li>
+              <li><a href="#">Art</a></li>
+              <li><a href="#">History</a></li>
 </ul>
 </div>
 <h1 className="footer_text mb-auto text-5xl text-nowrap lg:text-9xl scale-150 font-[1000] font-[boska] bg-[url(/medias/Cinema/Blade_runner.webp)] bg-center bg-cover" >Will Never Die</h1>
        
-      <p>Insta/Yes</p>
+      <p className="font-[boska]">end</p>
       </section>
 
       <style jsx>{`
@@ -628,4 +770,3 @@ export default function MainCinema(){
     </section>
   );
 };
-

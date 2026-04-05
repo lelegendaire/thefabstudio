@@ -94,6 +94,16 @@ export default function FooterContent() {
                     Twitter
                   </AnimatedLink>
                 </li>
+                <li className="mt-3 lg:text-2xl text-xs">
+                  <AnimatedLink
+                    color="black"
+                    target_on="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.facebook.com/people/Thefabstudio2/61574320501301/"
+                  >
+                    FaceBook
+                  </AnimatedLink>
+                </li>
                 
               </ul>
             </div>
