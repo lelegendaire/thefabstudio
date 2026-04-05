@@ -97,6 +97,7 @@ function AnalyticsChart() {
  
       {/* Graphique */}
       <ChartContainer
+      id="analytics-chart"
         className="w-3/4 h-full lg:font-bold font-normal"
         config={chartConfig}
       >

@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import { Flip } from "gsap/Flip";
+import { Flip } from "gsap/flip";
 import { useLenis } from "../context/LenisContext";
 import { dirtyline } from "../fonts";
 import CopyBlur from "../components/CopyBlur"
