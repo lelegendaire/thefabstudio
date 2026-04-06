@@ -41,9 +41,155 @@
     "paragraph4": "The Fab Studio est né d'un désir de repousser les limites du web. Un laboratoire visuel où innovation, esthétique et interactivité se rencontrent pour inventer des expériences uniques."
   },
   "projects": {
-    "title": "Nos projets",
-    "cta": "Voir le projet"
-  },
+  "title": "Projets",
+  "cta": "Voir le projet",
+  "items": {
+    "studio_lens": {
+      "title_description": [
+        "Studio de retouche photo avancé",
+        "Filtres et corrections intelligentes",
+        "Optimisation d'image professionnelle"
+      ],
+      "description": [
+        "Éditez vos photos avec précision grâce à des outils puissants et intuitifs.",
+        "Appliquez des filtres, ajustez les couleurs et améliorez vos images en un clic.",
+        "Une interface fluide pensée pour accélérer votre flux de travail créatif."
+      ]
+    },
+    "studio_song_fab": {
+      "title_description": [
+        "Studio de musique",
+        "Choix des musiques favoris",
+        "Modèle sur Pinterest"
+      ],
+      "description": [
+        "Éditez vos photos avec précision grâce à des outils puissants et intuitifs.",
+        "Appliquez des filtres, ajustez les couleurs et améliorez vos images en un clic.",
+        "Une interface fluide pensée pour accélérer votre flux de travail créatif."
+      ]
+    },
+    "history_f1": {
+      "title_description": [
+        "L'histoire de la F1 sous un autre angle",
+        "La découverte des circuits les plus mythiques",
+        "Les différentes voitures et champions de la F1"
+      ],
+      "description": [
+        "Découvrez l'histoire de la F1 comme vous ne l'avez jamais vu.",
+        "Parcourez les moments forts de chaque évènement gravé à jamais.",
+        "N'oubliez pas de découvrir notre site."
+      ]
+    },
+    "new_clock": {
+      "title_description": [
+        "Une horloge constituée d'horloges",
+        "Reproduction pour un projet",
+        "La future horloge"
+      ],
+      "description": [
+        "Une réalisation originale et créative.",
+        "Inspirée d'un concept visuel fort.",
+        "Un objet temporel réinventé."
+      ]
+    },
+    "nature": {
+      "title_description": [
+        "Application web moderne avec React et Three.js",
+        "Exploration visuelle de la nature",
+        "Expérience immersive en 3D"
+      ],
+      "description": [
+        "Plongez dans un environnement naturel interactif.",
+        "Des animations fluides pour une expérience apaisante.",
+        "Technique et esthétique au service du vivant."
+      ]
+    },
+    "widget_weather": {
+      "title_description": [
+        "Widget météo inspiré d'Apple",
+        "Données en temps réel",
+        "Design minimaliste et élégant"
+      ],
+      "description": [
+        "Un widget météo pensé pour s'intégrer à votre interface.",
+        "Affichage clair et lisible des conditions actuelles.",
+        "Style épuré directement inspiré d'iOS."
+      ]
+    },
+    "text_editor": {
+      "title_description": [
+        "Éditeur de texte en ligne",
+        "Construisez vos romans en partageant avec d'autres",
+        "Tous vos textes rassemblés au même endroit"
+      ],
+      "description": [
+        "Rédigez et organisez vos écrits directement depuis le navigateur.",
+        "Collaborez en temps réel avec d'autres auteurs.",
+        "Retrouvez tous vos documents en un seul espace."
+      ]
+    },
+    "math_studio": {
+      "title_description": [
+        "Découvrez les maths",
+        "Construisez vos fonctions",
+        "Apprenez de nouvelles notions"
+      ],
+      "description": [
+        "Explorez les mathématiques de façon interactive.",
+        "Tracez des courbes et visualisez vos fonctions.",
+        "Une approche pédagogique et visuelle des maths."
+      ]
+    },
+    "food": {
+      "title_description": [
+        "Scrollez pour voir toutes les recettes",
+        "Créez votre propre recette",
+        "Achetez les aliments qu'il vous manque"
+      ],
+      "description": [
+        "Découvrez une multitude de recettes inspirantes.",
+        "Créez et partagez vos propres créations culinaires.",
+        "Gérez facilement votre liste de courses."
+      ]
+    },
+    "aac_studio": {
+      "title_description": [
+        "Parfait pour la conduite accompagnée",
+        "Fixez vos objectifs avec AAC",
+        "Comptez le kilométrage pour chaque trajet"
+      ],
+      "description": [
+        "Un outil pensé pour les apprentis conducteurs.",
+        "Suivez votre progression et atteignez vos objectifs.",
+        "Gardez une trace précise de chaque trajet effectué."
+      ]
+    },
+    "evolution_lab": {
+      "title_description": [
+        "Application web moderne avec React et Three.js",
+        "Simulation d'évolution en temps réel",
+        "Expérimentation interactive"
+      ],
+      "description": [
+        "Observez des systèmes évoluer sous vos yeux.",
+        "Modifiez les paramètres et constatez les résultats.",
+        "Science et interactivité réunies dans une seule app."
+      ]
+    },
+    "internet_capsule": {
+      "title_description": [
+        "Application web moderne avec React et Three.js",
+        "Créez votre capsule temporelle numérique",
+        "Partagez des souvenirs pour le futur"
+      ],
+      "description": [
+        "Enfermez vos pensées dans une capsule numérique.",
+        "Programmez leur ouverture à une date future.",
+        "Un concept poétique entre mémoire et anticipation."
+      ]
+    }
+  }
+},
   "team": {
     "title": "Notre équipe",
     "members": {

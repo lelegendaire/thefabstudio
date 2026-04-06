@@ -74,7 +74,7 @@ export default function FooterContent() {
                     Instagram
                   </AnimatedLink>
                 </li>
-                <li className="mt-3 lg:text-2xl text-xs">
+                <li className="lg:text-2xl text-xs">
                   <AnimatedLink
                     color="black"
                     target_on="_blank"
@@ -84,7 +84,7 @@ export default function FooterContent() {
                     Pinterest
                   </AnimatedLink>
                 </li>
-                <li className="mt-3 lg:text-2xl text-xs">
+                <li className="lg:text-2xl text-xs">
                   <AnimatedLink
                     color="black"
                     target_on="_blank"
@@ -94,7 +94,7 @@ export default function FooterContent() {
                     Twitter
                   </AnimatedLink>
                 </li>
-                <li className="mt-3 lg:text-2xl text-xs">
+                <li className="lg:text-2xl text-xs">
                   <AnimatedLink
                     color="black"
                     target_on="_blank"

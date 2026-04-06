@@ -41,9 +41,155 @@
     "paragraph4": "The Fab Studio was born of a desire to push back the boundaries of the web. A visual laboratory where innovation, aesthetics and interactivity meet to invent unique experiences."
   },
   "projects": {
-    "title": "Our projects",
-    "cta": "See the project"
-  },
+  "title": "Projects",
+  "cta": "View project",
+  "items": {
+    "studio_lens": {
+      "title_description": [
+        "Advanced photo editing studio",
+        "Smart filters and corrections",
+        "Professional image optimization"
+      ],
+      "description": [
+        "Edit your photos with precision using powerful and intuitive tools.",
+        "Apply filters, adjust colors and enhance your images in one click.",
+        "A smooth interface designed to speed up your creative workflow."
+      ]
+    },
+    "studio_song_fab": {
+      "title_description": [
+        "Music studio",
+        "Choose your favorite tracks",
+        "Pinterest-inspired model"
+      ],
+      "description": [
+        "Edit your photos with precision using powerful and intuitive tools.",
+        "Apply filters, adjust colors and enhance your images in one click.",
+        "A smooth interface designed to speed up your creative workflow."
+      ]
+    },
+    "history_f1": {
+      "title_description": [
+        "The history of F1 from a new angle",
+        "Discover the most iconic circuits",
+        "F1 cars and champions through the ages"
+      ],
+      "description": [
+        "Discover the history of F1 like you've never seen before.",
+        "Browse the highlights of every legendary event.",
+        "Don't forget to explore our site."
+      ]
+    },
+    "new_clock": {
+      "title_description": [
+        "A clock made of clocks",
+        "A reproduction for a project",
+        "The clock of the future"
+      ],
+      "description": [
+        "An original and creative achievement.",
+        "Inspired by a strong visual concept.",
+        "Time reinvented as an object."
+      ]
+    },
+    "nature": {
+      "title_description": [
+        "Modern web app with React and Three.js",
+        "Visual exploration of nature",
+        "Immersive 3D experience"
+      ],
+      "description": [
+        "Dive into an interactive natural environment.",
+        "Smooth animations for a soothing experience.",
+        "Technology and aesthetics in service of the living."
+      ]
+    },
+    "widget_weather": {
+      "title_description": [
+        "Apple-inspired weather widget",
+        "Real-time weather data",
+        "Minimalist and elegant design"
+      ],
+      "description": [
+        "A weather widget designed to blend into your interface.",
+        "Clear and readable display of current conditions.",
+        "Clean style directly inspired by iOS."
+      ]
+    },
+    "text_editor": {
+      "title_description": [
+        "Online text editor",
+        "Build your novels and share with others",
+        "All your texts in one place"
+      ],
+      "description": [
+        "Write and organize your work directly in the browser.",
+        "Collaborate in real time with other authors.",
+        "Find all your documents in one single space."
+      ]
+    },
+    "math_studio": {
+      "title_description": [
+        "Discover math",
+        "Build your own functions",
+        "Learn new concepts"
+      ],
+      "description": [
+        "Explore mathematics in an interactive way.",
+        "Plot curves and visualize your functions.",
+        "A visual and educational approach to math."
+      ]
+    },
+    "food": {
+      "title_description": [
+        "Scroll through all the recipes",
+        "Create your own recipe",
+        "Buy the ingredients you're missing"
+      ],
+      "description": [
+        "Discover a wide range of inspiring recipes.",
+        "Create and share your own culinary creations.",
+        "Easily manage your shopping list."
+      ]
+    },
+    "aac_studio": {
+      "title_description": [
+        "Perfect for accompanied driving",
+        "Set your goals with AAC",
+        "Track mileage for every trip"
+      ],
+      "description": [
+        "A tool designed for learner drivers.",
+        "Track your progress and reach your goals.",
+        "Keep an accurate record of every trip made."
+      ]
+    },
+    "evolution_lab": {
+      "title_description": [
+        "Modern web app with React and Three.js",
+        "Real-time evolution simulation",
+        "Interactive experimentation"
+      ],
+      "description": [
+        "Watch systems evolve right before your eyes.",
+        "Tweak parameters and see the results unfold.",
+        "Science and interactivity combined in one app."
+      ]
+    },
+    "internet_capsule": {
+      "title_description": [
+        "Modern web app with React and Three.js",
+        "Create your digital time capsule",
+        "Share memories for the future"
+      ],
+      "description": [
+        "Seal your thoughts inside a digital capsule.",
+        "Schedule them to open at a future date.",
+        "A poetic concept between memory and anticipation."
+      ]
+    }
+  }
+},
   "team": {
     "title": "Our team",
     "members": {

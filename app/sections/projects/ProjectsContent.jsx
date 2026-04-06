@@ -43,200 +43,104 @@ export default function Projects() {
   const bottomRef = useRef(null);
   const [isAtBottom, setIsAtBottom] = useState(false);
   // Données des projets
-  const projectsData = [
-    {
-      id: 1,
-      title: "Studio Lens",
-      title_description: [
-  "Studio de retouche photo avancé",
-  "Filtres et corrections intelligentes",
-  "Optimisation d’image professionnelle"
-],
-description: [
-  "Éditez vos photos avec précision grâce à des outils puissants et intuitifs.",
-  "Appliquez des filtres, ajustez les couleurs et améliorez vos images en un clic.",
-  "Une interface fluide pensée pour accélérer votre flux de travail créatif."
-],
-      link: "https://studiolens.onrender.com/",
-      overview: "/medias/StudioLens_view.webp"
-    },
-    {
-      id: 2,
-      title: "StudioSongFab",
-      title_description: [
-  "Studio de musique ",
-  "Choix des musiques favoris",
-  "Modèle sur Pinterest"
-],
-description: [
-  "Éditez vos photos avec précision grâce à des outils puissants et intuitifs.",
-  "Appliquez des filtres, ajustez les couleurs et améliorez vos images en un clic.",
-  "Une interface fluide pensée pour accélérer votre flux de travail créatif."
-],
-      link: "#",
-      overview: "/medias/StudioSongFab.webp"
-    },
-    {
-      id: 3,
-      title: "The History of F1",
-      title_description: [
-        "L'histoire de la F1 sous un autre angle",
-        "La découverte d'un circuit les plus mythiques",
-        "Les différentes voitures et champions de la F1",
-      ],
-      description: [
-        "Découvrez l'histoire de la f1 comme vous ne l'avez jamais vu.",
-        "Parcourez les moments forts de chaque évènement gravé à jamais!.",
-        "N'oubliez pas de découvrir notre site!.",
-      ],
-      link: "https://history-of-f1.onrender.com",
-      overview: "/medias/F1.webp"
-    },
-    {
-      id: 4,
-      title: "The New Clock",
-      title_description: [
-        "Une horloge constitué d'horloge",
-        "Reproduction pour un projet",
-        "La futur horloge",
-      ],
-      description: [
-        "Une réalisation vu ",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
-      link: "#",
-      overview: "/medias/Clock.webp"
-    },
-    {
-      id: 5,
-      title: "Nature",
-      title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
-      ],
-      description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
-      link: "https://fr.pinterest.com/pin/1106196727244797779",
-      overview: "/medias/Nature_preview.webp"
-    },
-    {
-      id: 6,
-      title: "Widget Apple Weather",
-      title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
-      ],
-      description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
-      link: "#",
-      overview: "/medias/Widget_weather.webp"
-    },
-    {
-      id: 7,
-      title: "Text editor Online",
-      title_description: [
-        "Editeur de texte en ligne ",
-        "construit vos romans en partageant avec d'autres",
-        "Tous vos textes rassemblés au même endroits",
-      ],
-      description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
-      link: "#",
-      overview: "/medias/StudioLens_view.webp"
-    },
-    {
-      id: 8,
-      title: "MathStudio",
-      title_description: [
-        "Découvrez les maths",
-        "Construisez vos fonctions",
-        "Apprenez des nouvelles notions",
-      ],
-      description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
-      link: "https://mathstudio.onrender.com/",
-      overview: "/medias/MathStudio_view.webp"
-    },
-    {
-      id: 9,
-      title: "Application Food",
-      title_description: [
-        "Scrollez pour voir toutes les recettes",
-        "Créer votre propre recette",
-        "Acheter les aliments qui vous manque",
-      ],
-      description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
-      link: "#",
-      overview: "/medias/StudioLens_view.webp"
-    },
-    {
-      id: 10,
-      title: "AAC - Studio",
-      title_description: [
-        "Parfait pour la conuduite accompagné",
-        "Fixer vos objectifs avec AAC",
-        "Comptez le nombre de kilométrage pour chaque trajet",
-      ],
-      description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
-      link: "#",
-      overview: "/medias/StudioLens_view.webp"
-    },
-    {
-      id: 11,
-      title: "Evolution Lab",
-      title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
-      ],
-      description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
-      link: "#",
-      overview: "/medias/EvolutionLab.webp"
-    },
-    {
-      id: 12,
-      title: "Internet Capsule",
-      title_description: [
-        "Application web moderne avec React et Three.js",
-        "Esse consequat",
-        "Nulla incididunt",
-      ],
-      description: [
-        "Occaecat amet in ut dolore minim consectetur.",
-        "Laborum exercitation excepteur elit Lorem quis laboris dolor nisi incididunt.",
-        "Ipsum proident consectetur dolor proident pariatur.",
-      ],
-      link: "https://capsulestudio.netlify.app/",
-      overview: "/medias/CapsuleStudio_view.webp"
-    },
-  ];
+const projectsData = [
+  {
+    id: 1,
+    title: "Studio Lens",
+    title_description: t('projects.items.studio_lens.title_description', { returnObjects: true }),
+    description: t('projects.items.studio_lens.description', { returnObjects: true }),
+    link: "https://studiolens.onrender.com/",
+    overview: "/medias/StudioLens_view.webp"
+  },
+  {
+    id: 2,
+    title: "StudioSongFab",
+    title_description: t('projects.items.studio_song_fab.title_description', { returnObjects: true }),
+    description: t('projects.items.studio_song_fab.description', { returnObjects: true }),
+    link: "#",
+    overview: "/medias/StudioSongFab.webp"
+  },
+  {
+    id: 3,
+    title: "The History of F1",
+    title_description: t('projects.items.history_f1.title_description', { returnObjects: true }),
+    description: t('projects.items.history_f1.description', { returnObjects: true }),
+    link: "https://history-of-f1.onrender.com",
+    overview: "/medias/F1.webp"
+  },
+  {
+    id: 4,
+    title: "The New Clock",
+    title_description: t('projects.items.new_clock.title_description', { returnObjects: true }),
+    description: t('projects.items.new_clock.description', { returnObjects: true }),
+    link: "#",
+    overview: "/medias/Clock.webp"
+  },
+  {
+    id: 5,
+    title: "Nature",
+    title_description: t('projects.items.nature.title_description', { returnObjects: true }),
+    description: t('projects.items.nature.description', { returnObjects: true }),
+    link: "https://fr.pinterest.com/pin/1106196727244797779",
+    overview: "/medias/Nature_preview.webp"
+  },
+  {
+    id: 6,
+    title: "Widget Apple Weather",
+    title_description: t('projects.items.widget_weather.title_description', { returnObjects: true }),
+    description: t('projects.items.widget_weather.description', { returnObjects: true }),
+    link: "#",
+    overview: "/medias/Widget_weather.webp"
+  },
+  {
+    id: 7,
+    title: "Text editor Online",
+    title_description: t('projects.items.text_editor.title_description', { returnObjects: true }),
+    description: t('projects.items.text_editor.description', { returnObjects: true }),
+    link: "#",
+    overview: "/medias/StudioLens_view.webp"
+  },
+  {
+    id: 8,
+    title: "MathStudio",
+    title_description: t('projects.items.math_studio.title_description', { returnObjects: true }),
+    description: t('projects.items.math_studio.description', { returnObjects: true }),
+    link: "https://mathstudio.onrender.com/",
+    overview: "/medias/MathStudio_view.webp"
+  },
+  {
+    id: 9,
+    title: "Application Food",
+    title_description: t('projects.items.food.title_description', { returnObjects: true }),
+    description: t('projects.items.food.description', { returnObjects: true }),
+    link: "#",
+    overview: "/medias/StudioLens_view.webp"
+  },
+  {
+    id: 10,
+    title: "AAC - Studio",
+    title_description: t('projects.items.aac_studio.title_description', { returnObjects: true }),
+    description: t('projects.items.aac_studio.description', { returnObjects: true }),
+    link: "#",
+    overview: "/medias/StudioLens_view.webp"
+  },
+  {
+    id: 11,
+    title: "Evolution Lab",
+    title_description: t('projects.items.evolution_lab.title_description', { returnObjects: true }),
+    description: t('projects.items.evolution_lab.description', { returnObjects: true }),
+    link: "#",
+    overview: "/medias/EvolutionLab.webp"
+  },
+  {
+    id: 12,
+    title: "Internet Capsule",
+    title_description: t('projects.items.internet_capsule.title_description', { returnObjects: true }),
+    description: t('projects.items.internet_capsule.description', { returnObjects: true }),
+    link: "https://capsulestudio.netlify.app/",
+    overview: "/medias/CapsuleStudio_view.webp"
+  },
+];
   const [currentProjectName, setCurrentProjectName] = useState(projectsData[3].title);
 
   const projectImages = [
