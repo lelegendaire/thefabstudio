@@ -20,6 +20,7 @@ import {
   SRGBColorSpace,
   Color,
 } from "three";
+import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { X, ArrowDown } from "lucide-react";
 import { useLanguage } from "../../../context/LanguageContext";
 
@@ -218,11 +219,13 @@ const cleanupRef = { fn: null };
       // Créer un cercle de cubes
       const numCubes = 12;
       const radius = isMobile ? 5 : 4; // Cercle plus grand sur mobile
-      const geometry = new BoxGeometry(
-        isMobile ? 0.4 : 0.5,
-        isMobile ? 2.5 : 3,
-        isMobile ? 1.5 : 2,
-      );
+      const geometry = new RoundedBoxGeometry(
+  isMobile ? 0.4 : 0.5,   // width
+  isMobile ? 2.5 : 3,     // height
+  isMobile ? 1.5 : 2,     // depth
+  4,                       // segments (qualité des coins, 4 suffit)
+  0.10                    // radius des coins (ajuste selon ton goût)
+);
 
       const colors = [
         0x000000, // Studio Lens
