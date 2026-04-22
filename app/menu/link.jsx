@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import Link from 'next/link';
 import { dirtyline } from '../fonts'
-export default function link({data, index, lien_id, closeL}) {
+export default function Link_menu({data, index_m, lien_id, closeL}) {
     const { title, description } = data;
     const outer = useRef(null);
     const inner = useRef(null);
@@ -43,7 +43,7 @@ export default function link({data, index, lien_id, closeL}) {
           onClick={() => {closeL()}}
           variants={rotateX} 
           {...mountAnim}
-          custom={index} 
+          custom={index_m} 
           className={`${dirtyline.className} ${styles.el}`}>
             <Link href={lien_id}>{title}</Link>
             <div ref={outer} className={styles.outer}>

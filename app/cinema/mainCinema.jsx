@@ -10,7 +10,50 @@ import { useLenis } from "../context/LenisContext";
 import { dirtyline } from "../fonts";
 import CopyBlur from "../components/CopyBlur"
 import setupMarqueeAnimation from "./marquee.js";
-
+import { HoverExpand_001  } from "../components/ui/skiper52";
+const images = [
+   {
+      src: "/medias/Cinema/Blade_runner.webp",
+      alt: "Illustrations by my fav AarzooAly",
+      code: "# 23",
+    },
+    {
+      src: "/medias/Cinema/Blade_runner_ligne.webp",
+      alt: "Illustrations by my fav AarzooAly",
+      code: "# 23",
+    },
+    {
+      src: "/medias/Cinema/img2.webp",
+      alt: "Illustrations by my fav AarzooAly",
+      code: "# 23",
+    },
+    {
+      src: "/medias/Cinema/img3.webp",
+      alt: "Illustrations by my fav AarzooAly",
+      code: "# 23",
+    },
+    {
+      src: "/medias/Cinema/Interstellar_ligne.webp",
+      alt: "Illustrations by my fav AarzooAly",
+      code: "# 23",
+    },
+    {
+      src: "/medias/Cinema/seven.webp",
+      alt: "Illustrations by my fav AarzooAly",
+      code: "# 23",
+    },
+    {
+      src: "/medias/Cinema/shuter_island.webp",
+      alt: "Illustrations by my fav AarzooAly",
+      code: "# 23",
+    },
+    {
+      src: "/medias/Cinema/space_odyssey.webp",
+      alt: "Illustrations by my fav AarzooAly",
+      code: "# 23",
+    },
+   
+];
 export default function MainCinema(){
   const [mousePos, setMousePos]         = useState({ x: 0, y: 0 });
   const [cursorPos, setCursorPos]       = useState({ x: 0, y: 0 });
@@ -655,10 +698,13 @@ export default function MainCinema(){
     
 
       {/* ── Color ────────────────────────────────────────────────────────── */}
-      <section className="bg-black h-screen w-screen text-white">
+      
+<section className="relative flex w-screen flex-col items-center gap-[10vh] py-[10vh] bg-black">
         <h2 className="text-3xl font-[montserrat] p-8">Color</h2>
-      </section>
-
+    
+        <HoverExpand_001 images={images}/>
+   
+    </section>
       {/* ── Lighting ─────────────────────────────────────────────────────── */}
       <section className="bg-black h-full w-screen text-white">
         <h2 className="text-3xl font-[montserrat] p-8">Lighting</h2>

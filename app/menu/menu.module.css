@@ -4,22 +4,19 @@
   z-index: 999;
   height: 100%;
   width: 100%;
+  top: 0%;
+  left: 0%;
   flex-direction: column;
   justify-content: space-between;
-  .header {
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px;
-    position: absolute;
-    transform: translate(-20px, -44px);
-  }
 }
+
 .body {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-146%) translateY(-50%);
+  top: 25%;
+
+  perspective: 1000px;
   width: 100%;
+
   .el {
     border-top: 1px solid white;
     display: flex;
@@ -27,9 +24,11 @@
     cursor: pointer;
     perspective: 80vw;
     transform-origin: top;
+
     &:last-of-type {
       border-bottom: 1px solid white;
     }
+
     &:hover {
       .outer {
         .container {
@@ -38,6 +37,7 @@
       }
     }
   }
+
   a,
   p {
     color: white;
@@ -48,6 +48,7 @@
     margin: 0px;
     text-decoration: none;
   }
+
   .outer {
     display: flex;
     position: absolute;
@@ -56,6 +57,7 @@
     overflow: hidden;
     pointer-events: none;
     will-change: top;
+
     .inner {
       background-color: #b98d6b;
       position: absolute;
@@ -64,6 +66,7 @@
       top: 100%;
       display: flex;
       will-change: top;
+
       .container {
         display: flex;
         align-items: center;
@@ -75,6 +78,7 @@
         &:nth-of-type(2) {
           transition-delay: -4s;
         }
+
         &:nth-of-type(3) {
           transition-delay: -6s;
         }
@@ -84,6 +88,7 @@
         }
       }
     }
+
     .background {
       background-color: #d3fd50;
       position: absolute;
@@ -93,32 +98,37 @@
     }
   }
 }
+
 @keyframes slider {
   from {
     transform: translate3d(0, 0, 0);
   }
+
   to {
     transform: translate3d(-100%, 0, 0);
   }
 }
+
 @media screen and (max-width: 768px) {
+
   .el a,
   .el p {
     font-size: 7vw;
     line-height: 8vw;
   }
+
   .body .el {
     border-top: 0.7px solid white;
   }
+
   .body .el:last-of-type {
     border-bottom: 0.7px solid white;
   }
-  .body {
-    transform: translateX(-140%) translateY(-50%);
-  }
+
 }
 
 @media screen and (max-width: 480px) {
+
   .el a,
   .el p {
     font-size: 9vw;

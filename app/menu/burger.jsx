@@ -1,8 +1,8 @@
 "use client";
-import { AlignJustify } from 'lucide-react';
-export default function Burger({openMenu}) {
+import { MenuIcon } from "../components/ui/skiper99";
 
-    return (
-        <AlignJustify onClick={() => {openMenu()}} color="white"/>
-    )
+export default function Burger({ isOpen, toggleMenu }) {
+  return (
+    <MenuIcon isOpen={isOpen} onClick={toggleMenu} className={"text-white"}/>
+  );
 }

@@ -23,6 +23,6 @@ export const druck = localFont({
 export const venom = localFont({
   src: '../public/fonts/venom.ttf',
   display: 'optional',
-  preload: true,
+  preload: false,
   variable: '--font-venom',
 })

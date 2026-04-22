@@ -15,6 +15,18 @@ import {
   ScrubBarTimeLabel,
   ScrubBarTrack,
 } from "../components/ui/scrub-bar"
+import { StickyCard_003 } from "../components/ui/skiper34";
+const images = [
+  "/medias/The_Weeknd/Image1.webp",
+  "/medias/The_Weeknd/Image2.webp",
+  "/medias/The_Weeknd/Image3.webp",
+  "/medias/The_Weeknd/Image4.webp",
+  "/medias/The_Weeknd/Image5.webp",
+  "/medias/The_Weeknd/Image6.webp",
+  "/medias/The_Weeknd/Image7.webp",
+  "/medias/The_Weeknd/Image8.webp",
+  
+];
 // ─── ATLAS LOADER — vraies covers albums ────────────────────────────────────────
 async function buildAlbumAtlas(THREE) {
   // Fetch covers depuis notre route Spotify
@@ -963,6 +975,11 @@ const handleVolume = (val) => {
     <div className="absolute inset-0 rounded-4xl border border-white/20 shadow-2xl" />
   </div>
 </section>
+<section className="relative flex w-screen flex-col items-center gap-[10vh] py-[10vh] bg-black">
+      {images.map((img, idx) => (
+        <StickyCard_003 key={idx} imgUrl={img} />
+      ))}
+    </section>
      <section className="footer overflow-hidden relative h-screen bg-black flex flex-col">
  
       {/* ── Grain overlay ── */}

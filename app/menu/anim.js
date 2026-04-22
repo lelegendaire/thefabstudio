@@ -25,6 +25,13 @@ export const background = {
         transition: {duration: 0.5, ease: [0.33, 1, 0.68, 1]}
     }
 }
+export const staggerContainer = {
+  initial: {},
+  enter: {
+    transition: { staggerChildren: 0.08, delayChildren: 0.2 }
+  },
+  exit: {}
+}
 
 export const opacity = {
     initial: {
