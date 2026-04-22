@@ -442,6 +442,7 @@ const Interaction = () => {
   };
 
   return (
+    <>
     <div ref={sectionRef} className="team-section">
       {/* Section Intro */}
       <section className="relative w-screen h-screen p-8 overflow-hidden flex justify-center items-center bg-[#0f0f0f] text-white">
@@ -458,12 +459,13 @@ const Interaction = () => {
           style={{
             transformStyle: "preserve-3d",
             perspective: "2000px",
+            filter: "url(#SquiCircleFilter)"
           }}
         >
           {imageUrls.map((imageUrl, index) => (
             <div
               key={index}
-              className="img-element absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-125 h-87.5 bg-cover bg-center will-change-transform rounded-2xl"
+              className="img-element absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-125 h-87.5 bg-cover bg-center will-change-transform rounded-2xl "
               style={{
                 backgroundImage: `url('${imageUrl}')`,
               }}
@@ -516,18 +518,20 @@ const Interaction = () => {
             {t("discover.description")}
           </h3>
         </Copy>
-        <div className="flex items-center justify-center gap-3 flex-col lg:flex-row">
+        <div className="flex items-center justify-center gap-3 flex-col lg:flex-row"  >
           {works.map((work, index) => (
             <div
               key={index}
-              className="flex items-center justify-center flex-col gap-3 cursor-pointer"
+              className="flex items-center justify-center flex-col gap-3 cursor-pointer" 
               onClick={(e) => handleNavigation(work.image, work.url, e)}
+              
             >
-              <div className="h-64 w-full rounded-2xl overflow-hidden transition-all duration-500">
+              <div className="h-64 w-full rounded-2xl overflow-hidden transition-all duration-500" >
                 <img
                   className="w-full h-full object-cover transition-transform duration-500 object-center hover:scale-110"
                   src={work.image}
                   alt={work.title}
+                  
                 />
               </div>
               <h2 className="text-xl ">{work.title}</h2>
@@ -582,6 +586,19 @@ const Interaction = () => {
         `}</style>
       </section>
     </div>
+<svg xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", width: 0, height: 0 }}>
+  <defs>
+    <filter id="SquiCircleFilter">  {/* ← même ID */}
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7"
+        result="goo"
+      />
+      <feBlend in="SourceGraphic" in2="goo" />
+    </filter>
+  </defs>
+</svg>
+    </>
   );
 };
 export default Interaction;

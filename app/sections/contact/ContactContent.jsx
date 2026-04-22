@@ -220,12 +220,18 @@ const Contact = forwardRef((props, ref) => {
     },
   ];
   return (
+    <>
     <section
       id="contact_section"
       ref={ref}
-      className="min-h-[150vh] md:h-full lg:h-full w-full bg-[#F5F3EF] p-4 rounded-4xl relative"
+      className="min-h-[150vh] md:h-full lg:h-full w-full bg-[#F5F3EF] p-4 rounded-4xl relative " 
       style={{ transform: "translateY(-105%) scale(0.05)" }}
     >
+      {/* Background squircle séparé */}
+  <div
+    className="absolute inset-0 -z-10 bg-[#F5F3EF] rounded-4xl"
+    style={{ filter: "url(#SquiCircleFilter)" }}
+  />
       <h2 className="font-bold lg:text-8xl md:text-6xl text-5xl text-black">
         {t("contact.title")}
       </h2>
@@ -336,6 +342,20 @@ const Contact = forwardRef((props, ref) => {
         </div>
       </div>
     </section>
+<svg xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", width: 0, height: 0 }}>
+  <defs>
+    <filter id="SquiCircleFilter">  {/* ← même ID */}
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7"
+        result="goo"
+      />
+      <feBlend in="SourceGraphic" in2="goo" />
+    </filter>
+  </defs>
+</svg>
+    </>
+
   );
 });
 export default Contact;
