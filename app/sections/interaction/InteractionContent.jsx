@@ -5,7 +5,6 @@ import { useLanguage } from "../../../context/LanguageContext";
 import { useLenis } from "../../context/LenisContext";
 import { useRouter } from "next/navigation";
 import { dirtyline } from "../../fonts";
-// Enregistrer les plugins GSAP
 
 const Interaction = () => {
   const { t } = useLanguage();
@@ -17,6 +16,13 @@ const Interaction = () => {
   const lenis = useLenis();
   const animationInitialized = useRef(false);
   const rafIdRef = useRef(null);
+
+  // Mobile touch state
+  const [touchProgress, setTouchProgress] = useState(0);
+  const [isMobileMode, setIsMobileMode] = useState(false);
+  const touchStartY = useRef(null);
+  const touchContainerRef = useRef(null);
+
   // Collection d'images variées
   const imageUrls = [
     "https://images.unsplash.com/photo-1757317202556-a87236bdb48b?q=80&w=775&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -58,12 +64,11 @@ const Interaction = () => {
     },
   ];
   const handleNavigation = async (image, url, e) => {
-    if (transitioning) return; // ✅ bloquer les doubles clics
+    if (transitioning) return;
     const imgEl = e.currentTarget.querySelector("img");
   if (!imgEl) return;
   const rect = imgEl.getBoundingClientRect();
 
-    // Charger GSAP si pas encore chargé
     if (!window.gsap) {
       const gsapModule = await import("gsap");
       const scrollTriggerModule = await import("gsap/ScrollTrigger");
@@ -94,9 +99,8 @@ const Interaction = () => {
 
     let timeoutId;
     let started = false;
-    let gsap, ScrollTrigger, SplitText; // ✅ Déclarer ici
+    let gsap, ScrollTrigger, SplitText;
 
-    // ✅ Fonction pour charger GSAP
     const loadGSAP = async () => {
       const gsapModule = await import("gsap");
       const scrollTriggerModule = await import("gsap/ScrollTrigger");
@@ -109,25 +113,23 @@ const Interaction = () => {
       gsap.registerPlugin(ScrollTrigger, SplitText);
     };
 
-    // Fonction d'animation principale
     const startAnimations = async () => {
-      // ✅ Rendre async
       if (started) return;
       started = true;
 
-      // ✅ Charger GSAP d'abord
       await loadGSAP();
-      const isMobile = window.innerWidth < 768;
-      // Boucle Lenis
+      const screenWidth = window.innerWidth;
+      const isMobile = screenWidth < 1000;
+      setIsMobileMode(isMobile);
+
       const tick = (time) => {
-        if (isMobile) return; // STOP sur mobile
+        if (isMobile) return;
         lenis.raf(time);
         rafIdRef.current = requestAnimationFrame(tick);
       };
       rafIdRef.current = requestAnimationFrame(tick);
 
-      // Init des ScrollTriggers
-      initSpotlightAnimations(gsap, ScrollTrigger, SplitText); // ✅ Passer en paramètres
+      initSpotlightAnimations(gsap, ScrollTrigger, SplitText, isMobile);
       animationInitialized.current = true;
 
       timeoutId = setTimeout(() => {
@@ -135,7 +137,6 @@ const Interaction = () => {
       }, 600);
     };
 
-    // Attendre que Lenis commence à scroller avant de démarrer
     const handleScrollStart = () => {
       startAnimations();
       lenis.off("scroll", handleScrollStart);
@@ -148,12 +149,12 @@ const Interaction = () => {
       if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
       if (timeoutId) clearTimeout(timeoutId);
       lenis.off("scroll", handleScrollStart);
-      ScrollTrigger?.getAll().forEach((trigger) => trigger.kill()); // ✅ Optional chaining
+      ScrollTrigger?.getAll().forEach((trigger) => trigger.kill());
       animationInitialized.current = false;
     };
   }, [lenis]);
 
-  const initSpotlightAnimations = (gsap, ScrollTrigger, SplitText) => {
+  const initSpotlightAnimations = (gsap, ScrollTrigger, SplitText, isMobile) => {
     if (!sectionRef.current) return;
 
     const images = sectionRef.current.querySelectorAll(".img-element");
@@ -168,59 +169,61 @@ const Interaction = () => {
     if (!images.length || !coverImg || !introHeader || !outroHeader) return;
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
-    const isMobile = screenWidth < 1000;
     const isVerySmallScreen = screenWidth < 600;
 
-    // 🔥 VERSION SIMPLIFIÉE POUR PETITS ÉCRANS (sans scroll pin)
-    if (isVerySmallScreen) {
-      // Animation simple au scroll sans pin
-      gsap.set(images, { opacity: 0, scale: 0.5 });
-      gsap.set(coverImg, { opacity: 0, scale: 0.8 });
+    // 🔥 NOUVELLE APPROCHE MOBILE: Interaction tactile simple sans pin
+    if (isMobile) {
+      // Reset initial state
+      gsap.set(images, { opacity: 0, scale: 0.3, x: 0, y: 0 });
+      gsap.set(coverImg, { opacity: 0, scale: 0.5 });
       gsap.set(introHeader, { opacity: 1 });
       gsap.set(outroHeader, { opacity: 0 });
 
-      // Intro text fade out
+      // Intro text fade out on scroll
       ScrollTrigger.create({
         trigger: sectionRef.current.querySelector(".spotlight"),
         start: "top center",
         end: "center center",
         scrub: 1,
         onUpdate: (self) => {
-          gsap.set(introHeader, { opacity: 1 - self.progress });
+          gsap.set(introHeader, { opacity: Math.max(0, 1 - self.progress * 2) });
         },
       });
 
-      // Images apparition simple
-      ScrollTrigger.create({
-        trigger: sectionRef.current.querySelector(".spotlight"),
-        start: "top center",
-        end: "center top",
-        scrub: 1,
-        onUpdate: (self) => {
-          images.forEach((img, index) => {
-            const delay = index * 0.05;
-            const progress = Math.max(
-              0,
-              Math.min(1, (self.progress - delay) * 2),
-            );
+      // Mobile: Simple parallax float effect instead of complex 3D scatter
+      // Images appear with a gentle floating animation as user scrolls
+      images.forEach((img, index) => {
+        const offsetX = (index % 2 === 0 ? 1 : -1) * (Math.random() * 50 + 20);
+        const offsetY = Math.random() * 100 + 50;
+
+        ScrollTrigger.create({
+          trigger: sectionRef.current.querySelector(".spotlight"),
+          start: `${index * 5 + 10}% top`,
+          end: `${index * 5 + 30}% top`,
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            const floatY = Math.sin(progress * Math.PI * 2) * 20;
             gsap.set(img, {
-              opacity: progress,
-              scale: 0.5 + progress * 0.5,
+              opacity: Math.sin(progress * Math.PI),
+              scale: 0.3 + Math.sin(progress * Math.PI) * 0.4,
+              x: offsetX * progress,
+              y: floatY,
             });
-          });
-        },
+          },
+        });
       });
 
-      // Cover image apparition
+      // Cover image simple fade
       ScrollTrigger.create({
         trigger: sectionRef.current.querySelector(".spotlight"),
-        start: "center top",
-        end: "bottom center",
+        start: "70% center",
+        end: "90% center",
         scrub: 1,
         onUpdate: (self) => {
           gsap.set(coverImg, {
             opacity: self.progress,
-            scale: 0.8 + self.progress * 0.2,
+            scale: 0.5 + self.progress * 0.5,
           });
         },
       });
@@ -228,20 +231,21 @@ const Interaction = () => {
       // Outro text fade in
       ScrollTrigger.create({
         trigger: sectionRef.current.querySelector(".spotlight"),
-        start: "center top",
-        end: "bottom center",
+        start: "70% center",
+        end: "90% center",
         scrub: 1,
         onUpdate: (self) => {
           gsap.set(outroHeader, { opacity: self.progress });
         },
       });
 
-      return; // Exit early - pas besoin du reste
+      return;
     }
+
+    // Desktop version (original complex animation)
     let introHeaderSplit = null;
     let outroHeaderSplit = null;
 
-    // Nettoyer les animations précédentes
     ScrollTrigger.getAll().forEach((trigger) => {
       if (trigger.trigger === sectionRef.current.querySelector(".spotlight")) {
         trigger.kill();
@@ -249,7 +253,6 @@ const Interaction = () => {
     });
 
     try {
-      // Sauvegarder le texte original avant de split
       const introOriginalText = introHeader.textContent;
       const outroOriginalText = outroHeader.textContent;
 
@@ -260,12 +263,10 @@ const Interaction = () => {
       gsap.set(outroHeaderSplit.words, { opacity: 0 });
       gsap.set(outroHeader, { opacity: 1 });
 
-      // Stocker les instances pour le nettoyage
       introHeaderSplit._originalText = introOriginalText;
       outroHeaderSplit._originalText = outroOriginalText;
     } catch (error) {
       console.warn("SplitText non disponible, utilisation d'une alternative");
-      // Alternative simple si SplitText n'est pas disponible
       const splitTextSimple = (element) => {
         const text = element.textContent;
         const words = text.split(" ");
@@ -306,10 +307,9 @@ const Interaction = () => {
       { x: 1.25, y: -0.2 },
     ];
 
-    const scatterMultiplier = isMobile ? 2.5 : 0.5;
+    const scatterMultiplier = 0.5;
 
-    // 🔥 FIX PRINCIPAL: Réduire drastiquement la durée du scroll sur mobile
-    const scrollDuration = isMobile ? 8 : 15; // 8x viewport au lieu de 15x
+    const scrollDuration = 15;
     const startPositions = Array.from(images).map(() => ({
       x: 0,
       y: 0,
@@ -342,20 +342,15 @@ const Interaction = () => {
       pin: true,
       pinSpacing: true,
       scrub: 1,
-      anticipatePin: 1, // Important pour Lenis
-      invalidateOnRefresh: true, // recalcul après resize
-      // 🔥 Empêcher le refresh sur mobile
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
       onRefresh: (self) => {
-        // Forcer la recalculation sans recharger
         self.scroll(self.scroll());
       },
-      // 🔥 Désactiver le refresh automatique sur mobile
-      refreshPriority: isMobile ? -1 : 0,
       onUpdate: (self) => {
         const progress = self.progress;
         images.forEach((img, index) => {
           const staggerDelay = index * 0.03;
-          const scaleMultiplier = isMobile ? 4 : 2;
           let imageProgress = Math.max(0, (progress - staggerDelay) * 4);
 
           const start = startPositions[index];
@@ -365,7 +360,7 @@ const Interaction = () => {
           const scaleValue = gsap.utils.interpolate(
             start.scale,
             end.scale,
-            imageProgress * scaleMultiplier,
+            imageProgress * 2,
           );
           const xValue = gsap.utils.interpolate(start.x, end.x, imageProgress);
           const yValue = gsap.utils.interpolate(start.y, end.y, imageProgress);
@@ -384,7 +379,6 @@ const Interaction = () => {
           y: 0,
         });
 
-        // Animation du texte intro
         if (introHeaderSplit && introHeaderSplit.words.length > 0) {
           if (progress >= 0.6 && progress <= 0.75) {
             const introFadeProgress = (progress - 0.6) / 0.15;
@@ -411,7 +405,6 @@ const Interaction = () => {
           }
         }
 
-        // Animation du texte outro
         if (outroHeaderSplit && outroHeaderSplit.words.length > 0) {
           if (progress >= 0.85 && progress <= 1.0) {
             const outroRevealProgress = (progress - 0.85) / 0.15;
@@ -451,23 +444,30 @@ const Interaction = () => {
         </h2>
       </section>
 
-      {/* Section Spotlight */}
-      <section className="spotlight relative w-screen h-screen p-8 overflow-hidden bg-[#0f0f0f] text-[#d7dbd2]">
-        {/* Images Container */}
+      {/* Section Spotlight - Mobile Friendly Version */}
+      <section
+        ref={touchContainerRef}
+        className="spotlight relative w-screen min-h-screen p-8 overflow-hidden bg-[#0f0f0f] text-[#d7dbd2]"
+        style={{
+          touchAction: isMobileMode ? 'pan-y' : 'auto'
+        }}
+      >
+        {/* Images Container - Simplified for mobile */}
         <div
           className="spotlight-images absolute inset-0 w-full h-full"
           style={{
-            transformStyle: "preserve-3d",
-            perspective: "2000px",
+            transformStyle: isMobileMode ? "flat" : "preserve-3d",
+            perspective: isMobileMode ? "none" : "2000px",
             filter: "url(#SquiCircleFilter)"
           }}
         >
           {imageUrls.map((imageUrl, index) => (
             <div
               key={index}
-              className="img-element absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-125 h-87.5 bg-cover bg-center will-change-transform rounded-2xl "
+              className="img-element absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-125 h-87.5 bg-cover bg-center will-change-transform rounded-2xl"
               style={{
                 backgroundImage: `url('${imageUrl}')`,
+                willChange: isMobileMode ? 'opacity, transform' : 'all',
               }}
             />
           ))}
@@ -477,8 +477,8 @@ const Interaction = () => {
         <div
           className="spotlight-cover-img absolute inset-0 w-full h-full will-change-transform"
           style={{
-            transformStyle: "preserve-3d",
-            perspective: "2000px",
+            transformStyle: isMobileMode ? "flat" : "preserve-3d",
+            perspective: isMobileMode ? "none" : "2000px",
           }}
         >
           <img
@@ -489,21 +489,31 @@ const Interaction = () => {
         </div>
 
         {/* Headers */}
-        <div className="spotlight-intro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-10">
+        <div className="spotlight-intro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-10 pointer-events-none">
           <h2
-            className={`${dirtyline.className} text-4xl md:text-6xl font-medium tracking-tight leading-[0.9] `}
+            className={`${dirtyline.className} text-4xl md:text-6xl font-medium tracking-tight leading-[0.9]`}
           >
             {t("discover.tagline1")}
           </h2>
         </div>
 
-        <div className="spotlight-outro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-20">
+        <div className="spotlight-outro-header absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center w-full md:w-1/2 px-8 z-20 pointer-events-none">
           <h2
             className={`${dirtyline.className} text-4xl md:text-6xl font-medium tracking-tight leading-[0.9]`}
           >
             {t("discover.tagline2")}
           </h2>
         </div>
+
+        {/* Mobile hint */}
+        {isMobileMode && (
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center text-sm opacity-60 animate-bounce">
+            <p>Scroll to explore</p>
+            <svg className="w-6 h-6 mx-auto mt-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
+        )}
       </section>
 
       {/* Section Outro */}
@@ -522,16 +532,16 @@ const Interaction = () => {
           {works.map((work, index) => (
             <div
               key={index}
-              className="flex items-center justify-center flex-col gap-3 cursor-pointer" 
+              className="flex items-center justify-center flex-col gap-3 cursor-pointer"
               onClick={(e) => handleNavigation(work.image, work.url, e)}
-              
+
             >
               <div className="h-64 w-full rounded-2xl overflow-hidden transition-all duration-500" >
                 <img
                   className="w-full h-full object-cover transition-transform duration-500 object-center hover:scale-110"
                   src={work.image}
                   alt={work.title}
-                  
+
                 />
               </div>
               <h2 className="text-xl ">{work.title}</h2>
@@ -588,7 +598,7 @@ const Interaction = () => {
     </div>
 <svg xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", width: 0, height: 0 }}>
   <defs>
-    <filter id="SquiCircleFilter">  {/* ← même ID */}
+    <filter id="SquiCircleFilter">
       <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
       <feColorMatrix in="blur" mode="matrix"
         values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7"

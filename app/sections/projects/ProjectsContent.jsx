@@ -628,23 +628,7 @@ const cleanupRef = { fn: null };
               cube.userData.isHovered = true;
 
               // Éclaircir la couleur et ajouter un effet émissif
-              cube.material.forEach((mat, index) => {
-                if (
-                  index !== 0 &&
-                  index !== 1 &&
-                  cube.userData.originalColors[index]
-                ) {
-                  const originalColor = new Color(
-                    cube.userData.originalColors[index],
-                  );
-                  const lighterColor = originalColor
-                    .clone()
-                    .lerp(new Color(0xffffff), 0.3);
-                  mat.color.copy(lighterColor);
-                  mat.emissive.setHex(cube.userData.originalColors[index]);
-                  mat.emissiveIntensity = 0;
-                }
-              });
+             
 
               canvasRef.current.style.cursor = "pointer";
             }

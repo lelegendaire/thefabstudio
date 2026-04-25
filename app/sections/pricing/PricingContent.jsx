@@ -17,6 +17,8 @@ import {
   Flame,
   SquareMousePointer,
 } from "lucide-react";
+import Copy from "../../components/Copy";
+
 import { useLanguage } from "../../../context/LanguageContext";
 export default function PricingContent() {
   const { locale, t } = useLanguage();
@@ -24,6 +26,7 @@ export default function PricingContent() {
 
   return (
     <>
+    <Copy>
      <h1
       className={`
         font-bold absolute whitespace-nowrap
@@ -35,7 +38,7 @@ export default function PricingContent() {
       `}
     > {t("pricing.title")}
       </h1>
-
+</Copy>
       <div className="bloc flex items-center justify-center md:flex-row lg:flex-row flex-col lg:gap-5 gap-5 md:gap-2 lg:top-30 md:absolute lg:absolute relative text-black">
         {/* Starter Experience */}
         <div className="flex flex-col justify-center items-center gap-5">
