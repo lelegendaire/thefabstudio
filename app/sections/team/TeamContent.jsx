@@ -535,9 +535,7 @@ const handleMouseMove = (e) => {
   }, [contactRef]);
 
   return (
-    <>
     <section
-      id="team_section"
       ref={teamRef}
       className="h-[150vh] lg:h-screen bg-[#F5F3EF] relative flex justify-center items-center">
       <div className="slider h-[90%] w-[90%] mt-40 " onClick={handleSlideChange}>
@@ -591,20 +589,7 @@ const handleMouseMove = (e) => {
             </div>
           </div>
         </div>
-      </div>
+      </div>  
     </section>
-<svg xmlns="http://www.w3.org/2000/svg" style={{ position: "absolute", width: 0, height: 0 }}>
-  <defs>
-    <filter id="SquiCircleFilter">  {/* ← même ID */}
-      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-      <feColorMatrix in="blur" mode="matrix"
-        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -7"
-        result="goo"
-      />
-      <feBlend in="SourceGraphic" in2="goo" />
-    </filter>
-  </defs>
-</svg>
-    </>
   );
 }
