@@ -474,8 +474,17 @@ export default function Team({ contactRef }) {
     };
 
     window.addEventListener("resize", handleResize);
-    import("gsap").then((gsapModule) => {
-      const gsap = gsapModule.gsap;
+     import("gsap").then(async (gsapModule) => {
+    const gsap = gsapModule.gsap;
+
+    const { ScrollTrigger } =
+      await import("gsap/ScrollTrigger");
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+
       gsap.timeline({
         scrollTrigger: {
           trigger: teamRef.current,
@@ -497,6 +506,7 @@ export default function Team({ contactRef }) {
           },
         },
       });
+    });
 
       const animate_contatc = () => {
         const {
