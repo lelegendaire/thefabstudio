@@ -111,11 +111,11 @@ const projectsData = [
   },
   {
     id: 9,
-    title: "Application Food",
-    title_description: t('projects.items.food.title_description', { returnObjects: true }),
-    description: t('projects.items.food.description', { returnObjects: true }),
-    link: "#",
-    overview: "/medias/StudioLens_view.webp"
+    title: "Monad Murder",
+    title_description: t('projects.items.monad_murder.title_description', { returnObjects: true }),
+    description: t('projects.items.monad_murder.description', { returnObjects: true }),
+    link: "https://monad-murder.vercel.app",
+    overview: "/medias/monad_murder.webp"
   },
   {
     id: 10,
@@ -153,7 +153,7 @@ const projectsData = [
     "/medias/Widget_weather.webp",
     "/medias/TextEditor.webp",
     "/medias/MathStudio.webp",
-    "/medias/FoodStudio.webp",
+    "/medias/MonadMurder.webp",
     "/medias/AAC.webp",
     "/medias/EvolutionLab.webp",
     "/medias/CapsuleStudio.webp",
@@ -236,7 +236,7 @@ const cleanupRef = { fn: null };
         0xacacac, //widget
         0x000000,//texteditor
         0x000000, //Math
-        0xD37B7B,//Food
+        0x121212,//monad_murder
         0x714EFF,
         0x4EFF68,
         0x4EFCFF,

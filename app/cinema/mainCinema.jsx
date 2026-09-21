@@ -5,9 +5,10 @@ import { motion } from "motion/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
-import {Flip} from "gsap/Flip"
+import {Flip} from "gsap/flip"
 import { useLenis } from "../context/LenisContext";
 import { dirtyline } from "../fonts";
+import Card_compo from "./composition_card"
 import CopyBlur from "../components/CopyBlur"
 import setupMarqueeAnimation from "./marquee.js";
 import { HoverExpand_001  } from "../components/ui/skiper52";
@@ -531,7 +532,7 @@ export default function MainCinema(){
                     <circle cx="50%" cy="50%" r="7" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="1.5"/>
                     <circle cx="50%" cy="50%" r="2.5" fill="rgba(255,255,255,0.75)"/>
                   </svg>
-                  <span className="absolute top-5 left-5 text-white text-[0.6rem] font-[montserrat] tracking-[0.35em] uppercase opacity-60">Center Frame</span>
+                 
                 </div>
               </div>
             </div>
@@ -562,7 +563,7 @@ export default function MainCinema(){
                     <circle cx="50%" cy="50%" r="7" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="1.5"/>
                     <circle cx="50%" cy="50%" r="2.5" fill="rgba(255,255,255,0.75)"/>
                   </svg>
-                  <span className="absolute top-5 left-5 text-white text-[0.6rem] font-[montserrat] tracking-[0.35em] uppercase opacity-60">Center Frame</span>
+                  
                 </div>
               </div>
             </div>
@@ -591,12 +592,12 @@ export default function MainCinema(){
                     <circle cx="50%" cy="50%" r="7" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="1.5"/>
                     <circle cx="50%" cy="50%" r="2.5" fill="rgba(255,255,255,0.75)"/>
                   </svg>
-                  <span className="absolute top-5 left-5 text-white text-[0.6rem] font-[montserrat] tracking-[0.35em] uppercase opacity-60">Center Frame</span>
+                  
                 </div>
               </div>
             </div>
           </div>
-
+          <Card_compo title="Seven" desc="Tier" img="/medias/Cinema/seven.webp"/>
         </div>
       </section>
 
